@@ -567,4 +567,8 @@ img {
 }
 .button--close:hover {
   cursor: pointer;
+}
+
+body {
+  background-color: bisque;
 }/*# sourceMappingURL=style.css.map */
