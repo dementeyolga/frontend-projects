@@ -1,0 +1,14 @@
+@use './../abstract/variables' as *;
+
+* {
+	font-family: $font-main, Arial, Helvetica, sans-serif;
+}
+
+.section__description {
+	margin: 0 auto 19px;
+	text-align: center;
+	font-family: $font-main;
+	font-size: 2rem;
+	font-weight: 400;
+	line-height: 200%;
+}

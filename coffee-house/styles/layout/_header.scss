@@ -1,0 +1,7 @@
+@use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
+@use './../base/fonts' as *;
+
+.header {
+  $this: &;
+}
