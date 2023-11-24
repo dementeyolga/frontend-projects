@@ -1,14 +1,27 @@
 @use './../abstract/variables' as *;
 
 * {
-	font-family: $font-main, Arial, Helvetica, sans-serif;
+  font-family: $font-main, Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+  color: $text-dark;
 }
 
-.section__description {
-	margin: 0 auto 19px;
-	text-align: center;
-	font-family: $font-main;
-	font-size: 2rem;
-	font-weight: 400;
-	line-height: 200%;
+h1 {
+  position: absolute;
+  visibility: hidden;
+}
+
+.section-heading {
+  font-size: 6rem;
+  font-weight: 600;
+  line-height: 115%;
+
+  & .accent {
+    font-style: italic;
+    color: $text-accent;
+  }
+}
+
+span {
+  font: inherit;
 }

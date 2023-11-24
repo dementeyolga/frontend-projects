@@ -1,40 +1,28 @@
 @use './../abstract/mixins' as *;
+@use './../abstract/variables' as *;
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $background-body;
 }
 
 .wrapper {
-	max-width: 1440px;
-	padding: 0 20px;
-	margin: 0 auto;
-}
-
-.section {
-	margin: 20px auto 60px;
+  max-width: 1440px;
+  padding: 0 2.777%;
+  margin: 0 auto;
 }
 
 img {
-	max-width: 100%;
+  max-width: 100%;
 }
 
 .transparent {
-	opacity: 0;
-}
-
-.d-none {
-	display: none !important;
-}
-
-.d-flex {
-	display: flex;
-}
-
-.d-flex-sb {
-	display: flex;
-	justify-content: space-between;
+  opacity: 0;
 }

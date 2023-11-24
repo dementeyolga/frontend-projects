@@ -353,15 +353,27 @@ template {
 }
 * {
   font-family: Inter, sans-serif, Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+  color: #403f3d;
 }
 
-.section__description {
-  margin: 0 auto 19px;
-  text-align: center;
-  font-family: Inter, sans-serif;
-  font-size: 2rem;
-  font-weight: 400;
-  line-height: 200%;
+h1 {
+  position: absolute;
+  visibility: hidden;
+}
+
+.section-heading {
+  font-size: 6rem;
+  font-weight: 600;
+  line-height: 115%;
+}
+.section-heading .accent {
+  font-style: italic;
+  color: #b0907a;
+}
+
+span {
+  font: inherit;
 }
 
 /* For media queries */
@@ -373,14 +385,14 @@ html {
   scroll-behavior: smooth;
 }
 
-.wrapper {
-  max-width: 1440px;
-  padding: 0 20px;
-  margin: 0 auto;
+body {
+  background-color: #e1d4c9;
 }
 
-.section {
-  margin: 20px auto 60px;
+.wrapper {
+  max-width: 1440px;
+  padding: 0 2.777%;
+  margin: 0 auto;
 }
 
 img {
@@ -391,184 +403,23 @@ img {
   opacity: 0;
 }
 
-.d-none {
-  display: none !important;
-}
-
-.d-flex {
-  display: flex;
-}
-
-.d-flex-sb {
-  display: flex;
-  justify-content: space-between;
-}
-
-.about__slider {
-  margin-bottom: 40px;
-}
-.about__slider-body {
-  display: flex;
-  align-items: center;
-  gap: 58px;
-}
-.about__slider-arrow {
-  display: none;
-  background-color: transparent;
-}
-.about__slider-arrow:disabled path {
-  stroke: #8e8e8e;
-}
-@media (max-width: 768px) {
-  .about__slider-arrow {
-    display: block;
-    padding: 5px;
-  }
-  .about__slider-arrow--right {
-    margin-right: 57px;
-  }
-  .about__slider-arrow--left {
-    margin-left: 57px;
-  }
-}
-.about__slider-cards {
-  position: relative;
-  left: 0;
-  display: flex;
-  gap: 25px;
-  margin-bottom: 40px;
-  transition: left 0.4s ease-in-out;
-}
-.about__slider-cards-wrapper {
-  overflow: hidden;
-}
-.about__slider-card {
-  flex-shrink: 0;
-}
-.about__slider-card img {
-  width: 100%;
-}
-@media (max-width: 768px) {
-  .about__slider-card {
-    flex-shrink: 0;
-    width: 100%;
-  }
-}
-.about__slider-controls {
-  display: flex;
-  justify-content: center;
-}
-.about__slider-control {
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  background-color: #0c0c0e;
-}
-.about__slider-control-wrapper {
-  height: 26px;
-  width: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.about__slider-control-wrapper:not(:nth-child(-n+3)) {
-  display: none;
-}
-@media (max-width: 768px) {
-  .about__slider-control-wrapper:not(:nth-child(-n+3)) {
-    display: flex;
-  }
-}
-.about__slider-control.active {
-  background-color: #bb945f;
-}
-
-.footer {
-  padding: 20px 20px 44px;
-  color: #ffffff;
-  background-color: #000000;
-}
-.footer__upper {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.5rem;
-  font-family: Inter, sans-serif;
-  line-height: 133.333%;
-}
-.footer__upper::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 1px;
-  background-color: #ffffff;
-}
-.footer__socials {
-  margin: 18px 0 38px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.footer__schedule {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.footer__bottom {
-  margin-top: 44px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 2rem;
-  letter-spacing: 2px;
-}
-.footer__year {
-  width: 30%;
-}
-.footer__rs-school {
-  text-align: center;
-  width: 40%;
-}
-.footer__username {
-  text-align: right;
-  width: 30%;
-}
-
 .button {
   display: flex;
-  align-items: center;
+  width: 200px;
+  padding: 20px 78px;
   justify-content: center;
-  width: 75px;
-  height: 30px;
-  border-radius: 2px;
-  border: 1px solid #0c0c0e;
-  background-color: transparent;
-}
-.button:hover {
-  background-color: #8e8e8e;
-}
-.button:disabled {
-  color: #8e8e8e;
-  border-color: #8e8e8e;
-  background-color: #e9e9e9;
-}
-.button.own {
-  color: #bb945f;
-  border: 1px solid #bb945f;
-}
-.button--close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 15px;
-}
-.button--close:hover {
-  cursor: pointer;
+  align-items: center;
+  gap: 8px;
+  border-radius: 100px;
+  background-color: #e1d4c9;
 }
 
-body {
-  background-color: bisque;
+.icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #665f55;
+  border-radius: 100px;
 }/*# sourceMappingURL=style.css.map */
