@@ -1,0 +1,15 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__list {
+    display: flex;
+    column-gap: 40px;
+  }
+
+  &__item {
+    font-weight: 600;
+    list-style-type: none;
+  }
+}
