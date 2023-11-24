@@ -363,6 +363,7 @@ h1 {
 }
 
 .section-heading {
+  margin: 0;
   font-size: 6rem;
   font-weight: 600;
   line-height: 115%;
@@ -396,6 +397,10 @@ body {
   margin: 0 auto;
 }
 
+.section {
+  margin-bottom: 100px;
+}
+
 img {
   max-width: 100%;
 }
@@ -404,6 +409,9 @@ img {
   opacity: 0;
 }
 
+.header {
+  margin-bottom: 20px;
+}
 .header__wrapper {
   display: flex;
   justify-content: space-between;
@@ -432,6 +440,30 @@ img {
   background-color: #403f3d;
 }
 
+.promo__background {
+  padding: 100px;
+  background-image: url("./../../assets/images/img-hero.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 40px;
+}
+.promo__content {
+  max-width: 530px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.promo__title {
+  font-size: 7.2rem;
+  line-height: 105%;
+  color: #e1d4c9;
+}
+.promo__description {
+  line-height: 150%;
+  color: #e1d4c9;
+}
+
 .nav {
   display: flex;
   justify-content: center;
@@ -454,6 +486,8 @@ img {
   justify-content: center;
   align-items: center;
   gap: 8px;
+  line-height: 150%;
+  font-weight: 600;
   border-radius: 100px;
   background-color: #e1d4c9;
 }
