@@ -366,7 +366,8 @@ h1 {
   margin: 0;
   font-size: 6rem;
   font-weight: 600;
-  line-height: 115%;
+  line-height: 125%;
+  font-feature-settings: "clig" off, "liga" off;
 }
 .section-heading .accent {
   font-style: italic;
@@ -454,7 +455,7 @@ img {
   flex-direction: column;
   gap: 40px;
 }
-.promo__title {
+.promo__heading {
   font-size: 7.2rem;
   line-height: 105%;
   color: #e1d4c9;
@@ -462,6 +463,16 @@ img {
 .promo__description {
   line-height: 150%;
   color: #e1d4c9;
+}
+
+.favorites__heading {
+  margin-bottom: 40px;
+  text-align: center;
+}
+.favorites__slider {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .nav {
@@ -500,4 +511,27 @@ img {
   justify-content: center;
   border: 1px solid #665f55;
   border-radius: 100px;
+}
+
+.card {
+  width: 480px;
+}
+.card__title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 125%;
+  text-align: center;
+}
+.card__description {
+  text-align: center;
+  line-height: 150%;
+}
+.card__price {
+  text-align: center;
+}
+
+.slider__body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }/*# sourceMappingURL=style.css.map */

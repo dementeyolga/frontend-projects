@@ -15,7 +15,8 @@ h1 {
   margin: 0;
   font-size: 6rem;
   font-weight: 600;
-  line-height: 115%;
+  line-height: 125%;
+  font-feature-settings: 'clig' off, 'liga' off;
 
   & .accent {
     font-style: italic;
