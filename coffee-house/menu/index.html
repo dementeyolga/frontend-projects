@@ -1,12 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./../styles/style.css" />
-    <title>Menu</title>
-  </head>
-  <body>
-    Menu
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./../styles/style.css" />
+		<title>Menu</title>
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__wrapper wrapper">
+				<h1>Resource Coffee House</h1>
+				<div class="logo">
+					<img src="./assets/images/logo.svg" alt="Resource coffee house logo" />
+				</div>
+				<nav class="header__nav nav">
+					<ul class="nav__list">
+						<li class="nav__item">
+							<a href="./../index.html#favorite-coffee" class="nav__link">Favorite coffee</a>
+						</li>
+						<li class="nav__item">
+							<a href="./../index.html#about" class="nav__link">About</a>
+						</li>
+						<li class="nav__item">
+							<a href="./../index.html#mobile-app" class="nav__link">Mobile app</a>
+						</li>
+						<li class="nav__item">
+							<a href="./../index.html#contact-us" class="nav__link">Contact us</a>
+						</li>
+					</ul>
+				</nav>
+				<a class="header__redirect">
+					Menu
+					<div href="./menu/" class="header__redirect-icon">
+						<img src="./assets/images/coffee-cup.svg" alt="coffee cup icon" />
+					</div>
+				</a>
+			</div>
+		</header>
+
+		<footer class="footer">
+			<div class="footer__left">
+				<h2 class="footer__heading section-heading">
+					Sip, Savor, Smile. <br />
+					<span class="accent">It’s coffee time!</span>
+				</h2>
+				<div class="footer__socials">
+					<div class="footer__social">
+						<img src="./assets/images/twitter.svg" alt="twitter logo" />
+					</div>
+					<div class="footer__social">
+						<img src="./assets/images/instagram.svg" alt="instagram logo" />
+					</div>
+					<div class="footer__social">
+						<img src="./assets/images/facebook.svg" alt="facebook logo" />
+					</div>
+				</div>
+			</div>
+			<div class="footer__right">
+				<div class="footer__subheading">Contact us</div>
+				<div class="footer__contacts">
+					<div class="footer__contact">
+						<img src="./assets/images/pin-alt.svg" alt="pin icon" class="footer__contact-logo" />
+						8558 Green Rd., LA
+					</div>
+					<div class="footer__contact">
+						<img src="./assets/images/phone.svg" alt="phone icon" class="footer__contact-logo" />
+						+1 (603) 555-0123
+					</div>
+					<div class="footer__contact">
+						<img src="./assets/images/clock.svg" alt="clock icon" class="footer__contact-logo" />
+						Mon-Sat: 9:00 AM – 23:00 PM
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
 </html>
