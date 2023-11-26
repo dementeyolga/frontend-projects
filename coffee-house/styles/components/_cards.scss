@@ -1,7 +1,17 @@
 .card {
   width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 
   &__title {
+    margin: 0;
     font-size: 2.4rem;
     font-weight: 600;
     line-height: 125%;
@@ -14,6 +24,9 @@
   }
 
   &__price {
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 125%;
     text-align: center;
   }
 }

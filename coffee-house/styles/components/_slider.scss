@@ -1,7 +1,25 @@
+@use './../abstract/variables' as *;
+
 .slider {
   &__body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  &__control {
+    width: 40px;
+    height: 4px;
+    background-color: $border-light;
+
+    &.active {
+      background-color: $border-dark;
+    }
   }
 }
