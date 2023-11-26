@@ -475,6 +475,38 @@ img {
   gap: 40px;
 }
 
+.about__heading {
+  margin-bottom: 40px;
+}
+.about__pics {
+  display: flex;
+  gap: 40px;
+}
+.about__pics-row {
+  height: 1060px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.about__pics-row:nth-child(1) .about__pic:first-child {
+  height: 590px;
+  flex-shrink: 0;
+}
+.about__pics-row:nth-child(2) .about__pic:first-child {
+  height: 430px;
+  flex-shrink: 0;
+}
+.about__pic {
+  overflow: hidden;
+  border-radius: 20px;
+  flex-shrink: 1;
+}
+.about__pic img {
+  scale: 1.1;
+  -o-object-position: center;
+     object-position: center;
+}
+
 .nav {
   display: flex;
   justify-content: center;
