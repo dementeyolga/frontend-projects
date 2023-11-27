@@ -2,44 +2,45 @@
 @use './../abstract/mixins' as *;
 
 .about {
-  &__heading {
-    margin-bottom: 40px;
-  }
+	&__heading {
+		margin-bottom: 40px;
+	}
 
-  &__pics {
-    display: flex;
-    gap: 40px;
+	&__pics {
+		max-height: 1060px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 430px auto 430px;
+		gap: 40px;
+	}
 
-    &-row {
-      height: 1060px;
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
+	&__pic {
+		overflow: hidden;
+		border-radius: 20px;
 
-      &:nth-child(1) {
-        .about__pic:first-child {
-          height: 590px;
-          flex-shrink: 0;
-        }
-      }
+		&:nth-child(1) {
+			max-height: 590px;
+			grid-row: 1 / 3;
+		}
 
-      &:nth-child(2) {
-        .about__pic:first-child {
-          height: 430px;
-          flex-shrink: 0;
-        }
-      }
-    }
-  }
+		&:nth-child(4) {
+			max-height: 590px;
+			grid-row: 2 / 4;
+		}
 
-  &__pic {
-    overflow: hidden;
-    border-radius: 20px;
-    flex-shrink: 1;
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: center;
+			scale: 1.1;
+			transition: scale 0.3s;
+		}
 
-    img {
-      scale: 1.1;
-      object-position: center;
-    }
-  }
+		&:hover {
+			img {
+				scale: 1;
+			}
+		}
+	}
 }

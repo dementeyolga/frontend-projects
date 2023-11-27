@@ -1,4 +1,57 @@
 @use './../abstract/variables' as *;
 
 .footer {
+	* {
+		color: $text-light;
+	}
+
+	&__content {
+		padding: 100px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		gap: 100px;
+		background-color: $background-container;
+		border-radius: 40px;
+	}
+
+	&__left,
+	&__right {
+		display: flex;
+		flex-direction: column;
+		gap: 39px;
+	}
+
+	&__socials {
+		display: flex;
+		gap: 12px;
+	}
+
+	&__social {
+		border: 1px solid $border-light;
+	}
+
+	&__subheading {
+		font-size: 2.4rem;
+		line-height: 125%;
+		font-weight: 600;
+	}
+
+	&__contacts {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	&__contact {
+		display: flex;
+		gap: 8px;
+		font-weight: 600;
+		line-height: 150%;
+
+		&-icon {
+			width: 20px;
+			height: 20px;
+		}
+	}
 }

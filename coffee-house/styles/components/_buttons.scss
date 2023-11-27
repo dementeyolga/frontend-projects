@@ -1,14 +1,32 @@
 @use './../abstract/variables' as *;
 
 .button {
-  display: flex;
-  width: 200px;
-  padding: 20px 78px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  line-height: 150%;
-  font-weight: 600;
-  border-radius: 100px;
-  background-color: $background-body;
+	display: flex;
+	width: 200px;
+	padding: 20px 78px;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	line-height: 150%;
+	font-weight: 600;
+	border-radius: 100px;
+	background-color: $background-body;
+
+	&--store {
+		width: 200px;
+		padding: 12px 20px;
+		justify-content: start;
+		border: 1px solid $border-dark;
+
+		&:hover {
+			color: $text-light;
+			background-color: $background-container;
+		}
+	}
+
+	&__top {
+		font-size: 1rem;
+		font-weight: 600;
+		line-height: 140%;
+	}
 }

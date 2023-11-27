@@ -1,0 +1,26 @@
+@use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
+
+.app {
+	&__wrapper {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		gap: 7.3529%;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+	}
+
+	&__description {
+		line-height: 150%;
+	}
+
+	&__buttons {
+		display: flex;
+		gap: 20px;
+	}
+}
