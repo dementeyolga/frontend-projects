@@ -432,14 +432,19 @@ span {
   border-radius: 100px;
   border: 1px solid #c1b6ad;
   background-color: transparent;
+  transition: 0.3s;
 }
 .tab.active, .tab:hover {
+  cursor: pointer;
   color: #e1d4c9;
   background-color: #665f55;
   border-color: #665f55;
 }
 .tab.active .tab__icon, .tab:hover .tab__icon {
   background-color: #e1d4c9;
+}
+.tab.active {
+  cursor: default;
 }
 .tab__icon {
   padding: 3px 7px;
@@ -462,7 +467,7 @@ span {
   border-radius: 100px;
   transition: 0.3s;
 }
-.icon svg {
+.icon--light svg {
   stroke: #e1d4c9;
 }
 .icon--light:hover {
@@ -472,6 +477,17 @@ span {
 }
 .icon--light:hover svg {
   stroke: #403f3d;
+}
+.icon--dark svg {
+  stroke: #403f3d;
+}
+.icon--dark:hover {
+  cursor: pointer;
+  background-color: #665f55;
+  border-color: #665f55;
+}
+.icon--dark:hover svg {
+  stroke: #e1d4c9;
 }
 
 .card {
@@ -569,7 +585,6 @@ img {
   width: 100px;
 }
 .header__redirect {
-  height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   position: relative;
@@ -579,12 +594,16 @@ img {
   gap: 8px;
   line-height: 150%;
 }
-.header__redirect:hover::after {
+.header__redirect::after {
   content: "";
   position: absolute;
   bottom: -4px;
   width: 100%;
   height: 2px;
+  background-color: transparent;
+  transition: 0.3s;
+}
+.header__redirect:hover::after, .header__redirect.active::after {
   background-color: #403f3d;
 }
 
@@ -708,6 +727,9 @@ img {
 .menu__card * {
   text-align: left;
 }
+.menu__card:hover {
+  cursor: pointer;
+}
 .menu__card:hover img {
   scale: 1;
 }
@@ -771,11 +793,29 @@ img {
   flex-direction: column;
   gap: 20px;
 }
+.footer__contacts a {
+  position: relative;
+}
+.footer__contacts a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-color: transparent;
+  transition: 0.3s;
+}
+.footer__contacts a:hover::after {
+  background-color: #e1d4c9;
+}
 .footer__contact {
+  width: -moz-fit-content;
+  width: fit-content;
   display: flex;
   gap: 8px;
   font-weight: 600;
   line-height: 150%;
+  transition: 0.3s;
 }
 .footer__contact-icon {
   width: 20px;
