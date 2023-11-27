@@ -1,0 +1,44 @@
+@use './../abstract/variables' as *;
+
+.icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $border-dark;
+  border-radius: 100px;
+  transition: 0.3s;
+
+  &--light {
+    svg {
+      stroke: $text-light;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: $background-body;
+      border-color: $background-body;
+
+      svg {
+        stroke: $text-dark;
+      }
+    }
+  }
+
+  &--dark {
+    svg {
+      stroke: $text-dark;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: $background-container;
+      border-color: $background-container;
+
+      svg {
+        stroke: $text-light;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
+
+.favorites {
+	&__heading {
+		margin-bottom: 40px;
+		text-align: center;
+	}
+
+	&__slider {
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+	}
+}
