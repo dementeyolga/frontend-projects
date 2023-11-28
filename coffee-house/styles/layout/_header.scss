@@ -16,6 +16,12 @@
 		width: 100px;
 	}
 
+	&__nav {
+		@include max-1024 {
+			display: none;
+		}
+	}
+
 	&__redirect {
 		height: fit-content;
 		position: relative;
@@ -25,6 +31,10 @@
 		gap: 8px;
 		line-height: 150%;
 		font-weight: 600;
+
+		@include max-1024 {
+			display: none;
+		}
 
 		&::after {
 			content: '';
@@ -52,6 +62,16 @@
 					left: 0;
 					right: 0;
 				}
+			}
+		}
+	}
+
+	&__burger {
+		&-button {
+			display: none;
+
+			@include max-768 {
+				display: block;
 			}
 		}
 	}

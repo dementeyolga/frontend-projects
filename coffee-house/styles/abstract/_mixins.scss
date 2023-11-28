@@ -30,8 +30,8 @@
 	}
 }
 
-@mixin max-320 {
-	@media (max-width: 320px) {
+@mixin max-380 {
+	@media (max-width: 380px) {
 		@content;
 	}
 }
