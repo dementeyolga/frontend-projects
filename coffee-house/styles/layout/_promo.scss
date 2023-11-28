@@ -2,30 +2,42 @@
 @use './../abstract/mixins' as *;
 
 .promo {
-  &__background {
-    padding: 100px;
-    background-image: url('/assets/images/img-hero.png');
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    border-radius: 40px;
-  }
+	&__background {
+		padding: 100px;
+		background-image: url('./../assets/images/img-hero.png');
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		border-radius: 40px;
+	}
 
-  &__content {
-    max-width: 530px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
+	&__content {
+		max-width: 530px;
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+	}
 
-  &__heading {
-    font-size: 7.2rem;
-    line-height: 105%;
-    color: $text-light;
-  }
+	&__heading {
+		font-size: 7.2rem;
+		line-height: 105%;
+		color: $text-light;
+	}
 
-  &__description {
-    line-height: 150%;
-    color: $text-light;
-  }
+	&__description {
+		line-height: 150%;
+		color: $text-light;
+	}
+
+	&__button {
+		.button__icon {
+			display: none;
+		}
+
+		&:hover {
+			.button__icon {
+				display: block;
+			}
+		}
+	}
 }
