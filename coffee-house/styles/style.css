@@ -848,13 +848,16 @@ img {
   content: "";
   position: absolute;
   bottom: -4px;
-  width: 100%;
+  left: 50%;
+  width: 0;
   height: 2px;
-  background-color: transparent;
+  background-color: #e1d4c9;
   transition: 0.3s;
 }
 .footer__contacts a:hover::after {
-  background-color: #e1d4c9;
+  width: 100%;
+  left: 0;
+  right: 0;
 }
 .footer__contact {
   width: -webkit-fit-content;
