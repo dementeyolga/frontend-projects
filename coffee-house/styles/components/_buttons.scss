@@ -17,10 +17,19 @@
 		padding: 12px 20px;
 		justify-content: start;
 		border: 1px solid $border-dark;
+		transition: 0.3s;
 
 		&:hover {
-			color: $text-light;
+			cursor: pointer;
 			background-color: $background-container;
+
+			path {
+				fill: $text-light !important;
+			}
+
+			* {
+				color: $text-light;
+			}
 		}
 	}
 
