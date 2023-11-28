@@ -37,9 +37,11 @@
 			transition: scale 0.3s;
 		}
 
-		&:hover {
-			img {
-				scale: 1;
+		@include min-1024 {
+			&:hover {
+				img {
+					scale: 1;
+				}
 			}
 		}
 	}

@@ -37,12 +37,21 @@
 			transition: 0.3s;
 		}
 
-		&:hover,
 		&.active {
 			&::after {
 				width: 100%;
 				left: 0;
 				right: 0;
+			}
+		}
+
+		@include min-1024 {
+			&:hover {
+				&::after {
+					width: 100%;
+					left: 0;
+					right: 0;
+				}
 			}
 		}
 	}
