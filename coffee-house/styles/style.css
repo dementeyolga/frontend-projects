@@ -397,13 +397,16 @@ span {
   content: "";
   position: absolute;
   bottom: -4px;
-  width: 100%;
+  left: 50%;
+  width: 0;
   height: 2px;
-  background-color: transparent;
+  background-color: #403f3d;
   transition: 0.3s;
 }
 .nav__item:hover::after {
-  background-color: #403f3d;
+  width: 100%;
+  left: 0;
+  right: 0;
 }
 
 .button {
@@ -614,18 +617,22 @@ img {
   justify-content: center;
   gap: 8px;
   line-height: 150%;
+  font-weight: 600;
 }
 .header__redirect::after {
   content: "";
   position: absolute;
   bottom: -4px;
-  width: 100%;
+  left: 50%;
+  width: 0;
   height: 2px;
-  background-color: transparent;
+  background-color: #403f3d;
   transition: 0.3s;
 }
 .header__redirect:hover::after, .header__redirect.active::after {
-  background-color: #403f3d;
+  width: 100%;
+  left: 0;
+  right: 0;
 }
 
 .promo__background {
@@ -651,11 +658,25 @@ img {
   line-height: 150%;
   color: #e1d4c9;
 }
+.promo__button {
+  position: relative;
+}
+.promo__button-text {
+  transition: 0.3s;
+}
 .promo__button .button__icon {
-  display: none;
+  position: absolute;
+  right: 64px;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+}
+.promo__button:hover .promo__button-text {
+  transform: translateX(-10px);
 }
 .promo__button:hover .button__icon {
-  display: block;
+  visibility: visible;
+  opacity: 1;
 }
 
 .favorites__heading {

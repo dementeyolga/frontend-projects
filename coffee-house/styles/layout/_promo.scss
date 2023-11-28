@@ -30,13 +30,30 @@
 	}
 
 	&__button {
+		position: relative;
+
+		$this: &;
+
+		&-text {
+			transition: 0.3s;
+		}
+
 		.button__icon {
-			display: none;
+			position: absolute;
+			right: 64px;
+			visibility: hidden;
+			opacity: 0;
+			transition: 0.3s;
 		}
 
 		&:hover {
+			#{$this}-text {
+				transform: translateX(-10px);
+			}
+
 			.button__icon {
-				display: block;
+				visibility: visible;
+				opacity: 1;
 			}
 		}
 	}
