@@ -391,6 +391,7 @@ span {
 .nav__item {
   position: relative;
   font-weight: 600;
+  line-height: 150%;
   list-style-type: none;
 }
 .nav__item::after {
