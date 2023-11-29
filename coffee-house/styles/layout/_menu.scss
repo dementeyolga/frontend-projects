@@ -4,6 +4,10 @@
 .menu {
 	margin-bottom: 100px;
 
+	&__heading {
+		max-width: 800px;
+	}
+
 	&__wrapper {
 		display: flex;
 		flex-direction: column;
@@ -31,6 +35,7 @@
 
 		@include max-768 {
 			grid-template-columns: repeat(2, 1fr);
+			padding: 0 14px;
 		}
 
 		@include max-380 {
@@ -56,6 +61,12 @@
 				img {
 					scale: 1;
 				}
+			}
+		}
+
+		@include max-768 {
+			&:nth-child(n + 5) {
+				display: none;
 			}
 		}
 
@@ -85,5 +96,9 @@
 		&-title {
 			margin-bottom: 12px;
 		}
+	}
+
+	&__refresh {
+		align-self: center;
 	}
 }
