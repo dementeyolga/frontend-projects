@@ -17,7 +17,7 @@
 	}
 
 	&__nav {
-		@include max-1024 {
+		@include max-768 {
 			display: none;
 		}
 	}

@@ -9,6 +9,10 @@
 		background-size: cover;
 		background-repeat: no-repeat;
 		border-radius: 40px;
+
+		@include max-768 {
+			padding: 100px 60px;
+		}
 	}
 
 	&__content {
@@ -48,7 +52,18 @@
 
 		&:hover {
 			#{$this}-text {
-				transform: translateX(-10px);
+				transform: translateX(-14px);
+			}
+
+			.button__icon {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
+
+		@include max-768 {
+			#{$this}-text {
+				transform: translateX(-14px);
 			}
 
 			.button__icon {

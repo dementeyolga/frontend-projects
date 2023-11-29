@@ -7,6 +7,11 @@
 		grid-template-columns: 1fr 1fr;
 		align-items: center;
 		gap: 7.3529%;
+
+		@include max-768 {
+			grid-template-columns: 1fr;
+			gap: 100px;
+		}
 	}
 
 	&__content {
@@ -22,5 +27,10 @@
 	&__buttons {
 		display: flex;
 		gap: 20px;
+	}
+
+	&__promo {
+		display: flex;
+		justify-content: center;
 	}
 }
