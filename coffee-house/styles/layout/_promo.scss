@@ -1,18 +1,16 @@
 @use './../abstract/variables' as *;
 @use './../abstract/mixins' as *;
+@use './../abstract/placeholders' as *;
 
 .promo {
 	&__background {
-		padding: 100px;
+		@extend %padding-promo;
+
 		background-image: url('./../assets/images/img-hero.png');
 		background-position: center center;
 		background-size: cover;
 		background-repeat: no-repeat;
 		border-radius: 40px;
-
-		@include max-768 {
-			padding: 100px 60px;
-		}
 	}
 
 	&__content {
@@ -26,6 +24,11 @@
 		font-size: 7.2rem;
 		line-height: 105%;
 		color: $text-light;
+
+		@include max-576 {
+			font-size: 4.2rem;
+			line-height: 115%;
+		}
 	}
 
 	&__description {

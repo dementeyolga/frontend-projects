@@ -36,6 +36,12 @@
 		}
 	}
 
+	&__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
 	&__top {
 		font-size: 1rem;
 		font-weight: 600;

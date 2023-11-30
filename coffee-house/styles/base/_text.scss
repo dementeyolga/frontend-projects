@@ -1,29 +1,34 @@
 @use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
 
 * {
-  font-family: $font-main, Arial, Helvetica, sans-serif;
-  font-size: 1.6rem;
-  color: $text-dark;
+	font-family: $font-main, Arial, Helvetica, sans-serif;
+	font-size: 1.6rem;
+	color: $text-dark;
 }
 
 h1 {
-  position: absolute;
-  visibility: hidden;
+	position: absolute;
+	visibility: hidden;
 }
 
 .section-heading {
-  margin: 0;
-  font-size: 6rem;
-  font-weight: 600;
-  line-height: 125%;
-  font-feature-settings: 'clig' off, 'liga' off;
+	margin: 0;
+	font-size: 6rem;
+	font-weight: 600;
+	line-height: 125%;
+	font-feature-settings: 'clig' off, 'liga' off;
 
-  & .accent {
-    font-style: italic;
-    color: $text-accent;
-  }
+	& .accent {
+		font-style: italic;
+		color: $text-accent;
+	}
+
+	@include max-576 {
+		font-size: 3.2rem;
+	}
 }
 
 span {
-  font: inherit;
+	font: inherit;
 }

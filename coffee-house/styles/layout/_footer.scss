@@ -1,5 +1,6 @@
 @use './../abstract/variables' as *;
 @use './../abstract/mixins' as *;
+@use './../abstract/placeholders' as *;
 
 .footer {
 	* {
@@ -7,7 +8,8 @@
 	}
 
 	&__content {
-		padding: 100px;
+		@extend %padding-promo;
+
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		align-items: center;
@@ -16,8 +18,11 @@
 		border-radius: 40px;
 
 		@include max-768 {
-			padding: 100px 60px;
 			grid-template-columns: 1fr;
+		}
+
+		@include max-576 {
+			gap: 40px;
 		}
 	}
 

@@ -22,6 +22,10 @@
 		display: flex;
 		justify-content: center;
 		gap: 14px;
+
+		@include max-576 {
+			gap: 7px;
+		}
 	}
 
 	&__cards {
@@ -38,8 +42,9 @@
 			padding: 0 14px;
 		}
 
-		@include max-380 {
+		@include max-576 {
 			grid-template-columns: repeat(1, 1fr);
+			padding: 0 19px;
 		}
 	}
 

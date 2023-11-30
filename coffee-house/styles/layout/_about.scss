@@ -16,6 +16,10 @@
 			grid-template-columns: 1fr;
 			grid-template-rows: auto auto;
 		}
+
+		@include max-576 {
+			grid-template-rows: 590px 590px;
+		}
 	}
 
 	&__pic {
@@ -50,6 +54,10 @@
 
 			@include max-768 {
 				scale: 1.05;
+			}
+
+			@include max-576 {
+				scale: 1.24;
 			}
 		}
 

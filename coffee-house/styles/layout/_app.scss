@@ -12,6 +12,10 @@
 			grid-template-columns: 1fr;
 			gap: 100px;
 		}
+
+		@include max-576 {
+			gap: 40px;
+		}
 	}
 
 	&__content {
@@ -26,6 +30,7 @@
 
 	&__buttons {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 20px;
 	}
 
