@@ -891,6 +891,7 @@ img {
 }
 .menu__heading {
   max-width: 800px;
+  align-self: center;
 }
 .menu__wrapper {
   display: flex;
