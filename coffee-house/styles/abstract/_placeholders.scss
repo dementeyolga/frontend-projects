@@ -1,0 +1,13 @@
+@use './../abstract/mixins' as *;
+
+%padding-promo {
+	padding: 100px;
+
+	@include max-768 {
+		padding: 100px 60px;
+	}
+
+	@include max-576 {
+		padding: 60px 16px;
+	}
+}

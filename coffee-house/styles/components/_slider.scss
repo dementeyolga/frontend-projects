@@ -1,4 +1,5 @@
 @use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
 
 .slider {
 	&__body {
@@ -24,6 +25,12 @@
 
 		&.active {
 			background-color: $border-dark;
+		}
+	}
+
+	&__arrow {
+		@include max-576 {
+			display: none;
 		}
 	}
 }
