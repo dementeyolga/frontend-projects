@@ -1,9 +1,11 @@
 @use './../abstract/variables' as *;
 @use './../abstract/mixins' as *;
+@use './../abstract/placeholders' as *;
 
 .promo {
 	&__background {
-		padding: 100px;
+		@extend %padding-promo;
+
 		background-image: url('./../assets/images/img-hero.png');
 		background-position: center center;
 		background-size: cover;
@@ -22,6 +24,11 @@
 		font-size: 7.2rem;
 		line-height: 105%;
 		color: $text-light;
+
+		@include max-576 {
+			font-size: 4.2rem;
+			line-height: 115%;
+		}
 	}
 
 	&__description {
@@ -48,7 +55,18 @@
 
 		&:hover {
 			#{$this}-text {
-				transform: translateX(-10px);
+				transform: translateX(-14px);
+			}
+
+			.button__icon {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
+
+		@include max-768 {
+			#{$this}-text {
+				transform: translateX(-14px);
 			}
 
 			.button__icon {

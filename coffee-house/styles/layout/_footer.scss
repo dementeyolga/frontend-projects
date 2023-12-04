@@ -1,4 +1,6 @@
 @use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
+@use './../abstract/placeholders' as *;
 
 .footer {
 	* {
@@ -6,20 +8,29 @@
 	}
 
 	&__content {
-		padding: 100px;
+		@extend %padding-promo;
+
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		align-items: center;
 		gap: 100px;
 		background-color: $background-container;
 		border-radius: 40px;
+
+		@include max-768 {
+			grid-template-columns: 1fr;
+		}
+
+		@include max-576 {
+			gap: 40px;
+		}
 	}
 
 	&__left,
 	&__right {
 		display: flex;
 		flex-direction: column;
-		gap: 39px;
+		gap: 40px;
 	}
 
 	&__socials {
@@ -45,22 +56,24 @@
 		a {
 			position: relative;
 
-			&::after {
-				content: '';
-				position: absolute;
-				bottom: -4px;
-				left: 50%;
-				width: 0;
-				height: 2px;
-				background-color: $text-light;
-				transition: 0.3s;
-			}
-
-			&:hover {
+			@include min-1024 {
 				&::after {
-					width: 100%;
-					left: 0;
-					right: 0;
+					content: '';
+					position: absolute;
+					bottom: -4px;
+					left: 50%;
+					width: 0;
+					height: 2px;
+					background-color: $text-light;
+					transition: 0.3s;
+				}
+
+				&:hover {
+					&::after {
+						width: 100%;
+						left: 0;
+						right: 0;
+					}
 				}
 			}
 		}

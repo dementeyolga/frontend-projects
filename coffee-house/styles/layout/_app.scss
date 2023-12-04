@@ -7,6 +7,15 @@
 		grid-template-columns: 1fr 1fr;
 		align-items: center;
 		gap: 7.3529%;
+
+		@include max-768 {
+			grid-template-columns: 1fr;
+			gap: 100px;
+		}
+
+		@include max-576 {
+			gap: 40px;
+		}
 	}
 
 	&__content {
@@ -21,6 +30,12 @@
 
 	&__buttons {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 20px;
+	}
+
+	&__promo {
+		display: flex;
+		justify-content: center;
 	}
 }

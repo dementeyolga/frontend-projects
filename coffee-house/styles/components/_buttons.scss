@@ -1,4 +1,5 @@
 @use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
 
 .button {
 	display: flex;
@@ -19,18 +20,26 @@
 		border: 1px solid $border-dark;
 		transition: 0.3s;
 
-		&:hover {
-			cursor: pointer;
-			background-color: $background-container;
+		@include min-1024 {
+			&:hover {
+				cursor: pointer;
+				background-color: $background-container;
 
-			path {
-				fill: $text-light !important;
-			}
+				path {
+					fill: $text-light !important;
+				}
 
-			* {
-				color: $text-light;
+				* {
+					color: $text-light;
+				}
 			}
 		}
+	}
+
+	&__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	&__top {

@@ -18,6 +18,10 @@ body {
 	max-width: 1440px;
 	padding: 0 40px;
 	margin: 0 auto;
+
+	@include max-576 {
+		padding: 0 4.21052%;
+	}
 }
 
 .section {
