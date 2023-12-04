@@ -983,7 +983,13 @@ img {
   margin-bottom: 12px;
 }
 .menu__refresh {
+  display: none;
   align-self: center;
+}
+@media (max-width: 768px) {
+  .menu__refresh {
+    display: flex;
+  }
 }
 
 .footer * {

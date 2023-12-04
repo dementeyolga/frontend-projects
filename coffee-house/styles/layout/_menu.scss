@@ -105,6 +105,12 @@
 	}
 
 	&__refresh {
+		display: none;
+
+		@include max-768 {
+			display: flex;
+		}
+
 		align-self: center;
 	}
 }
