@@ -32,7 +32,7 @@
 		line-height: 150%;
 		font-weight: 600;
 
-		@include max-1024 {
+		@include max-768 {
 			display: none;
 		}
 
@@ -62,16 +62,6 @@
 					left: 0;
 					right: 0;
 				}
-			}
-		}
-	}
-
-	&__burger {
-		&-button {
-			display: none;
-
-			@include max-768 {
-				display: block;
 			}
 		}
 	}

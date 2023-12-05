@@ -36,12 +36,36 @@
 						<img src="./assets/images/coffee-cup.svg" alt="coffee cup icon" />
 					</div>
 				</a>
-				<div class="header__burger-button">
-					<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<rect x="0.5" y="0.5" width="43" height="43" rx="21.5" stroke="#665F55" />
-						<path d="M14 18H30" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-						<path d="M14 26H30" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-					</svg>
+
+				<div class="header__burger burger">
+					<nav class="nav">
+						<ul class="nav__list">
+							<li class="nav__item">
+								<a href="#favorite-coffee" class="nav__link">Favorite coffee</a>
+							</li>
+							<li class="nav__item">
+								<a href="#about" class="nav__link">About</a>
+							</li>
+							<li class="nav__item">
+								<a href="#mobile-app" class="nav__link">Mobile app</a>
+							</li>
+							<li class="nav__item">
+								<a href="#contact-us" class="nav__link">Contact us</a>
+							</li>
+						</ul>
+					</nav>
+
+					<a href="./menu/" class="burger__redirect">
+						Menu
+						<div class="burger__redirect-icon">
+							<img src="./assets/images/coffee-cup.svg" alt="coffee cup icon" />
+						</div>
+					</a>
+				</div>
+
+				<div class="header__burger-button burger__button">
+					<div class="burger__button-stroke"></div>
+					<div class="burger__button-stroke"></div>
 				</div>
 			</div>
 		</header>
@@ -49,6 +73,9 @@
 		<div class="promo section">
 			<div class="promo__wrapper wrapper">
 				<div class="promo__background">
+					<video autoplay muted loop class="promo__video" id="promo-video">
+						<source src="/assets/video/coffee-promo.mp4" type="video/mp4" />
+					</video>
 					<div class="promo__content">
 						<h2 class="promo__heading section-heading">
 							<span class="accent">Enjoy</span> premium <br />
@@ -222,5 +249,7 @@
 				</div>
 			</div>
 		</footer>
+
+		<script src="./scripts/burger-menu.js"></script>
 	</body>
 </html>
