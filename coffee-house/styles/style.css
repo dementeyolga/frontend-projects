@@ -665,12 +665,116 @@ span {
 }
 
 .slider__body {
+  position: relative;
+  height: 640px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.slider__cards {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: end;
+}
 .slider__card {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
   max-width: 480px;
+}
+.slider__card:nth-child(n+2) {
+  display: none;
+}
+.slider__card.slide-in-left {
+  -webkit-animation: 1s slide-in-left;
+          animation: 1s slide-in-left;
+}
+.slider__card.slide-out-left {
+  -webkit-animation: 1s slide-out-left;
+          animation: 1s slide-out-left;
+}
+.slider__card.slide-in-right {
+  -webkit-animation: 1s slide-in-right;
+          animation: 1s slide-in-right;
+}
+.slider__card.slide-out-right {
+  -webkit-animation: 1s slide-out-right;
+          animation: 1s slide-out-right;
+}
+@-webkit-keyframes slide-in-left {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+@keyframes slide-in-left {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+@-webkit-keyframes slide-out-left {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes slide-in-right {
+  from {
+    transform: translateX(-100%);
+    display: none !important;
+  }
+  to {
+    transform: translateX(0%);
+    display: flex !important;
+  }
+}
+@keyframes slide-in-right {
+  from {
+    transform: translateX(-100%);
+    display: none !important;
+  }
+  to {
+    transform: translateX(0%);
+    display: flex !important;
+  }
+}
+@-webkit-keyframes slide-out-right {
+  from {
+    transform: translateX(0%);
+    display: flex !important;
+  }
+  to {
+    transform: translateX(100%);
+    display: none !important;
+  }
+}
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0%);
+    display: flex !important;
+  }
+  to {
+    transform: translateX(100%);
+    display: none !important;
+  }
 }
 .slider__controls {
   display: flex;
