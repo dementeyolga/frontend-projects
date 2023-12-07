@@ -16,15 +16,17 @@
 		top: 0;
 		left: 50%;
 		transform: translateX(-50%);
+		width: 480px;
+		height: 100%;
+		overflow: hidden;
 
 		display: flex;
-		align-items: end;
+		align-items: flex-end;
 	}
 
 	&__card {
 		position: absolute;
 		top: 0;
-		transform: translateX(-50%);
 
 		max-width: 480px;
 
@@ -33,19 +35,19 @@
 		}
 
 		&.slide-in-left {
-			animation: 1s slide-in-left;
+			animation: 0.7s slide-in-left;
 		}
 
 		&.slide-out-left {
-			animation: 1s slide-out-left;
+			animation: 0.7s slide-out-left;
 		}
 
 		&.slide-in-right {
-			animation: 1s slide-in-right;
+			animation: 0.7s slide-in-right;
 		}
 
 		&.slide-out-right {
-			animation: 1s slide-out-right;
+			animation: 0.7s slide-out-right;
 		}
 	}
 
@@ -99,9 +101,15 @@
 		width: 40px;
 		height: 4px;
 		background-color: $border-light;
+		border-radius: 2px;
+		overflow: hidden;
 
-		&.active {
+		&-progress {
+			width: 0%;
+			height: 100%;
 			background-color: $border-dark;
+			border-radius: 2px;
+			transition: 0.1s;
 		}
 	}
 

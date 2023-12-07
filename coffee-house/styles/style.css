@@ -490,6 +490,7 @@ span {
   transition: 0.3s;
 }
 .burger__redirect {
+  height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   position: relative;
@@ -687,33 +688,35 @@ span {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  width: 480px;
+  height: 100%;
+  overflow: hidden;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
 }
 .slider__card {
   position: absolute;
   top: 0;
-  transform: translateX(-50%);
   max-width: 480px;
 }
 .slider__card:nth-child(n+2) {
   display: none;
 }
 .slider__card.slide-in-left {
-  -webkit-animation: 1s slide-in-left;
-          animation: 1s slide-in-left;
+  -webkit-animation: 0.7s slide-in-left;
+          animation: 0.7s slide-in-left;
 }
 .slider__card.slide-out-left {
-  -webkit-animation: 1s slide-out-left;
-          animation: 1s slide-out-left;
+  -webkit-animation: 0.7s slide-out-left;
+          animation: 0.7s slide-out-left;
 }
 .slider__card.slide-in-right {
-  -webkit-animation: 1s slide-in-right;
-          animation: 1s slide-in-right;
+  -webkit-animation: 0.7s slide-in-right;
+          animation: 0.7s slide-in-right;
 }
 .slider__card.slide-out-right {
-  -webkit-animation: 1s slide-out-right;
-          animation: 1s slide-out-right;
+  -webkit-animation: 0.7s slide-out-right;
+          animation: 0.7s slide-out-right;
 }
 @-webkit-keyframes slide-in-left {
   from {
@@ -796,9 +799,15 @@ span {
   width: 40px;
   height: 4px;
   background-color: #c1b6ad;
+  border-radius: 2px;
+  overflow: hidden;
 }
-.slider__control.active {
+.slider__control-progress {
+  width: 0%;
+  height: 100%;
   background-color: #665f55;
+  border-radius: 2px;
+  transition: 0.1s;
 }
 @media (max-width: 576px) {
   .slider__arrow {
@@ -879,6 +888,7 @@ img {
   }
 }
 .header__redirect {
+  height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   position: relative;
@@ -923,7 +933,7 @@ img {
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: hsla(0, 0%, 4%, 0.26);
+  background-color: hsla(0deg, 0%, 4%, 0.26);
   border-radius: 40px;
   overflow: hidden;
 }
@@ -1279,6 +1289,7 @@ img {
   }
 }
 .footer__contact {
+  width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   display: flex;
