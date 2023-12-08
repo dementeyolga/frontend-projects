@@ -1,6 +1,7 @@
 const sliderBody = document.querySelector('.slider__body');
 const sliderCardsWrapper = document.querySelector('.slider__cards');
 const sliderCardsList = document.querySelectorAll('.slider__card');
+const sliderCardImagesList = document.querySelectorAll('.card__image img');
 const sliderArrowLeft = document.querySelector('.slider__arrow.left');
 const sliderArrowRight = document.querySelector('.slider__arrow.right');
 const sliderControlsList = document.querySelectorAll('.slider__control');
@@ -12,39 +13,65 @@ const slideToLeft = createSlideToDirection('left');
 const cardsNumber = sliderCardsList.length;
 let currCardNumber = 0;
 let prevCardNumber;
+let resettingProgressCardNumber;
 
 const autoScrollTime = 5000;
-let sliderAutoScrollInterval = setInterval(slideToLeft, autoScrollTime);
-let intervalTimeStart = Date.now();
-let launchProgressInterval;
-let resetProgressInterval;
+let sliderAutoScrollIntervalID = setInterval(slideToLeft, autoScrollTime);
+let sliderAutoScrollTimeoutID;
+let scrollIntervalStartTime = Date.now();
 
-let mouseEnterIntervalTime;
+let scrollIntervalContinueTime;
+let scrollIntervalPauseValue = 0;
+
+let launchProgressIntervalID;
+let resetProgressIntervalID;
+
+let pointerStartXCoordinate;
 
 launchProgress(currCardNumber);
 
-sliderArrowRight.addEventListener('click', slideToLeft);
+sliderCardImagesList.forEach((img) => (img.ondragstart = () => false));
 
-sliderArrowLeft.addEventListener('click', slideToRight);
+sliderArrowRight.addEventListener('pointerdown', slideToLeft);
 
-sliderCardsWrapper.addEventListener('mouseenter', function () {
-	mouseEnterIntervalTime = Date.now() - intervalTimeStart;
-	clearInterval(sliderAutoScrollInterval);
-	console.log(mouseEnterIntervalTime);
+sliderArrowLeft.addEventListener('pointerdown', slideToRight);
+
+sliderCardsWrapper.addEventListener('pointerenter', () => {
+	pauseScroll();
+	pauseProgress();
 });
 
-sliderCardsWrapper.addEventListener('mouseleave', function () {
-	sliderAutoScrollInterval = setInterval(() => {
-		slideToLeft();
-		sliderAutoScrollInterval = setInterval(slideToLeft, autoScrollTime);
-		clearInterval(sliderAutoScrollInterval);
-	}, autoScrollTime - mouseEnterIntervalTime);
-	intervalTimeStart = Date.now();
+sliderCardsWrapper.addEventListener('pointerleave', () => {
+	resumeScroll();
+	launchProgress(currCardNumber);
+});
+
+sliderBody.addEventListener('pointerdown', (ev) => {
+	ev.preventDefault();
+	// sliderBody.setPointerCapture(ev.pointerId);
+	pointerStartXCoordinate = ev.clientX;
+	console.log('pointer down');
+});
+
+sliderBody.addEventListener('pointerup', (ev) => {
+	console.log('pointer UP');
+
+	let distanceX = ev.clientX - pointerStartXCoordinate;
+
+	if (Math.abs(distanceX) > 10) {
+		if (distanceX > 0) {
+			slideToRight();
+		} else if (distanceX < 0) {
+			slideToLeft();
+		}
+	}
 });
 
 function createSlideToDirection(direction) {
 	return function () {
-		clearInterval(sliderAutoScrollInterval);
+		clearInterval(sliderAutoScrollIntervalID);
+		clearTimeout(sliderAutoScrollTimeoutID);
+		resetIntervalStoredValues();
 		prevCardNumber = currCardNumber;
 
 		if (direction === 'left') {
@@ -56,15 +83,13 @@ function createSlideToDirection(direction) {
 		}
 
 		switchControl(prevCardNumber, currCardNumber);
-
-		console.log(currCardNumber);
+		sliderAutoScrollIntervalID = setInterval(createSlideToDirection('left'), 5000);
+		scrollIntervalStartTime = Date.now();
 
 		sliderCardsList[prevCardNumber].addEventListener(
 			'animationend',
 			function () {
 				this.style.display = 'none';
-				sliderAutoScrollInterval = setInterval(slideToLeft, 5000);
-				intervalTimeStart = Date.now();
 			},
 			{ once: true }
 		);
@@ -76,28 +101,55 @@ function createSlideToDirection(direction) {
 
 		sliderCardsList[prevCardNumber].classList.add(`slide-out-${direction}`);
 		sliderCardsList[currCardNumber].classList.add(`slide-in-${direction}`);
-
-		console.log(`slide-in-${direction}`);
 	};
 }
 
+function pauseScroll() {
+	clearInterval(sliderAutoScrollIntervalID);
+	clearInterval(sliderAutoScrollTimeoutID);
+
+	const startTime = scrollIntervalContinueTime || scrollIntervalStartTime;
+	scrollIntervalPauseValue += Date.now() - startTime;
+	console.log(scrollIntervalPauseValue);
+}
+
+function resumeScroll() {
+	scrollIntervalContinueTime = Date.now();
+	sliderAutoScrollTimeoutID = setTimeout(() => {
+		slideToLeft();
+		sliderAutoScrollIntervalID = setInterval(slideToLeft, autoScrollTime);
+	}, autoScrollTime - scrollIntervalPauseValue);
+}
+
 function switchControl(prevIndex, currIndex) {
+	if (currIndex === resettingProgressCardNumber) {
+		clearInterval(resetProgressIntervalID);
+	}
+
 	resetProgress(prevIndex);
 	launchProgress(currIndex);
 }
 
+function resetIntervalStoredValues() {
+	scrollIntervalStartTime = Date.now();
+	scrollIntervalContinueTime = null;
+	scrollIntervalPauseValue = 0;
+}
+
 function resetProgress(prevIndex) {
-	clearInterval(launchProgressInterval);
+	resettingProgressCardNumber = prevIndex;
+	clearInterval(launchProgressIntervalID);
 	const prevProgress = sliderProgressList[prevIndex];
 	let width = prevProgress.style.width;
-	width = width.slice(0, -1);
+	width = +width.slice(0, -1);
 
-	resetProgressInterval = setInterval(clearProgress, 5);
+	resetProgressIntervalID = setInterval(clearProgress, 5);
 
 	function clearProgress() {
 		if (width < 0) {
 			prevProgress.style.width = '0%';
-			clearInterval(resetProgressInterval);
+			clearInterval(resetProgressIntervalID);
+			resettingProgressCardNumber = null;
 		} else {
 			width -= 1;
 			prevProgress.style.width = `${width}%`;
@@ -106,16 +158,23 @@ function resetProgress(prevIndex) {
 }
 
 function launchProgress(currIndex) {
+	console.log('launch progress');
 	const currProgress = sliderProgressList[currIndex];
-	launchProgressInterval = setInterval(updateProgress, autoScrollTime / 1000);
-	let width = 0;
+	let width = currProgress.style.width;
+	width = +width.slice(0, -1);
+
+	launchProgressIntervalID = setInterval(updateProgress, autoScrollTime / 1000);
 
 	function updateProgress() {
 		if (width <= 100) {
 			width += 0.1;
 			currProgress.style.width = `${width}%`;
 		} else {
-			clearInterval(launchProgressInterval);
+			clearInterval(launchProgressIntervalID);
 		}
 	}
+}
+
+function pauseProgress() {
+	clearInterval(launchProgressIntervalID);
 }

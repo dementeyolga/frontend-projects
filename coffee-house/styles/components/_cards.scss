@@ -3,6 +3,12 @@
 	flex-direction: column;
 	gap: 20px;
 
+	&__image {
+		img {
+			touch-action: none;
+		}
+	}
+
 	&__content {
 		display: flex;
 		flex-direction: column;

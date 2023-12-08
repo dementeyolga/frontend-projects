@@ -653,6 +653,9 @@ span {
   flex-direction: column;
   gap: 20px;
 }
+.card__image img {
+  touch-action: none;
+}
 .card__content {
   display: flex;
   flex-direction: column;
@@ -682,6 +685,7 @@ span {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  touch-action: none;
 }
 .slider__cards {
   position: absolute;
@@ -694,9 +698,18 @@ span {
   display: flex;
   align-items: flex-end;
 }
+@media (max-width: 576px) {
+  .slider__cards {
+    max-width: 100%;
+  }
+}
 .slider__card {
   position: absolute;
   top: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   max-width: 480px;
 }
 .slider__card:nth-child(n+2) {
