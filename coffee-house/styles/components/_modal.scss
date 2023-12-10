@@ -1,4 +1,4 @@
-@use './../abstract/variables';
+@use './../abstract/variables' as *;
 
 .modal {
   padding: 16px;
@@ -6,6 +6,9 @@
   display: grid;
   grid-template-columns: 310px auto;
   gap: 20px;
+
+  background-color: $background-body;
+  border-radius: 40px;
 
   &__wrapper {
     position: fixed;
@@ -15,15 +18,74 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: $background-backdrop;
   }
 
   &__image {
+    height: fit-content;
+    border-radius: 40px;
+    overflow: hidden;
   }
 
   &__content {
     display: flex;
     flex-direction: column;
     gap: 20px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 125%;
+  }
+
+  &__description {
+    line-height: 150%;
+  }
+
+  &__size,
+  &__additives {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__cart {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__total,
+  &__price {
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 125%;
+  }
+
+  &__disclaimer {
+    display: flex;
+    gap: 8px;
+
+    &-text {
+      font-size: 1rem;
+    }
+  }
+
+  &__close {
+    border-color: $border-dark;
   }
 }

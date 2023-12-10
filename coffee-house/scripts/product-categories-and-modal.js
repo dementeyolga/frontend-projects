@@ -39,7 +39,7 @@ function showActiveCategoryProducts(activeCategory) {
       `
     <div class="menu__card card">
       <div class="card__image menu__card-image">
-        <img src="${product.image}" alt="Irish coffee" />
+        <img src="${product.image}" alt="${product.name}" />
       </div>
       <div class="card__content menu__card-content">
       <div class="menu__card-content-top">
