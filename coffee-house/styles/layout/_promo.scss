@@ -3,76 +3,94 @@
 @use './../abstract/placeholders' as *;
 
 .promo {
-	&__background {
-		@extend %padding-promo;
+  &__background {
+    @extend %padding-promo;
 
-		background-image: url('./../assets/images/img-hero.png');
-		background-position: center center;
-		background-size: cover;
-		background-repeat: no-repeat;
-		border-radius: 40px;
-	}
+    position: relative;
+    background-image: url('./../assets/images/img-hero.png');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: $background-backdrop;
+    border-radius: 40px;
+    overflow: hidden;
+  }
 
-	&__content {
-		max-width: 530px;
-		display: flex;
-		flex-direction: column;
-		gap: 40px;
-	}
+  &__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-	&__heading {
-		font-size: 7.2rem;
-		line-height: 105%;
-		color: $text-light;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 
-		@include max-576 {
-			font-size: 4.2rem;
-			line-height: 115%;
-		}
-	}
+    z-index: -1;
+  }
 
-	&__description {
-		line-height: 150%;
-		color: $text-light;
-	}
+  &__content {
+    max-width: 530px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
 
-	&__button {
-		position: relative;
+  &__heading {
+    font-size: 7.2rem;
+    line-height: 105%;
+    color: $text-light;
 
-		$this: &;
+    @include max-576 {
+      font-size: 4.2rem;
+      line-height: 115%;
+    }
+  }
 
-		&-text {
-			transition: 0.3s;
-		}
+  &__description {
+    line-height: 150%;
+    color: $text-light;
+  }
 
-		.button__icon {
-			position: absolute;
-			right: 64px;
-			visibility: hidden;
-			opacity: 0;
-			transition: 0.3s;
-		}
+  &__button {
+    position: relative;
 
-		&:hover {
-			#{$this}-text {
-				transform: translateX(-14px);
-			}
+    $this: &;
 
-			.button__icon {
-				visibility: visible;
-				opacity: 1;
-			}
-		}
+    &-text {
+      transition: 0.3s;
+    }
 
-		@include max-768 {
-			#{$this}-text {
-				transform: translateX(-14px);
-			}
+    .button__icon {
+      position: absolute;
+      right: 64px;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s;
+    }
 
-			.button__icon {
-				visibility: visible;
-				opacity: 1;
-			}
-		}
-	}
+    &:hover {
+      #{$this}-text {
+        transform: translateX(-14px);
+      }
+
+      .button__icon {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    @include max-768 {
+      #{$this}-text {
+        transform: translateX(-14px);
+      }
+
+      .button__icon {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
 }

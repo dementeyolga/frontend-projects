@@ -1,0 +1,126 @@
+@use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
+
+.modal {
+	padding: 16px;
+	width: 100%;
+	max-width: 800px;
+	display: grid;
+	grid-template-columns: 310px auto;
+	gap: 20px;
+
+	background-color: $background-body;
+	border-radius: 40px;
+
+	@include max-700 {
+		grid-template-columns: 1fr;
+	}
+
+	&__wrapper {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		padding: 40px;
+
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: $background-backdrop;
+
+		opacity: 0;
+		visibility: hidden;
+
+		transition: 0.5s;
+		z-index: 20;
+
+		@include max-576 {
+			padding: 19px;
+		}
+
+		&.active {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+
+	&__image {
+		height: fit-content;
+		border-radius: 40px;
+		overflow: hidden;
+
+		@include max-700 {
+			display: none;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	&__title {
+		font-size: 2.4rem;
+		font-weight: 600;
+		line-height: 125%;
+	}
+
+	&__description {
+		line-height: 150%;
+	}
+
+	&__caption {
+		line-height: 150%;
+	}
+
+	&__size,
+	&__additives {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__buttons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	&__cart {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__total,
+	&__price {
+		font-size: 2.4rem;
+		font-weight: 600;
+		line-height: 125%;
+	}
+
+	&__disclaimer {
+		padding: 12px 0;
+		display: flex;
+		gap: 8px;
+		border-top: 1px solid $border-light;
+
+		&-text {
+			font-size: 1rem;
+		}
+	}
+
+	&__close {
+		border-color: $border-dark;
+	}
+}

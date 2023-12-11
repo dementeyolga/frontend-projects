@@ -1,31 +1,49 @@
 .card {
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
-	&__content {
-		display: flex;
-		flex-direction: column;
-		gap: 16px;
-	}
+  animation: fade-in 0.7s;
 
-	&__title {
-		margin: 0;
-		font-size: 2.4rem;
-		font-weight: 600;
-		line-height: 125%;
-		text-align: center;
-	}
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
 
-	&__description {
-		text-align: center;
-		line-height: 150%;
-	}
+    to {
+      opacity: 1;
+    }
+  }
 
-	&__price {
-		font-size: 2.4rem;
-		font-weight: 600;
-		line-height: 125%;
-		text-align: center;
-	}
+  &__image {
+    img {
+      touch-action: none;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 125%;
+    text-align: center;
+  }
+
+  &__description {
+    text-align: center;
+    line-height: 150%;
+  }
+
+  &__price {
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 125%;
+    text-align: center;
+  }
 }
