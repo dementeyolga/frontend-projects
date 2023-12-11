@@ -14,29 +14,33 @@ findActiveCategory();
 showActiveCategoryProducts(activeCategory);
 
 menuTabList.forEach((tab) =>
-	tab.addEventListener('click', function () {
-		menuTabList.forEach((tab) => tab.classList.remove('active'));
-		this.classList.add('active');
+  tab.addEventListener('click', function () {
+    menuTabList.forEach((tab) => tab.classList.remove('active'));
+    this.classList.add('active');
 
-		findActiveCategory();
-		showActiveCategoryProducts(activeCategory);
-	})
+    findActiveCategory();
+    showActiveCategoryProducts(activeCategory);
+  })
 );
 
 function findActiveCategory() {
-	activeTab = [].find.call(menuTabList, (tab) => tab.classList.contains('active'));
-	activeCategory = activeTab.textContent.toLowerCase().trim();
+  activeTab = [].find.call(menuTabList, (tab) =>
+    tab.classList.contains('active')
+  );
+  activeCategory = activeTab.textContent.toLowerCase().trim();
 }
 
 function showActiveCategoryProducts(activeCategory) {
-	productCardsWrapper.innerHTML = '';
+  productCardsWrapper.innerHTML = '';
 
-	let activeCategoryProducts = products.filter((product) => product.category === activeCategory);
+  let activeCategoryProducts = products.filter(
+    (product) => product.category === activeCategory
+  );
 
-	activeCategoryProducts.forEach((product) => {
-		productCardsWrapper.insertAdjacentHTML(
-			'beforeend',
-			`
+  activeCategoryProducts.forEach((product) => {
+    productCardsWrapper.insertAdjacentHTML(
+      'beforeend',
+      `
 			<div class="menu__card card">
 				<div class="card__image menu__card-image">
 					<img src="${product.image}" alt="${product.name}" />
@@ -54,24 +58,25 @@ function showActiveCategoryProducts(activeCategory) {
 			</div>
 		</div>
   `
-		);
-	});
+    );
+  });
 
-	const menuCards = document.querySelectorAll('.menu__card');
-	if (menuCards.length > 4 && document.documentElement.clientWidth <= 768) {
-		menuCards.forEach((item, index) => (index > 3 ? item.classList.add('d-none') : item));
-		showMoreButton.classList.add('show');
-		showMoreButton.onclick = () => {
-			menuCards.forEach((item) => item.classList.remove('d-none'));
-			showMoreButton.classList.remove('show');
-		};
-	}
+  const menuCards = document.querySelectorAll('.menu__card');
+  if (menuCards.length <= 4) {
+    showMoreButton.classList.add('hidden');
+  } else if (document.documentElement.clientWidth <= 768) {
+    showMoreButton.classList.remove('hidden');
+    showMoreButton.onclick = () => {
+      menuCards.forEach((item) => (item.style.display = 'flex'));
+      showMoreButton.classList.add('hidden');
+    };
+  }
 
-	menuCards.forEach((card, index) =>
-		card.addEventListener('click', function () {
-			const product = activeCategoryProducts[index];
+  menuCards.forEach((card, index) =>
+    card.addEventListener('click', function () {
+      const product = activeCategoryProducts[index];
 
-			menuModal.innerHTML = `
+      menuModal.innerHTML = `
       			<div class="modal__image">
 							<img src="${product.image}" alt="${product.name}" />
 						</div>
@@ -138,61 +143,65 @@ function showActiveCategoryProducts(activeCategory) {
 							<div class="modal__close tab">Close</div>
 						</div>
       `;
-			menuModalWrapper.classList.add('active');
-			document.body.classList.add('scroll-disabled');
+      menuModalWrapper.classList.add('active');
+      document.body.classList.add('scroll-disabled');
 
-			const total = menuModal.querySelector('.modal__price');
-			let totalValue = +total.textContent.slice(1);
+      const total = menuModal.querySelector('.modal__price');
+      let totalValue = +total.textContent.slice(1);
 
-			const sizesTabs = menuModal.querySelectorAll('.modal__size .modal__button');
-			const additivesTabs = menuModal.querySelectorAll('.modal__additives .modal__button');
+      const sizesTabs = menuModal.querySelectorAll(
+        '.modal__size .modal__button'
+      );
+      const additivesTabs = menuModal.querySelectorAll(
+        '.modal__additives .modal__button'
+      );
 
-			sizesTabs.forEach((tab) => {
-				tab.addEventListener('click', function () {
-					if (this.classList.contains('active')) return;
+      sizesTabs.forEach((tab) => {
+        tab.addEventListener('click', function () {
+          if (this.classList.contains('active')) return;
 
-					sizesTabs.forEach((elem) => {
-						if (elem.classList.contains('active')) {
-							totalValue -= +elem.dataset.price;
-							elem.classList.remove('active');
-						}
-					});
+          sizesTabs.forEach((elem) => {
+            if (elem.classList.contains('active')) {
+              totalValue -= +elem.dataset.price;
+              elem.classList.remove('active');
+            }
+          });
 
-					this.classList.add('active');
-					totalValue += +this.dataset.price;
+          this.classList.add('active');
+          totalValue += +this.dataset.price;
 
-					let strTotalValue = totalValue.toFixed(2);
-					total.textContent = `$${strTotalValue}`;
-				});
-			});
+          let strTotalValue = totalValue.toFixed(2);
+          total.textContent = `$${strTotalValue}`;
+        });
+      });
 
-			additivesTabs.forEach((tab) => {
-				tab.addEventListener('click', function () {
-					this.classList.toggle('active');
-					if (this.classList.contains('active')) {
-						totalValue += +this.dataset.price;
-					} else {
-						totalValue -= +this.dataset.price;
-					}
+      additivesTabs.forEach((tab) => {
+        tab.addEventListener('click', function () {
+          this.classList.toggle('active');
+          if (this.classList.contains('active')) {
+            totalValue += +this.dataset.price;
+          } else {
+            totalValue -= +this.dataset.price;
+          }
 
-					let strTotalValue = totalValue.toFixed(2);
-					total.textContent = `$${strTotalValue}`;
-				});
-			});
+          let strTotalValue = totalValue.toFixed(2);
+          total.textContent = `$${strTotalValue}`;
+        });
+      });
 
-			const closeBtn = menuModal.querySelector('.modal__close');
+      const closeBtn = menuModal.querySelector('.modal__close');
 
-			menuModalWrapper.onclick = (ev) => {
-				if (ev.target === closeBtn) {
-					menuModalWrapper.classList.remove('active');
-					document.body.classList.remove('scroll-disabled');
-				} else if (ev.target.closest('.menu__modal') === menuModal) {
-					return;
-				} else {
-					menuModalWrapper.classList.remove('active');
-					document.body.classList.remove('scroll-disabled');
-				}
-			};
-		})
-	);
+      menuModalWrapper.onclick = (ev) => {
+        if (ev.target === closeBtn) {
+          menuModalWrapper.classList.remove('active');
+          document.body.classList.remove('scroll-disabled');
+        } else if (ev.target.closest('.menu__modal') === menuModal) {
+          return;
+        } else {
+          menuModalWrapper.classList.remove('active');
+          document.body.classList.remove('scroll-disabled');
+        }
+      };
+    })
+  );
 }
