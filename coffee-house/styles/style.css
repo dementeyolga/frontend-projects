@@ -1292,12 +1292,12 @@ img {
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
 }
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .menu__cards {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .menu__cards {
     grid-template-columns: repeat(2, 1fr);
     padding: 0 14px;
@@ -1316,6 +1316,9 @@ img {
   border: 1px solid #c1b6ad;
   overflow: hidden;
 }
+.menu__card.d-none {
+  display: none;
+}
 .menu__card * {
   text-align: left;
 }
@@ -1325,11 +1328,6 @@ img {
   }
   .menu__card:hover img {
     scale: 1;
-  }
-}
-@media (max-width: 768px) {
-  .menu__card:nth-child(n+5) {
-    display: none;
   }
 }
 .menu__card-image {
@@ -1361,10 +1359,8 @@ img {
   display: none;
   align-self: center;
 }
-@media (max-width: 768px) {
-  .menu__refresh {
-    display: flex;
-  }
+.menu__refresh.show {
+  display: flex;
 }
 
 .footer * {

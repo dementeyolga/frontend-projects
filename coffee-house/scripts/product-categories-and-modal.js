@@ -2,6 +2,7 @@ const productCardsWrapper = document.querySelector('.menu__cards');
 const menuTabList = document.querySelectorAll('.menu__tab');
 const menuModal = document.querySelector('.menu__modal');
 const menuModalWrapper = document.querySelector('.menu__modal-wrapper');
+const showMoreButton = document.querySelector('.menu__refresh');
 
 let URL = './../assets/json/products.json';
 let response = await fetch(URL);
@@ -26,6 +27,7 @@ function findActiveCategory() {
 	activeTab = [].find.call(menuTabList, (tab) => tab.classList.contains('active'));
 	activeCategory = activeTab.textContent.toLowerCase().trim();
 }
+
 function showActiveCategoryProducts(activeCategory) {
 	productCardsWrapper.innerHTML = '';
 
@@ -56,10 +58,17 @@ function showActiveCategoryProducts(activeCategory) {
 	});
 
 	const menuCards = document.querySelectorAll('.menu__card');
+	if (menuCards.length > 4 && document.documentElement.clientWidth <= 768) {
+		menuCards.forEach((item, index) => (index > 3 ? item.classList.add('d-none') : item));
+		showMoreButton.classList.add('show');
+		showMoreButton.onclick = () => {
+			menuCards.forEach((item) => item.classList.remove('d-none'));
+			showMoreButton.classList.remove('show');
+		};
+	}
 
 	menuCards.forEach((card, index) =>
 		card.addEventListener('click', function () {
-			console.log(`card ${index} clicked`);
 			const product = activeCategoryProducts[index];
 
 			menuModal.innerHTML = `

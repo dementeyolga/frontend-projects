@@ -34,11 +34,11 @@
 		grid-template-columns: repeat(4, 1fr);
 		gap: 40px;
 
-		@include max-1024 {
+		@include max-1200 {
 			grid-template-columns: repeat(3, 1fr);
 		}
 
-		@include max-768 {
+		@include max-1024 {
 			grid-template-columns: repeat(2, 1fr);
 			padding: 0 14px;
 		}
@@ -56,6 +56,10 @@
 		border: 1px solid $border-light;
 		overflow: hidden;
 
+		&.d-none {
+			display: none;
+		}
+
 		* {
 			text-align: left;
 		}
@@ -67,12 +71,6 @@
 				img {
 					scale: 1;
 				}
-			}
-		}
-
-		@include max-768 {
-			&:nth-child(n + 5) {
-				display: none;
 			}
 		}
 
@@ -106,11 +104,10 @@
 
 	&__refresh {
 		display: none;
+		align-self: center;
 
-		@include max-768 {
+		&.show {
 			display: flex;
 		}
-
-		align-self: center;
 	}
 }
