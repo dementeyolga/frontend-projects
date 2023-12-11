@@ -5,11 +5,13 @@
 @use './base/text';
 
 @use './components/nav';
+@use './components/burger';
 @use './components/buttons';
 @use './components/tabs';
 @use './components/icons';
 @use './components/cards';
 @use './components/slider';
+@use './components/modal';
 
 @use './layout/basic';
 @use './layout/header';

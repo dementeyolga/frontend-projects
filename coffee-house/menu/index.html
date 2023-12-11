@@ -36,15 +36,38 @@
 						<img src="./../assets/images/coffee-cup.svg" alt="coffee cup icon" />
 					</div>
 				</a>
-				<div class="header__burger-button">
-					<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<rect x="0.5" y="0.5" width="43" height="43" rx="21.5" stroke="#665F55" />
-						<path d="M14 18H30" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-						<path d="M14 26H30" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-					</svg>
+				<div class="header__burger-button burger__button">
+					<div class="burger__button-stroke"></div>
+					<div class="burger__button-stroke"></div>
 				</div>
 			</div>
 		</header>
+
+		<div class="burger">
+			<nav class="burger__nav nav">
+				<ul class="nav__list">
+					<li class="nav__item">
+						<a href="./../index.html#favorite-coffee" class="nav__link">Favorite coffee</a>
+					</li>
+					<li class="nav__item">
+						<a href="./../index.html#about" class="nav__link">About</a>
+					</li>
+					<li class="nav__item">
+						<a href="./../index.html#mobile-app" class="nav__link">Mobile app</a>
+					</li>
+					<li class="nav__item">
+						<a href="#contact-us" class="nav__link">Contact us</a>
+					</li>
+				</ul>
+			</nav>
+
+			<a class="burger__redirect nav__link active">
+				Menu
+				<div class="burger__redirect-icon">
+					<img src="./../assets/images/coffee-cup-burger.svg" alt="coffee cup icon" />
+				</div>
+			</a>
+		</div>
 
 		<div class="menu">
 			<div class="menu__wrapper wrapper">
@@ -72,104 +95,12 @@
 						Dessert
 					</div>
 				</div>
-				<div class="menu__cards">
-					<div class="menu__card card">
-						<div class="card__image menu__card-image">
-							<img src="./../assets/images/coffee-1.png" alt="Irish coffee" />
-						</div>
-						<div class="card__content menu__card-content">
-							<div class="menu__card-content-top">
-								<h4 class="card__title menu__card-title">Irish coffee</h4>
-								<p class="card__description menu__card-description">Fragrant black coffee with Jameson Irish whiskey and whipped milk</p>
-							</div>
-							<p class="card__price menu__card-price">$7.00</p>
-						</div>
-					</div>
-					<div class="menu__card card">
-						<div class="card__image menu__card-image">
-							<img src="./../assets/images/coffee-2.png" alt="Kahlua coffee" />
-						</div>
-						<div class="card__content menu__card-content">
-							<div class="menu__card-content-top">
-								<h4 class="card__title menu__card-title">Kahlua coffee</h4>
-								<p class="card__description menu__card-description">Classic coffee with milk and Kahlua liqueur under a cap of frothed milk</p>
-							</div>
-							<p class="card__price menu__card-price">$7.00</p>
-						</div>
-					</div>
-					<div class="menu__card card">
-						<div class="card__image menu__card-image">
-							<img src="./../assets/images/coffee-3.png" alt="Honey raf" />
-						</div>
-						<div class="card__content menu__card-content">
-							<div class="menu__card-content-top">
-								<h4 class="card__title menu__card-title">Honey raf</h4>
-								<p class="card__description menu__card-description">Espresso with frothed milk, cream and aromatic honey</p>
-							</div>
-							<p class="card__price menu__card-price">$5.50</p>
-						</div>
-					</div>
-					<div class="menu__card card">
-						<div class="card__image menu__card-image">
-							<img src="./../assets/images/coffee-4.png" alt="Ice cappuccino" />
-						</div>
-						<div class="card__content menu__card-content">
-							<div class="menu__card-content-top">
-								<h4 class="card__title menu__card-title">Ice cappuccino</h4>
-								<p class="card__description menu__card-description">Cappuccino with soft thick foam in summer version with ice</p>
-							</div>
-							<p class="card__price menu__card-price">$5.00</p>
-						</div>
-					</div>
-					<div class="menu__card card">
-						<div class="card__image menu__card-image">
-							<img src="./../assets/images/coffee-5.png" alt="Espresso" />
-						</div>
-						<div class="card__content menu__card-content">
-							<div class="menu__card-content-top">
-								<h4 class="card__title menu__card-title">Espresso</h4>
-								<p class="card__description menu__card-description">Classic black coffee</p>
-							</div>
-							<p class="card__price menu__card-price">$4.50</p>
-						</div>
-					</div>
-					<div class="menu__card card">
-						<div class="card__image menu__card-image">
-							<img src="./../assets/images/coffee-6.png" alt="Latte" />
-						</div>
-						<div class="card__content menu__card-content">
-							<div class="menu__card-content-top">
-								<h4 class="card__title menu__card-title">Latte</h4>
-								<p class="card__description menu__card-description">Espresso coffee with the addition of steamed milk and dense milk foam</p>
-							</div>
-							<p class="card__price menu__card-price">$5.50</p>
-						</div>
-					</div>
-					<div class="menu__card card">
-						<div class="card__image menu__card-image">
-							<img src="./../assets/images/coffee-7.png" alt="Latte macchiato" />
-						</div>
-						<div class="card__content menu__card-content">
-							<div class="menu__card-content-top">
-								<h4 class="card__title menu__card-title">Latte macchiato</h4>
-								<p class="card__description menu__card-description">Espresso with frothed milk and chocolate</p>
-							</div>
-							<p class="card__price menu__card-price">$5.50</p>
-						</div>
-					</div>
-					<div class="menu__card card">
-						<div class="card__image menu__card-image">
-							<img src="./../assets/images/coffee-8.png" alt="Coffee with cognac" />
-						</div>
-						<div class="card__content menu__card-content">
-							<div class="menu__card-content-top">
-								<h4 class="card__title menu__card-title">Coffee with cognac</h4>
-								<p class="card__description menu__card-description">Fragrant black coffee with cognac and whipped cream</p>
-							</div>
-							<p class="card__price menu__card-price">$6.50</p>
-						</div>
-					</div>
+				<div class="menu__cards"></div>
+
+				<div class="menu__modal-wrapper modal__wrapper">
+					<div class="menu__modal modal"></div>
 				</div>
+
 				<div class="menu__refresh icon icon--dark">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 						<path d="M21.8883 13.5C21.1645 18.3113 17.013 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C16.1006 2 19.6248 4.46819 21.1679 8" stroke="#403F3D" stroke-linecap="round" stroke-linejoin="round" />
@@ -231,5 +162,8 @@
 				</div>
 			</div>
 		</footer>
+
+		<script type="module" src="./../scripts/burger-menu.js"></script>
+		<script type="module" src="./../scripts/product-categories-and-modal.js"></script>
 	</body>
 </html>

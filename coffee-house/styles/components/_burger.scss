@@ -1,0 +1,124 @@
+@use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
+@use './../abstract/placeholders' as *;
+
+.burger {
+  padding: 160px 40px 60px;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+  background-color: $background-body;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+
+  transform: translateX(100%);
+  transition: 0.5s;
+
+  z-index: 10;
+
+  $this: &;
+
+  .nav {
+    &__list {
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    &__link {
+      text-align: center;
+      font-size: 3.2rem;
+      font-weight: 600;
+      line-height: 125%;
+    }
+  }
+
+  &__button {
+    display: none;
+
+    width: 44px;
+    height: 44px;
+    border-radius: 100px;
+    border: 1px solid $border-dark;
+
+    @include max-768 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    $btn: this;
+
+    &.active {
+      #{$this}__button-stroke {
+        &:nth-child(1) {
+          transform: translateY(4px) rotate(45deg);
+        }
+
+        &:nth-child(2) {
+          transform: translateY(-4px) rotate(-45deg);
+        }
+      }
+    }
+
+    &-stroke {
+      width: 18px;
+      height: 2px;
+      background-color: $border-dark;
+      border-radius: 2px;
+
+      transition: 0.3s;
+    }
+  }
+
+  &__redirect {
+    height: fit-content;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    font-size: 3.2rem;
+    font-weight: 600;
+    line-height: 125%;
+
+    &.active {
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 2px;
+        background-color: $text-dark;
+        transition: 0.3s;
+      }
+    }
+
+    &-icon {
+      width: 40px;
+      height: 40px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &.active {
+    transform: translateX(0);
+  }
+}

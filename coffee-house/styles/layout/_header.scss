@@ -2,77 +2,84 @@
 @use './../abstract/mixins' as *;
 
 .header {
-	$this: &;
-	margin-bottom: 20px;
+  $this: &;
+  margin-bottom: 20px;
 
-	&__wrapper {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
+  @include max-768 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
 
-	&__logo {
-		height: 60px;
-		width: 100px;
-	}
+    padding: 20px 0;
 
-	&__nav {
-		@include max-768 {
-			display: none;
-		}
-	}
+    background-color: $background-body;
 
-	&__redirect {
-		height: fit-content;
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		line-height: 150%;
-		font-weight: 600;
+    z-index: 15;
+  }
 
-		@include max-1024 {
-			display: none;
-		}
+  &.fixed {
+    position: fixed;
+  }
 
-		&::after {
-			content: '';
-			position: absolute;
-			bottom: -4px;
-			left: 50%;
-			width: 0;
-			height: 2px;
-			background-color: $text-dark;
-			transition: 0.3s;
-		}
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-		&.active {
-			&::after {
-				width: 100%;
-				left: 0;
-				right: 0;
-			}
-		}
+  &__logo {
+    height: 60px;
+    width: 100px;
+  }
 
-		@include min-1024 {
-			&:hover {
-				&::after {
-					width: 100%;
-					left: 0;
-					right: 0;
-				}
-			}
-		}
-	}
+  &__nav {
+    @include max-768 {
+      display: none;
+    }
+  }
 
-	&__burger {
-		&-button {
-			display: none;
+  &__redirect {
+    height: fit-content;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    line-height: 150%;
+    font-weight: 600;
 
-			@include max-768 {
-				display: block;
-			}
-		}
-	}
+    @include max-768 {
+      display: none;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: $text-dark;
+      transition: 0.3s;
+    }
+
+    &.active {
+      &::after {
+        width: 100%;
+        left: 0;
+        right: 0;
+      }
+    }
+
+    @include min-1024 {
+      &:hover {
+        &::after {
+          width: 100%;
+          left: 0;
+          right: 0;
+        }
+      }
+    }
+  }
 }
