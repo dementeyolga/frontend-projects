@@ -3,94 +3,94 @@
 @use './../abstract/placeholders' as *;
 
 .promo {
-  &__background {
-    @extend %padding-promo;
+	&__background {
+		@extend %padding-promo;
 
-    position: relative;
-    background-image: url('./../assets/images/img-hero.png');
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: $background-backdrop;
-    border-radius: 40px;
-    overflow: hidden;
-  }
+		position: relative;
+		// background-image: url('./../assets/images/img-hero.png');
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-color: rgba(44, 44, 44, 0.349);
+		border-radius: 40px;
+		overflow: hidden;
+	}
 
-  &__video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+	&__video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
 
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
 
-    z-index: -1;
-  }
+		z-index: -1;
+	}
 
-  &__content {
-    max-width: 530px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
+	&__content {
+		max-width: 530px;
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+	}
 
-  &__heading {
-    font-size: 7.2rem;
-    line-height: 105%;
-    color: $text-light;
+	&__heading {
+		font-size: 7.2rem;
+		line-height: 105%;
+		color: $text-light;
 
-    @include max-576 {
-      font-size: 4.2rem;
-      line-height: 115%;
-    }
-  }
+		@include max-576 {
+			font-size: 4.2rem;
+			line-height: 115%;
+		}
+	}
 
-  &__description {
-    line-height: 150%;
-    color: $text-light;
-  }
+	&__description {
+		line-height: 150%;
+		color: $text-light;
+	}
 
-  &__button {
-    position: relative;
+	&__button {
+		position: relative;
 
-    $this: &;
+		$this: &;
 
-    &-text {
-      transition: 0.3s;
-    }
+		&-text {
+			transition: 0.3s;
+		}
 
-    .button__icon {
-      position: absolute;
-      right: 64px;
-      visibility: hidden;
-      opacity: 0;
-      transition: 0.3s;
-    }
+		.button__icon {
+			position: absolute;
+			right: 64px;
+			visibility: hidden;
+			opacity: 0;
+			transition: 0.3s;
+		}
 
-    &:hover {
-      #{$this}-text {
-        transform: translateX(-14px);
-      }
+		&:hover {
+			#{$this}-text {
+				transform: translateX(-14px);
+			}
 
-      .button__icon {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
+			.button__icon {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
 
-    @include max-768 {
-      #{$this}-text {
-        transform: translateX(-14px);
-      }
+		@include max-768 {
+			#{$this}-text {
+				transform: translateX(-14px);
+			}
 
-      .button__icon {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
-  }
+			.button__icon {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
+	}
 }

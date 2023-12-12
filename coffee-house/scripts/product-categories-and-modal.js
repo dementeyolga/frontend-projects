@@ -27,6 +27,7 @@ function findActiveCategory() {
   activeTab = [].find.call(menuTabList, (tab) =>
     tab.classList.contains('active')
   );
+
   activeCategory = activeTab.textContent.toLowerCase().trim();
 }
 
@@ -143,8 +144,9 @@ function showActiveCategoryProducts(activeCategory) {
 							<div class="modal__close tab">Close</div>
 						</div>
       `;
-      menuModalWrapper.classList.add('active');
+
       document.body.classList.add('scroll-disabled');
+      menuModalWrapper.classList.add('active');
 
       const total = menuModal.querySelector('.modal__price');
       let totalValue = +total.textContent.slice(1);
