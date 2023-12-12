@@ -3,122 +3,126 @@
 @use './../abstract/placeholders' as *;
 
 .burger {
-  padding: 160px 40px 60px;
+	display: none;
+	@include max-768 {
+		display: flex;
+	}
 
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+	padding: 160px 40px 60px;
 
-  width: 100%;
-  height: 100vh;
-  background-color: $background-body;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 100px;
+	width: 100%;
+	height: 100vh;
+	background-color: $background-body;
 
-  transform: translateX(100%);
-  transition: 0.5s;
+	flex-direction: column;
+	align-items: center;
+	gap: 100px;
 
-  z-index: 10;
+	transform: translateX(100%);
+	transition: 0.5s;
 
-  $this: &;
+	z-index: 10;
 
-  .nav {
-    &__list {
-      flex-direction: column;
-      gap: 60px;
-    }
+	$this: &;
 
-    &__link {
-      text-align: center;
-      font-size: 3.2rem;
-      font-weight: 600;
-      line-height: 125%;
-    }
-  }
+	.nav {
+		&__list {
+			flex-direction: column;
+			gap: 60px;
+		}
 
-  &__button {
-    display: none;
+		&__link {
+			text-align: center;
+			font-size: 3.2rem;
+			font-weight: 600;
+			line-height: 125%;
+		}
+	}
 
-    width: 44px;
-    height: 44px;
-    border-radius: 100px;
-    border: 1px solid $border-dark;
+	&__button {
+		display: none;
 
-    @include max-768 {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
+		width: 44px;
+		height: 44px;
+		border-radius: 100px;
+		border: 1px solid $border-dark;
 
-    $btn: this;
+		@include max-768 {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+		}
 
-    &.active {
-      #{$this}__button-stroke {
-        &:nth-child(1) {
-          transform: translateY(4px) rotate(45deg);
-        }
+		$btn: this;
 
-        &:nth-child(2) {
-          transform: translateY(-4px) rotate(-45deg);
-        }
-      }
-    }
+		&.active {
+			#{$this}__button-stroke {
+				&:nth-child(1) {
+					transform: translateY(4px) rotate(45deg);
+				}
 
-    &-stroke {
-      width: 18px;
-      height: 2px;
-      background-color: $border-dark;
-      border-radius: 2px;
+				&:nth-child(2) {
+					transform: translateY(-4px) rotate(-45deg);
+				}
+			}
+		}
 
-      transition: 0.3s;
-    }
-  }
+		&-stroke {
+			width: 18px;
+			height: 2px;
+			background-color: $border-dark;
+			border-radius: 2px;
 
-  &__redirect {
-    height: fit-content;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+			transition: 0.3s;
+		}
+	}
 
-    font-size: 3.2rem;
-    font-weight: 600;
-    line-height: 125%;
+	&__redirect {
+		height: fit-content;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
 
-    &.active {
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -4px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: 2px;
-        background-color: $text-dark;
-        transition: 0.3s;
-      }
-    }
+		font-size: 3.2rem;
+		font-weight: 600;
+		line-height: 125%;
 
-    &-icon {
-      width: 40px;
-      height: 40px;
+		&.active {
+			&::after {
+				content: '';
+				position: absolute;
+				bottom: -4px;
+				left: 0;
+				right: 0;
+				width: 100%;
+				height: 2px;
+				background-color: $text-dark;
+				transition: 0.3s;
+			}
+		}
 
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
+		&-icon {
+			width: 40px;
+			height: 40px;
 
-  &.active {
-    transform: translateX(0);
-  }
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+
+	&.active {
+		transform: translateX(0);
+	}
 }
