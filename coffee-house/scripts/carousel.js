@@ -17,6 +17,7 @@ let prevCardNumber;
 let resettingProgressCardNumber;
 
 const autoScrollTime = 5000;
+
 let sliderAutoScrollIntervalID = setInterval(slideToLeft, autoScrollTime);
 let scrollIntervalStartTime = Date.now();
 
@@ -32,32 +33,26 @@ let pointerStartXCoordinate;
 
 sliderCardImagesList.forEach((img) => (img.ondragstart = () => false));
 
-sliderArrowRight.addEventListener('pointerdown', slideToLeft);
+sliderArrowRight.addEventListener('click', slideToLeft);
 
-sliderArrowLeft.addEventListener('pointerdown', slideToRight);
+sliderArrowLeft.addEventListener('click', slideToRight);
 
 sliderCardsWrapper.addEventListener('pointerenter', () => {
-	console.log('pointer enter');
 	pauseScroll();
 	pauseProgress();
 });
 
 sliderCardsWrapper.addEventListener('pointerleave', () => {
-	console.log('pointer leave');
 	resumeScroll();
 	launchProgress(currCardNumber);
 });
 
 sliderBody.addEventListener('pointerdown', (ev) => {
-	// ev.preventDefault();
-	// sliderBody.setPointerCapture(ev.pointerId);
+	ev.preventDefault();
 	pointerStartXCoordinate = ev.clientX;
-	console.log('pointer down');
 });
 
 sliderBody.addEventListener('pointerup', (ev) => {
-	console.log('pointer UP');
-
 	let distanceX = ev.clientX - pointerStartXCoordinate;
 
 	if (Math.abs(distanceX) > 10) {
@@ -120,14 +115,12 @@ function pauseScroll() {
 
 	const startTime = scrollIntervalContinueTime || scrollIntervalStartTime;
 	scrollIntervalPauseValue += Date.now() - startTime;
-	console.log(scrollIntervalPauseValue);
 }
 
 function resumeScroll() {
 	scrollIntervalContinueTime = Date.now();
 	sliderAutoScrollTimeoutID = setTimeout(() => {
 		slideToLeft();
-		sliderAutoScrollIntervalID = setInterval(slideToLeft, autoScrollTime);
 	}, autoScrollTime - scrollIntervalPauseValue);
 }
 
@@ -135,8 +128,6 @@ function switchControl(prevIndex, currIndex) {
 	if (currIndex === resettingProgressCardNumber) {
 		clearInterval(resetProgressIntervalID);
 	}
-
-	console.log(prevIndex, currIndex);
 
 	resetProgress(prevIndex);
 	launchProgress(currIndex);
@@ -167,7 +158,6 @@ function launchProgress(currIndex) {
 	const currProgress = sliderProgressList[currIndex];
 	let width = currProgress.style.width;
 	width = +width.slice(0, -1);
-	console.log('current panel width:', width);
 
 	launchProgressIntervalID = setInterval(updateProgress, autoScrollTime / 1000);
 
