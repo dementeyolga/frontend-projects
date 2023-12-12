@@ -80,12 +80,14 @@ function createSlideToDirection(direction) {
 		}
 
 		arrowsList.forEach((arrow) => arrow.classList.add('disabled'));
+		sliderBody.style.pointerEvents = 'none';
 
 		sliderCardsList[prevCardNumber].addEventListener(
 			'animationend',
 			function () {
 				this.style.display = 'none';
 				arrowsList.forEach((arrow) => arrow.classList.remove('disabled'));
+				sliderBody.style.pointerEvents = 'auto';
 			},
 			{ once: true }
 		);
