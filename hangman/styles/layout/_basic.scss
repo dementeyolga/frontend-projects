@@ -12,6 +12,7 @@ html {
 body {
 	padding: 20px 0px 40px 0px;
 	background-color: $background-body;
+	user-select: none;
 
 	&.scroll-disabled {
 		height: 100%;
