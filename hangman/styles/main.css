@@ -424,7 +424,7 @@ span {
 .keyboard__key.disabled {
   background-color: rgba(2, 36, 73, 0.3215686275);
 }
-.keyboard__key.correct:hover, .keyboard__key.disabled:hover {
+.keyboard__key.correct:hover, .keyboard__key.disabled:hover, .keyboard__key.inactive:hover {
   cursor: default;
 }
 
