@@ -1,6 +1,7 @@
 import { VirtualKeyboard } from './virtualKeyboard.js';
 import { randomInt } from './randomInt.js';
 import { words } from './words.js';
+import { hangmanDrawingGenerator } from './hangmanDrawingGenerator.js';
 
 class HangmanGame {
 	init() {
@@ -78,72 +79,8 @@ class HangmanGame {
 		gameBodyLeft.append(gallows);
 
 		const ctx = gallows.getContext('2d');
-		ctx.fillStyle = '#ffffbf';
-		ctx.fillRect(0, 0, gallows.width, gallows.height);
-
-		ctx.beginPath();
-		// ctx.lineCap = "round";
-
-		ctx.lineWidth = 10;
-		ctx.strokeStyle = '#022449';
-
-		//bottom line
-		ctx.moveTo(gallows.width * 0.2, gallows.height - ctx.lineWidth / 2);
-		ctx.lineTo(gallows.width - gallows.width * 0.2, gallows.height - ctx.lineWidth / 2);
-		ctx.stroke();
-
-		// main
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.1, gallows.height);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.1, gallows.height * 0.2);
-		ctx.stroke();
-
-		//crossbar
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.1, gallows.height * 0.2 + gallows.height * 0.12);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.1 + gallows.height * 0.12, gallows.height * 0.2);
-		ctx.stroke();
-
-		//to right
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.1 - ctx.lineWidth / 2, gallows.height * 0.2);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.2);
-		ctx.stroke();
-
-		//to bottom
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.2 - ctx.lineWidth / 2);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.3);
-		ctx.stroke();
-		ctx.closePath();
-
-		//head
-		ctx.beginPath();
-		ctx.lineWidth = 8;
-		const headRadius = gallows.height * 0.08;
-		ctx.arc(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.3 + headRadius, headRadius, 0, 2 * Math.PI);
-		ctx.stroke();
-
-		//body
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.3 + 2 * headRadius);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.25);
-		ctx.stroke();
-
-		//left arm
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.04);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.4 - gallows.width * 0.1, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.14);
-		ctx.stroke();
-
-		//right arm
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.04);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.4 + gallows.width * 0.1, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.14);
-		ctx.stroke();
-
-		//left leg
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.25);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.4 - gallows.width * 0.1, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.25 + gallows.height * 0.1);
-		ctx.stroke();
-
-		//right leg
-		ctx.moveTo(gallows.width * 0.2 + gallows.width * 0.4, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.25);
-		ctx.lineTo(gallows.width * 0.2 + gallows.width * 0.4 + gallows.width * 0.1, gallows.height * 0.3 + 2 * headRadius + gallows.height * 0.25 + gallows.height * 0.1);
-		ctx.stroke();
+		let generator = hangmanDrawingGenerator(ctx, gallows.width, gallows.height);
+		generator.next();
 
 		let keyboardHandler = function func(e) {
 			if (e.target.classList.contains('correct') || e.target.classList.contains('disabled')) return;
@@ -166,6 +103,7 @@ class HangmanGame {
 						e.currentTarget.removeEventListener('click', func);
 					}
 				} else {
+					generator.next();
 					e.target.classList.add('disabled');
 					incorrectGuesses.textContent = +incorrectGuesses.textContent + 1;
 
