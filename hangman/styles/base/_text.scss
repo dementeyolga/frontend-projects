@@ -1,0 +1,12 @@
+@use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
+
+* {
+  font-family: $font-main, Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  color: $text-dark;
+}
+
+span {
+  font: inherit;
+}
