@@ -1,29 +1,32 @@
 .hangman {
-	margin-top: 60px;
+  padding: 40px 0;
 
-	&__wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 40px;
-	}
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
 
-	&__body {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
-		&-right {
-			display: flex;
-			flex-direction: column;
-			row-gap: 30px;
-		}
-	}
+    &-right {
+      display: flex;
+      flex-direction: column;
+      row-gap: 30px;
+    }
+  }
 
-	&__input {
-		display: flex;
-		gap: 20px;
+  &__input {
+    display: flex;
+    gap: 20px;
 
-		&-char {
-			font-size: 5rem;
-		}
-	}
+    &-char {
+      display: flex;
+      justify-content: center;
+      font-size: 5rem;
+      width: 4rem;
+    }
+  }
 }

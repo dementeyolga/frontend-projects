@@ -1,4 +1,4 @@
-import { HangmanGame } from './hangman.js';
+import { HangmanGame } from './hangmanGame/hangmanGame.js';
 
 const hangman = new HangmanGame();
 

@@ -1,1 +1,19 @@
 @use './../abstract/variables' as *;
+@use './../abstract/mixins' as *;
+
+h1 {
+  position: absolute;
+  visibility: hidden;
+}
+
+.section-heading {
+  margin: 0;
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 125%;
+
+  @include max-576 {
+    font-size: 3rem;
+  }
+}

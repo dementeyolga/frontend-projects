@@ -1,53 +1,63 @@
+@use './../abstract/mixins' as *;
 @use './../abstract/variables' as *;
 
 .keyboard {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
-	&__row {
-		display: flex;
-		gap: 8px;
-		justify-content: center;
-	}
+  &__row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
 
-	&__key {
-		width: 50px;
-		height: 50px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+  &__key {
+    $key-parameter: 3.5vw;
 
-		font-size: 2.4rem;
-		font-weight: 500;
-		color: $text-light;
-		line-height: 100%;
+    width: $key-parameter;
+    height: $key-parameter;
+    font-size: $key-parameter * 0.6;
 
-		background-color: $color-accent-dark;
-		border-radius: 8px;
-		user-select: none;
+    @include max-576 {
+      width: $key-parameter * 2;
+      height: $key-parameter * 2;
+      font-size: $key-parameter * 2 * 0.6;
+    }
 
-		transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-		&:hover {
-			cursor: pointer;
-			background-color: $color-accent-hover;
-		}
+    font-weight: 500;
+    color: $text-light;
+    line-height: 100%;
 
-		&.correct {
-			background-color: $color-correct;
-		}
+    background-color: $color-accent-dark;
+    border-radius: 8px;
+    user-select: none;
 
-		&.disabled {
-			background-color: $color-disabled;
-		}
+    transition: 0.3s;
 
-		&.correct,
-		&.disabled,
-		&.inactive {
-			&:hover {
-				cursor: default;
-			}
-		}
-	}
+    &:hover {
+      cursor: pointer;
+      background-color: $color-accent-hover;
+    }
+
+    &.correct {
+      background-color: $color-correct;
+    }
+
+    &.disabled {
+      background-color: $color-disabled;
+    }
+
+    &.correct,
+    &.disabled,
+    &.inactive {
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
 }
