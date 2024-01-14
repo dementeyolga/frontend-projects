@@ -1,7 +1,19 @@
 {
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "A basic hangman game",
+  "scripts": {
+    "lint": "npx eslint app",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier app --check",
+    "prettier:fix": "npm run prettier -- --write"
+  },
   "devDependencies": {
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1"
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "prettier": "3.2.2"
   }
 }

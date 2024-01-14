@@ -3,7 +3,7 @@ export function* hangmanDrawingGenerator(ctx, color, width, height) {
   ctx.lineWidth = 10;
   ctx.strokeStyle = color;
 
-  //bottom line
+  // bottom line
   ctx.moveTo(width * 0.2, height - ctx.lineWidth / 2);
   ctx.lineTo(width - width * 0.2, height - ctx.lineWidth / 2);
   ctx.stroke();
@@ -13,17 +13,17 @@ export function* hangmanDrawingGenerator(ctx, color, width, height) {
   ctx.lineTo(width * 0.2 + width * 0.1, height * 0.2);
   ctx.stroke();
 
-  //crossbar
+  // crossbar
   ctx.moveTo(width * 0.2 + width * 0.1, height * 0.2 + height * 0.12);
   ctx.lineTo(width * 0.2 + width * 0.1 + height * 0.12, height * 0.2);
   ctx.stroke();
 
-  //to right
+  // to right
   ctx.moveTo(width * 0.2 + width * 0.1 - ctx.lineWidth / 2, height * 0.2);
   ctx.lineTo(width * 0.2 + width * 0.4, height * 0.2);
   ctx.stroke();
 
-  //to bottom
+  // to bottom
   ctx.moveTo(width * 0.2 + width * 0.4, height * 0.2 - ctx.lineWidth / 2);
   ctx.lineTo(width * 0.2 + width * 0.4, height * 0.3);
   ctx.stroke();
@@ -31,7 +31,7 @@ export function* hangmanDrawingGenerator(ctx, color, width, height) {
 
   yield;
 
-  //head
+  // head
   ctx.beginPath();
   ctx.lineWidth = 8;
   const headRadius = height * 0.075;
@@ -40,52 +40,52 @@ export function* hangmanDrawingGenerator(ctx, color, width, height) {
     height * 0.3 + headRadius,
     headRadius,
     0,
-    2 * Math.PI
+    2 * Math.PI,
   );
   ctx.stroke();
 
   yield;
 
-  //body
+  // body
   ctx.moveTo(width * 0.2 + width * 0.4, height * 0.3 + 2 * headRadius);
   ctx.lineTo(
     width * 0.2 + width * 0.4,
-    height * 0.3 + 2 * headRadius + height * 0.25
+    height * 0.3 + 2 * headRadius + height * 0.25,
   );
   ctx.stroke();
 
   yield;
 
-  //left arm
+  // left arm
   ctx.moveTo(
     width * 0.2 + width * 0.4,
-    height * 0.3 + 2 * headRadius + height * 0.04
+    height * 0.3 + 2 * headRadius + height * 0.04,
   );
   ctx.lineTo(
     width * 0.2 + width * 0.4 - width * 0.1,
-    height * 0.3 + 2 * headRadius + height * 0.14
+    height * 0.3 + 2 * headRadius + height * 0.14,
   );
   ctx.stroke();
 
   yield;
 
-  //right arm
+  // right arm
   ctx.moveTo(
     width * 0.2 + width * 0.4,
-    height * 0.3 + 2 * headRadius + height * 0.04
+    height * 0.3 + 2 * headRadius + height * 0.04,
   );
   ctx.lineTo(
     width * 0.2 + width * 0.4 + width * 0.1,
-    height * 0.3 + 2 * headRadius + height * 0.14
+    height * 0.3 + 2 * headRadius + height * 0.14,
   );
   ctx.stroke();
 
   yield;
 
-  //left leg
+  // left leg
   ctx.moveTo(
     width * 0.2 + width * 0.4,
-    height * 0.3 + 2 * headRadius + height * 0.25 - ctx.lineWidth / 2
+    height * 0.3 + 2 * headRadius + height * 0.25 - ctx.lineWidth / 2,
   );
   ctx.lineTo(
     width * 0.2 + width * 0.4 - width * 0.1,
@@ -93,16 +93,16 @@ export function* hangmanDrawingGenerator(ctx, color, width, height) {
       2 * headRadius +
       height * 0.25 +
       height * 0.1 -
-      ctx.lineWidth / 2
+      ctx.lineWidth / 2,
   );
   ctx.stroke();
 
   yield;
 
-  //right leg
+  // right leg
   ctx.moveTo(
     width * 0.2 + width * 0.4,
-    height * 0.3 + 2 * headRadius + height * 0.25 - ctx.lineWidth / 2
+    height * 0.3 + 2 * headRadius + height * 0.25 - ctx.lineWidth / 2,
   );
   ctx.lineTo(
     width * 0.2 + width * 0.4 + width * 0.1,
@@ -110,7 +110,7 @@ export function* hangmanDrawingGenerator(ctx, color, width, height) {
       2 * headRadius +
       height * 0.25 +
       height * 0.1 -
-      ctx.lineWidth / 2
+      ctx.lineWidth / 2,
   );
   ctx.stroke();
 
