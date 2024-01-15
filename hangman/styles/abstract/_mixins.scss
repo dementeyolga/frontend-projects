@@ -36,6 +36,12 @@
   }
 }
 
+@mixin portrait {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
 /* For responsive key width */
 @mixin key-parameter {
   $key-parameter: 3.5vw;

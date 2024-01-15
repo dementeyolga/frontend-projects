@@ -6,15 +6,15 @@ class GameOverModal {
   }
 
   create() {
-    const modalWrapper = document.createElement("div");
-    modalWrapper.className = "hangman__modal-wrapperse modal__wrapper";
+    const modalWrapper = document.createElement('div');
+    modalWrapper.className = 'hangman__modal-wrapper modal__wrapper';
 
     modalWrapper.innerHTML = `
       <div class="hangman__modal modal">
         <h3 class="hangman__modal-heading modal__heading ${
-          this.win ? "win" : "lose"
+          this.win ? 'win' : 'lose'
         }">
-          ${this.win ? "Congrats! You won!" : "Oops, game over... "}
+          ${this.win ? 'Congrats! You won!' : 'Oops, game over... '}
         </h3> 
         <p class="hangman__modal-hint modal__hint modal__text"><span class="accent">Hint:</span> ${
           this.hint
@@ -27,7 +27,7 @@ class GameOverModal {
     `;
 
     this.modalWrapper = modalWrapper;
-    this.playAgainButton = modalWrapper.querySelector(".hangman__modal-button");
+    this.playAgainButton = modalWrapper.querySelector('.hangman__modal-button');
 
     return modalWrapper;
   }

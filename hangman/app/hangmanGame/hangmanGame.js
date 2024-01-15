@@ -101,12 +101,22 @@ class HangmanGame {
 
       const modalWrapper = modal.create();
       document.body.append(modalWrapper);
+      //Initiate reflow after appending modal, but before 'active' class styles are applied
+      modalWrapper.offsetWidth;
       modalWrapper.classList.add('active');
+      document.body.classList.add('scroll-disabled');
       modal.playAgainButton.onclick = () => {
         modalWrapper.classList.remove('active');
-        modalWrapper.addEventListener('transitionend', () => this.init(), {
-          once: true,
-        });
+        modalWrapper.addEventListener(
+          'transitionend',
+          () => {
+            document.body.classList.remove('scroll-disabled');
+            this.init();
+          },
+          {
+            once: true,
+          }
+        );
       };
     };
 
