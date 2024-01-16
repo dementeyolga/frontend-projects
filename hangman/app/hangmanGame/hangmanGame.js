@@ -73,8 +73,9 @@ class HangmanGame {
     const gallows = document.createElement('canvas');
 
     const canvasWidth = gameBodyLeft.clientWidth;
-    const canvasHeight = gameBodyLeft.clientHeight;
-    gallows.width = canvasWidth;
+    const canvasHeight = gameBodyLeft.clientHeight * 0.9;
+    gallows.width =
+      canvasWidth > canvasHeight * 2 ? canvasHeight * 1.5 : canvasWidth;
     gallows.height = canvasHeight;
     gallows.className = 'hangman__gallows';
     gallows.id = 'hangman-gallows';

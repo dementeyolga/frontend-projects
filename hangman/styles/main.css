@@ -551,26 +551,16 @@ img {
 }
 
 .hangman {
+  width: 100%;
   padding: 40px 0;
 }
 .hangman__wrapper {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-}
-@media (max-width: 1024px) {
-  .hangman__wrapper {
-    gap: 15px;
-  }
-}
-@media (orientation: portrait) {
-  .hangman__wrapper {
-    gap: 15px;
-  }
 }
 .hangman__body {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 50% 50%;
 }
 @media (orientation: portrait) {
   .hangman__body {
@@ -579,14 +569,19 @@ img {
     grid-template-rows: 0.9fr 1fr;
   }
 }
+.hangman__body-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .hangman__body-right {
   display: flex;
   flex-direction: column;
-  row-gap: 30px;
+  row-gap: 20px;
 }
 @media (max-width: 768px) {
   .hangman__body-right {
-    row-gap: 25px;
+    row-gap: 16px;
   }
   .hangman__body-right p {
     font-size: 1.6rem;
