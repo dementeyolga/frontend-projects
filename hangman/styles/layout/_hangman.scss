@@ -1,24 +1,17 @@
 @use './../abstract/mixins' as *;
 
 .hangman {
+  width: 100%;
   padding: 40px 0;
 
   &__wrapper {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-
-    @include max-1024 {
-      gap: 15px;
-    }
-    @include portrait {
-      gap: 15px;
-    }
   }
 
   &__body {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50% 50%;
 
     @include portrait {
       gap: 30px;
@@ -26,13 +19,19 @@
       grid-template-rows: 0.9fr 1fr;
     }
 
+    &-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     &-right {
       display: flex;
       flex-direction: column;
-      row-gap: 30px;
+      row-gap: 20px;
 
       @include max-768 {
-        row-gap: 25px;
+        row-gap: 16px;
 
         p {
           font-size: 1.6rem;
