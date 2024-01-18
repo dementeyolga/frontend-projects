@@ -7,7 +7,24 @@ import './hangmanGame.js';
 
 class HangmanGame {
   init() {
-    const questionIndex = randomInt(0, words.length - 1);
+    let counter = +sessionStorage.getItem('questionsCounter');
+
+    sessionStorage.setItem('questionsCounter', ++counter);
+
+    const lastQuestion = counter === words.length;
+
+    let questionNumbers = JSON.parse(sessionStorage.getItem('questionNumbers'));
+
+    let questionIndex = randomInt(0, words.length - 1);
+
+    while (questionNumbers.includes(questionIndex)) {
+      questionIndex = randomInt(0, words.length - 1);
+    }
+
+    questionNumbers.push(questionIndex);
+
+    sessionStorage.setItem('questionNumbers', JSON.stringify(questionNumbers));
+
     const currentQuestion = words[questionIndex];
     const currentWord = currentQuestion.word;
 
@@ -26,6 +43,11 @@ class HangmanGame {
     title.className = 'section-heading hangman__title';
     title.innerText = 'HANGMAN game';
     gameWrapper.append(title);
+
+    const questionNo = document.createElement('p');
+    questionNo.className = 'hangman__question-number';
+    questionNo.innerText = `Question No: ${counter} / ${words.length}`;
+    gameWrapper.append(questionNo);
 
     const gameBody = document.createElement('div');
     gameBody.className = 'hangman__body';
@@ -97,7 +119,8 @@ class HangmanGame {
       const modal = new GameOverModal(
         win,
         currentWord,
-        currentQuestion.description
+        currentQuestion.description,
+        lastQuestion
       );
 
       const modalWrapper = modal.create();
@@ -107,6 +130,11 @@ class HangmanGame {
       modalWrapper.classList.add('active');
       document.body.classList.add('scroll-disabled');
       modal.playAgainButton.onclick = () => {
+        if (lastQuestion) {
+          sessionStorage.setItem('questionsCounter', 0);
+          sessionStorage.setItem('questionNumbers', JSON.stringify([]));
+        }
+
         modalWrapper.classList.remove('active');
         modalWrapper.addEventListener(
           'transitionend',

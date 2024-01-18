@@ -1,80 +1,80 @@
 export const words = [
   {
-    word: "password",
+    word: 'password',
     description:
-      "a string of characters that allows access to a computer system or service",
+      'a string of characters that allows access to a computer system or service',
   },
   {
-    word: "exercise",
+    word: 'exercise',
     description:
-      "activity requiring physical effort, carried out to sustain or improve health and fitness.",
+      'activity requiring physical effort, carried out to sustain or improve health and fitness.',
   },
   {
-    word: "fabric",
+    word: 'fabric',
     description:
-      "cloth or other material produced by weaving or knitting fibres",
+      'cloth or other material produced by weaving or knitting fibres',
   },
   {
-    word: "vitamin",
+    word: 'vitamin',
     description:
-      "any of a group of organic compounds which are essential for normal growth and nutrition and are required in small quantities in the diet because they cannot be synthesized by the body",
+      'any of a group of organic compounds which are essential for normal growth and nutrition and are required in small quantities in the diet because they cannot be synthesized by the body',
   },
   {
-    word: "landscape",
+    word: 'landscape',
     description:
-      "all the visible features of an area of land, often considered in terms of their aesthetic appeal",
+      'all the visible features of an area of land, often considered in terms of their aesthetic appeal',
   },
   {
-    word: "pharmacist",
+    word: 'pharmacist',
     description:
-      "a person who is professionally qualified to prepare and dispense medicinal drugs",
+      'a person who is professionally qualified to prepare and dispense medicinal drugs',
   },
   {
-    word: "windmill",
+    word: 'windmill',
     description:
-      "a building with sails or vanes that turn in the wind and generate power to grind corn into flour",
+      'a building with sails or vanes that turn in the wind and generate power to grind corn into flour',
   },
   {
-    word: "nightmare",
-    description: "a frightening or unpleasant dream",
+    word: 'nightmare',
+    description: 'a frightening or unpleasant dream',
   },
   {
-    word: "hair dryer",
+    word: 'hair dryer',
     description:
       "an electrical device for drying a person's hair by blowing warm air over it",
   },
   {
-    word: "season",
+    word: 'season',
     description:
       "each of the four divisions of the year marked by particular weather patterns and daylight hours, resulting from the earth's changing position with regard to the sun.",
   },
   {
-    word: "brand",
+    word: 'brand',
     description:
-      "a type of product manufactured by a particular company under a particular name",
+      'a type of product manufactured by a particular company under a particular name',
   },
   {
-    word: "avocado",
+    word: 'avocado',
     description:
-      "a pear-shaped fruit with a rough leathery skin and smooth, oily edible flesh",
+      'a pear-shaped fruit with a rough leathery skin and smooth, oily edible flesh',
   },
   {
-    word: "point",
-    description: "a dot or other punctuation mark, in particular a full stop",
+    word: 'point',
+    description: 'a dot or other punctuation mark, in particular a full stop',
   },
   {
-    word: "darts",
+    word: 'darts',
     description:
-      "an indoor game in which small pointed missiles with feather or plastic flights are thrown at a circular target marked with numbers in order to score points",
+      'an indoor game in which small pointed missiles with feather or plastic flights are thrown at a circular target marked with numbers in order to score points',
   },
   {
-    word: "migrate",
+    word: 'migrate',
     description:
-      "move from one region or habitat to another according to the seasons",
+      'move from one region or habitat to another according to the seasons',
   },
   {
-    word: "double",
+    word: 'double',
     description:
-      "consisting of two equal, identical, or similar parts or things",
+      'consisting of two equal, identical, or similar parts or things',
   },
 ];

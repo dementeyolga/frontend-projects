@@ -1,8 +1,9 @@
 class GameOverModal {
-  constructor(win = true, word, hint) {
+  constructor(win = true, word, hint, lastQuestion) {
     this.win = win;
     this.word = word;
     this.hint = hint;
+    this.lastQuestion = lastQuestion;
   }
 
   create() {
@@ -22,7 +23,8 @@ class GameOverModal {
         <p class="hangman__modal-word modal__word modal__text"><span class="accent">Answer:</span> ${
           this.word
         }</p>
-        <button class="hangman__modal-button modal__button">Play again</button>
+        ${this.lastQuestion ? `<p class="modal__text accent">It was the LAST question, want to restart the game?</p>` : ''}
+        <button class="hangman__modal-button modal__button">${this.lastQuestion ? 'Restart' : 'Play again'}</button>
       </div>
     `;
 

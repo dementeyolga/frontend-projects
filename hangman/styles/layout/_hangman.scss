@@ -9,6 +9,12 @@
     flex-direction: column;
   }
 
+  &__question-number {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 1.8rem;
+  }
+
   &__body {
     display: grid;
     grid-template-columns: 50% 50%;
