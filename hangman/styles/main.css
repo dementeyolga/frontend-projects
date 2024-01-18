@@ -558,6 +558,11 @@ img {
   display: flex;
   flex-direction: column;
 }
+.hangman__question-number {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 1.8rem;
+}
 .hangman__body {
   display: grid;
   grid-template-columns: 50% 50%;
