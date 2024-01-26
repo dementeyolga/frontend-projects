@@ -11,11 +11,12 @@ function component() {
 	const lavender = new Image();
 	lavender.src = Lavender;
 
-	element.appendChild(lavender);
+			element.appendChild(lavender);
 
 	test();
 
 	return element;
 }
+let apple = 'aaple';
 
 document.body.appendChild(component());
