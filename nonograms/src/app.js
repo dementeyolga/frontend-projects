@@ -1,6 +1,6 @@
 import './styles/main.scss';
-import { GameHeader } from './components/gameHeader';
-import { GameField } from './components/gameField';
+import { GameHeader } from './components/gameHeader/gameHeader';
+import { GameField } from './components/gameField/gameField';
 
 customElements.define('game-header', GameHeader);
 customElements.define('game-field', GameField);
