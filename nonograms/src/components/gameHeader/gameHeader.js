@@ -5,7 +5,10 @@ headerStyles.textContent = headerStylesStr;
 
 const template = document.createElement('template');
 template.innerHTML = `
-  <p>Nonograms</p>
+  <div class="wrapper">
+    <p>Nonograms</p>
+  </div>  
+
 `;
 class GameHeader extends HTMLElement {
 	connectedCallback() {

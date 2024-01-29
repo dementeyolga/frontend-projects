@@ -6,9 +6,9 @@ customElements.define('game-header', GameHeader);
 customElements.define('game-nonogram', GameNonogram);
 
 document.body.insertAdjacentHTML(
-  'afterbegin',
-  `
-		<game-header class="wrapper"></game-header>
+	'afterbegin',
+	`
+		<game-header></game-header>
 		<game-nonogram class="wrapper"></game-nonogram>
 	`
 );

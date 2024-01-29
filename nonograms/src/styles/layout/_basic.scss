@@ -2,46 +2,45 @@
 @use './../abstract/variables' as *;
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-  padding: 20px 0px 40px 0px;
-  background-color: $color-background;
-  user-select: none;
+	background-color: $color-background;
+	user-select: none;
 
-  &.scroll-disabled {
-    height: 100%;
-    overflow: hidden;
-  }
+	&.scroll-disabled {
+		height: 100%;
+		overflow: hidden;
+	}
 }
 
 .wrapper {
-  max-width: 1440px;
-  padding: 0 40px;
-  margin: 0 auto;
+	max-width: 1440px;
+	padding: 0 40px;
+	margin: 0 auto;
 
-  @include max-576 {
-    padding: 0 4.21052%;
-  }
+	@include max-576 {
+		padding: 0 4.21052%;
+	}
 }
 
 .section {
-  margin-bottom: 100px;
+	margin-bottom: 100px;
 }
 
 img {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 .transparent {
-  opacity: 0;
+	opacity: 0;
 }
 
 :host {
-  display: block;
+	display: block;
 }
