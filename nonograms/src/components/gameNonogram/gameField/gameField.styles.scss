@@ -1,3 +1,6 @@
+@use './../../../styles/abstract/variables' as *;
+@use './../../../styles/base/normalize' as *;
+
 :host {
   width: fit-content;
   display: flex;
@@ -10,8 +13,8 @@
 }
 
 .cell {
-  width: 5vw;
-  height: 5vw;
+  width: $cell-size;
+  height: $cell-size;
   border: 1px #000000 solid;
 
   &.filled {

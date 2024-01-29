@@ -1,5 +1,9 @@
+@use './../../styles/base/normalize' as *;
+@use './../../styles/abstract/variables' as *;
+
 :host {
   display: grid;
+  grid-template-columns: auto;
   grid-template-areas:
     'a b b'
     'c d d'
@@ -12,10 +16,56 @@
 
 .top-pane {
   grid-area: b;
+  width: fit-content;
+
+  display: flex;
+
+  border-top: 1px #000 solid;
+  border-right: 1px #000 solid;
+  border-left: 1px #000 solid;
+
+  &__hint {
+    width: $cell-size;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 5px;
+
+    border-top: 1px #000 solid;
+    border-right: 1px #000 solid;
+    border-left: 1px #000 solid;
+  }
+
+  &__number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .left-pane {
   grid-area: c;
+
+  border-top: 1px #000 solid;
+  border-bottom: 1px #000 solid;
+  border-left: 1px #000 solid;
+
+  &__hint {
+    height: $cell-size;
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+
+    border-top: 1px #000 solid;
+    border-bottom: 1px #000 solid;
+    border-left: 1px #000 solid;
+  }
+
+  &__number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 game-field {
