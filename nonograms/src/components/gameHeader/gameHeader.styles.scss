@@ -1,0 +1,10 @@
+@use './../../styles/abstract/variables' as *;
+
+:host {
+	display: flex;
+	background: $color-accent;
+
+	* {
+		color: $color-background;
+	}
+}

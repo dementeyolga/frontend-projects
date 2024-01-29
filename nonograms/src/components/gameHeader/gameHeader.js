@@ -1,19 +1,18 @@
+import headerStylesStr from './gameHeader.styles.scss';
+
+const headerStyles = document.createElement('style');
+headerStyles.textContent = headerStylesStr;
+
 const template = document.createElement('template');
 template.innerHTML = `
-  <style>
-    :host {
-      display: flex;
-      background: red;
-    }
-  </style>
-
-  <div className="wrapper">Nonograms</div> 
+  <p>Nonograms</p>
 `;
 class GameHeader extends HTMLElement {
-  connectedCallback() {
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.append(template.content.cloneNode(true));
-  }
+	connectedCallback() {
+		const shadowRoot = this.attachShadow({ mode: 'open' });
+		shadowRoot.append(headerStyles);
+		shadowRoot.append(template.content.cloneNode(true));
+	}
 }
 
 export { GameHeader };
