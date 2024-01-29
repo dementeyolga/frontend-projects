@@ -1,3 +1,23 @@
 :host {
-	display: flex;
+  display: grid;
+  grid-template-areas:
+    'a b b'
+    'c d d'
+    'c d d';
+}
+
+.picture {
+  grid-area: a;
+}
+
+.top-pane {
+  grid-area: b;
+}
+
+.left-pane {
+  grid-area: c;
+}
+
+game-field {
+  grid-area: d;
 }

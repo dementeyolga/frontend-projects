@@ -1,25 +1,26 @@
 :host {
-	display: flex;
-	flex-direction: column;
-	border: 1px #000000 solid;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  border: 1px #000000 solid;
 }
 
 .row {
-	display: flex;
+  display: flex;
 }
 
 .cell {
-	width: 5vw;
-	height: 5vw;
-	border: 1px #000000 solid;
+  width: 5vw;
+  height: 5vw;
+  border: 1px #000000 solid;
 
-	&.filled {
-		background-color: #000000;
-	}
+  &.filled {
+    background-color: #000000;
+  }
 
-	&.crossed {
-		&::after {
-			content: 'x';
-		}
-	}
+  &.crossed {
+    &::after {
+      content: 'x';
+    }
+  }
 }
