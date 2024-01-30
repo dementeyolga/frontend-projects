@@ -11,8 +11,8 @@ const matrix = nonograms[10].matrix;
 let str = '';
 matrix.forEach((el) => {
   str += el.reduce((acc, curr) => {
-    acc += curr ? '■' : '□';
-    return acc;
+    const square = curr ? '■' : '□';
+    return acc + square;
   }, '');
   str += '\n';
 });
