@@ -8,6 +8,16 @@ const nonogramStyles = document.createElement('style');
 nonogramStyles.textContent = nonogramStylesStr;
 
 const matrix = nonograms[10].matrix;
+let str = '';
+matrix.forEach((el) => {
+  str += el.reduce((acc, curr) => {
+    acc += curr ? '■' : '□';
+    return acc;
+  }, '');
+  str += '\n';
+});
+console.log(str);
+
 const correctSolution = matrix.flat().join('').toString();
 console.log(correctSolution);
 
