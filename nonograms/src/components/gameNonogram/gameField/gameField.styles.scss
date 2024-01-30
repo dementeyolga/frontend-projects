@@ -22,8 +22,31 @@
   }
 
   &.crossed {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      width: $cell-size * 0.9;
+      height: 3px;
+      background-color: #000000;
+
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
     &::after {
-      content: 'x';
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      width: $cell-size * 0.9;
+      height: 3px;
+      background-color: #000000;
+
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
   }
 }

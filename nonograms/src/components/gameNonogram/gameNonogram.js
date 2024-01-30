@@ -78,6 +78,12 @@ class GameNonogram extends HTMLElement {
       leftPane.append(leftHint);
       topPane.append(topHint);
     }
+
+    shadowRoot.addEventListener('fill', (e) => {
+      if (correctSolution === e.detail.currentSolution) {
+        console.log('You WON!');
+      }
+    });
   }
 }
 
