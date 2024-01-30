@@ -7,7 +7,7 @@ customElements.define('game-field', GameField);
 const nonogramStyles = document.createElement('style');
 nonogramStyles.textContent = nonogramStylesStr;
 
-const matrix = nonograms[0].matrix;
+const matrix = nonograms[10].matrix;
 const correctSolution = matrix.flat().join('').toString();
 console.log(correctSolution);
 

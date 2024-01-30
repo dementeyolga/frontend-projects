@@ -8,6 +8,10 @@
     'a b b'
     'c d d'
     'c d d';
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .picture {
@@ -34,6 +38,10 @@
     border-top: 1px #000 solid;
     border-right: 1px #000 solid;
     border-left: 1px #000 solid;
+
+    &:nth-child(5n):not(:last-child) {
+      border-right: 2px #000000 solid;
+    }
   }
 
   &__number {
@@ -59,6 +67,10 @@
     border-top: 1px #000 solid;
     border-bottom: 1px #000 solid;
     border-left: 1px #000 solid;
+
+    &:nth-child(5n):not(:last-child) {
+      border-bottom: 2px #000000 solid;
+    }
   }
 
   &__number {

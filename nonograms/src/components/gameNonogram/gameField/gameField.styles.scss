@@ -6,16 +6,29 @@
   display: flex;
   flex-direction: column;
   border: 1px #000000 solid;
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .row {
   display: flex;
+  height: $cell-size;
+
+  &:nth-child(5n):not(:last-child) {
+    border-bottom: 2px #000000 solid;
+  }
 }
 
 .cell {
   width: $cell-size;
   height: $cell-size;
   border: 1px #000000 solid;
+
+  &:nth-child(5n):not(:last-child) {
+    border-right: 2px #000000 solid;
+  }
 
   &.filled {
     background-color: #000000;
