@@ -7,26 +7,12 @@ customElements.define('game-field', GameField);
 const nonogramStyles = document.createElement('style');
 nonogramStyles.textContent = nonogramStylesStr;
 
-const matrix = nonograms[10].matrix;
-let str = '';
-matrix.forEach((el) => {
-  str += el.reduce((acc, curr) => {
-    const square = curr ? '■' : '□';
-    return acc + square;
-  }, '');
-  str += '\n';
-});
-console.log(str);
-
-const correctSolution = matrix.flat().join('').toString();
-console.log(correctSolution);
-
 const template = document.createElement('template');
 template.innerHTML = `
 	<div class="picture">Picture</div>
 	<div class="top-pane"></div>
 	<div class="left-pane"></div>
-  <game-field level="${matrix.length}"></game-field>
+  <game-field></game-field>
 `;
 
 class GameNonogram extends HTMLElement {
@@ -34,6 +20,29 @@ class GameNonogram extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: 'open' });
     shadowRoot.append(template.content.cloneNode(true));
     shadowRoot.append(nonogramStyles);
+
+    const level = this.getAttribute('level');
+    const name = this.getAttribute('name');
+
+    const { matrix } = nonograms.find(
+      (item) => item.name === name && item.level === level
+    );
+
+    console.log(matrix);
+
+    const correctSolution = matrix.flat().join('').toString();
+    console.log(correctSolution);
+
+    // Show matrix solution
+    let str = '';
+    matrix.forEach((el) => {
+      str += el.reduce((acc, curr) => {
+        const square = curr ? '■' : '□';
+        return acc + square;
+      }, '');
+      str += '\n';
+    });
+    console.log(str);
 
     const topPane = shadowRoot.querySelector('.top-pane');
     const leftPane = shadowRoot.querySelector('.left-pane');

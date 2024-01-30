@@ -1,12 +1,12 @@
 class AppRouter {
   constructor(pageEl) {
     this.page = pageEl;
-    this.page;
   }
 
   changeRout(rout) {
-    history.pushState(rout, '', rout);
+    // history.pushState(rout, '', rout);
+    this.currentRout = rout;
   }
 }
 
-export { appRouter };
+export { AppRouter };
