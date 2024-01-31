@@ -2,84 +2,86 @@
 @use './../../styles/abstract/variables' as *;
 
 :host {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-areas:
-    'a b b'
-    'c d d'
-    'c d d';
-
-  * {
-    box-sizing: border-box;
-  }
+	* {
+		box-sizing: border-box;
+	}
 }
 
-.picture {
-  grid-area: a;
-}
+.nonogram {
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-areas:
+		'a b b'
+		'c d d'
+		'c d d';
 
-.top-pane {
-  grid-area: b;
-  width: fit-content;
+	.picture {
+		grid-area: a;
+	}
 
-  display: flex;
+	.top-pane {
+		grid-area: b;
+		width: fit-content;
 
-  border-top: 1px #000 solid;
-  border-right: 1px #000 solid;
-  border-left: 1px #000 solid;
+		display: flex;
 
-  &__hint {
-    width: $cell-size;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 5px;
+		border-top: 1px #000 solid;
+		border-right: 1px #000 solid;
+		border-left: 1px #000 solid;
 
-    border-top: 1px #000 solid;
-    border-right: 1px #000 solid;
-    border-left: 1px #000 solid;
+		&__hint {
+			width: $cell-size;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			gap: 5px;
 
-    &:nth-child(5n):not(:last-child) {
-      border-right: 2px #000000 solid;
-    }
-  }
+			border-top: 1px #000 solid;
+			border-right: 1px #000 solid;
+			border-left: 1px #000 solid;
 
-  &__number {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
+			&:nth-child(5n):not(:last-child) {
+				border-right: 2px #000000 solid;
+			}
+		}
 
-.left-pane {
-  grid-area: c;
+		&__number {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
 
-  border-top: 1px #000 solid;
-  border-bottom: 1px #000 solid;
-  border-left: 1px #000 solid;
+	.left-pane {
+		grid-area: c;
 
-  &__hint {
-    height: $cell-size;
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px;
+		border-top: 1px #000 solid;
+		border-bottom: 1px #000 solid;
+		border-left: 1px #000 solid;
 
-    border-top: 1px #000 solid;
-    border-bottom: 1px #000 solid;
-    border-left: 1px #000 solid;
+		&__hint {
+			height: $cell-size;
+			display: flex;
+			justify-content: flex-end;
+			gap: 5px;
 
-    &:nth-child(5n):not(:last-child) {
-      border-bottom: 2px #000000 solid;
-    }
-  }
+			border-top: 1px #000 solid;
+			border-bottom: 1px #000 solid;
+			border-left: 1px #000 solid;
 
-  &__number {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
+			&:nth-child(5n):not(:last-child) {
+				border-bottom: 2px #000000 solid;
+			}
+		}
 
-game-field {
-  grid-area: d;
+		&__number {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	game-field {
+		grid-area: d;
+	}
 }

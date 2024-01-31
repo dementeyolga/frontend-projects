@@ -8,12 +8,14 @@ customElements.define('game-menu', GameMenu);
 customElements.define('game-nonogram', GameNonogram);
 
 document.body.insertAdjacentHTML(
-  'afterbegin',
-  `
-		<game-header></game-header>
-		<main class="main">
+	'afterbegin',
+	`
+		<game-header class="wrapper"></game-header>
+		<main class="main wrapper">
 			<game-menu></game-menu>
-			<game-nonogram name="tree" level="10x10"></game-nonogram>
+			<game-nonogram name="tree" level="10x10">
+			  <button slot="button" class="button" is="restart-btn">Restart Game</button>
+			</game-nonogram>
 		</main>
 	`
 );
