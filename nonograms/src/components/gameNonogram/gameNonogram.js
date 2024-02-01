@@ -17,7 +17,7 @@ template.innerHTML = `
     <div class="picture">Picture</div>
     <div class="top-pane"></div>
     <div class="left-pane"></div>
-    <game-field class="game-field"></game-field>
+    
   </div>
 	
 `;
@@ -30,6 +30,8 @@ class GameNonogram extends HTMLElement {
 
 		const level = this.getAttribute('level');
 		const name = this.getAttribute('name');
+
+		shadowRoot.querySelector('.nonogram').insertAdjacentHTML('beforeend', `<game-field class="game-field" level="${level}"></game-field>`);
 
 		const { matrix } = nonograms.find((item) => item.name === name && item.level === level);
 
