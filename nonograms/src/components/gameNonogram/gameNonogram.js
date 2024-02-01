@@ -104,6 +104,16 @@ class GameNonogram extends HTMLElement {
 				console.log('You WON!');
 			}
 		});
+
+		shadowRoot.addEventListener('restart', (e) => {
+			shadowRoot
+				.querySelector('game-field')
+				.shadowRoot.querySelectorAll('.cell')
+				.forEach((cell) => {
+					cell.classList.remove('filled');
+					cell.classList.remove('crossed');
+				});
+		});
 	}
 }
 
