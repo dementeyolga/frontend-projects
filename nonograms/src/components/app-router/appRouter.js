@@ -48,6 +48,7 @@ class AppRouter {
   }
 
   changeHash(url) {
+    this.url = url;
     window.location.hash = url;
   }
 
@@ -55,8 +56,6 @@ class AppRouter {
     const match = this.routes.find(
       (item) => item.hash === window.location.hash.slice(1)
     );
-
-    console.log('params:', ...params);
 
     this.app.innerHTML = match.view(...params);
   }

@@ -1,6 +1,17 @@
 @use './../abstract/variables' as *;
 
 .button {
-	color: $color-text-reverse;
-	background-color: $color-accent-secondary;
+  padding: 8px 12px;
+
+  color: $color-text-reverse;
+  background-color: $color-accent-secondary;
+
+  border-radius: 10px;
+
+  transition: 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(105%);
+  }
 }

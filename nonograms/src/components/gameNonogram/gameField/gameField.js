@@ -42,7 +42,6 @@ class GameField extends HTMLElement {
     }
 
     field.addEventListener('click', (e) => {
-      console.log('fill');
       e.target.classList.remove('crossed');
       e.target.classList.toggle('filled');
 
@@ -50,7 +49,6 @@ class GameField extends HTMLElement {
     });
 
     field.addEventListener('contextmenu', (e) => {
-      console.log('cross');
       e.preventDefault();
       e.target.classList.remove('filled');
       e.target.classList.toggle('crossed');

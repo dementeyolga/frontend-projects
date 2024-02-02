@@ -2,10 +2,12 @@
 @use './../../styles/layout/basic' as *;
 
 :host {
-	display: flex;
-	background: $color-accent;
+  margin-bottom: 20px;
 
-	* {
-		color: $color-background;
-	}
+  display: flex;
+  background: $color-accent;
+
+  * {
+    color: $color-background;
+  }
 }

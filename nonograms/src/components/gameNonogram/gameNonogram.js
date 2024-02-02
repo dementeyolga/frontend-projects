@@ -13,11 +13,13 @@ nonogramStyles.textContent = nonogramStylesStr;
 
 const template = document.createElement('template');
 template.innerHTML = `
-	<slot name="restart-button"></slot>
-  <a href="" data-link>Menu</a>
-  <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
-  
-  <div class="nonogram">
+  <div class="actions">
+    <slot name="restart-button"></slot>
+    <a href="" data-link>Menu</a>
+    <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
+  </div>
+	
+  <div id="nonogram" class="nonogram">
     <div id="summary" class="summary">
     </div>
     <div class="top-pane"></div>
@@ -36,15 +38,14 @@ class GameNonogram extends HTMLElement {
 
     shadowRoot.getElementById('summary').innerHTML = `
       <p class="summary__level">${level}</p>
-      <p class="summary__name"> ${name}</p>
+      <p class="summary__name"> ${name[0].toUpperCase() + name.slice(1)}</p>
     `;
 
-    shadowRoot
-      .querySelector('.nonogram')
-      .insertAdjacentHTML(
-        'beforeend',
-        `<game-field class="game-field" level="${level}"></game-field>`
-      );
+    const nonogram = shadowRoot.querySelector('#nonogram');
+    nonogram.insertAdjacentHTML(
+      'beforeend',
+      `<game-field class="game-field" level="${level}"></game-field>`
+    );
 
     const { matrix } = nonograms.find(
       (item) => item.name === name && item.level === level
@@ -52,7 +53,7 @@ class GameNonogram extends HTMLElement {
 
     const correctSolution = matrix.flat().join('').toString();
 
-    // Show matrix solution
+    // Draw matrix solution
     let str = '';
     matrix.forEach((el) => {
       str += el.reduce((acc, curr) => {
@@ -65,6 +66,7 @@ class GameNonogram extends HTMLElement {
 
     const topPane = shadowRoot.querySelector('.top-pane');
     const leftPane = shadowRoot.querySelector('.left-pane');
+    let maxLeftHints = 0;
 
     for (let i = 0; i < matrix.length; i += 1) {
       const leftHint = document.createElement('div');
@@ -75,6 +77,7 @@ class GameNonogram extends HTMLElement {
 
       let counterLeft = 0;
       let counterTop = 0;
+
       for (let j = 0; j < matrix.length; j += 1) {
         if (matrix[i][j]) {
           counterLeft += 1;
@@ -115,7 +118,17 @@ class GameNonogram extends HTMLElement {
 
       leftPane.append(leftHint);
       topPane.append(topHint);
+
+      if (leftHint.children.length > maxLeftHints) {
+        maxLeftHints = leftHint.children.length;
+      }
     }
+
+    // Calculate cell size
+    const nonogramWidth = nonogram.offsetWidth;
+
+    let cellSize = nonogramWidth / (maxLeftHints + matrix.length);
+    document.documentElement.style.setProperty('--cell-size', cellSize + 'px');
 
     shadowRoot.addEventListener('fill', (e) => {
       if (correctSolution === e.detail.currentSolution) {

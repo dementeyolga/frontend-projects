@@ -9,7 +9,9 @@ $color-text-reverse: #ffffff;
 
 // Sizes
 
-$cell-size: 5vw;
+:root {
+  --cell-size: auto;
+}
 
 // Fonts
 
