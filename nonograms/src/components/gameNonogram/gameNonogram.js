@@ -1,7 +1,7 @@
 import nonogramStylesStr from './gameNonogram.styles.scss';
 import { GameField } from './gameField/gameField';
 import { RestartBtn } from './restartBtn/restartBtn';
-import { GameTimer } from '../gameTimer/gameTimer';
+import { GameTimer } from './gameTimer/gameTimer';
 import nonograms from './../../resources/nonograms.json';
 
 customElements.define('game-field', GameField);
@@ -14,7 +14,7 @@ nonogramStyles.textContent = nonogramStylesStr;
 const template = document.createElement('template');
 template.innerHTML = `
 	<slot name="button"></slot>
-  <game-timer></game-timer>
+  <game-timer id="game-timer"></game-timer>
   
   <div class="nonogram">
     <div class="picture">Picture</div>
@@ -128,6 +128,17 @@ class GameNonogram extends HTMLElement {
           cell.classList.remove('crossed');
         });
     });
+
+    shadowRoot.addEventListener(
+      'starttimer',
+      () => {
+        const timer = shadowRoot.querySelector('#game-timer');
+        timer.launch();
+      },
+      {
+        once: true,
+      }
+    );
   }
 }
 
