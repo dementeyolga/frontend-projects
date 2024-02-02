@@ -34,9 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       router.showRoute(params);
-      console.log(deepestEl.getAttribute('href'));
     }
   });
+
+  window.onpopstate = () => {
+    router.showRoute();
+  };
 
   router.showRoute();
 });

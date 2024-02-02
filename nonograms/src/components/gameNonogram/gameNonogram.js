@@ -15,8 +15,8 @@ const template = document.createElement('template');
 template.innerHTML = `
   <div class="actions">
     <slot name="restart-button"></slot>
-    <a href="" data-link>Menu</a>
     <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
+    <a href="" data-link>Menu</a>
   </div>
 	
   <div id="nonogram" class="nonogram">
@@ -130,9 +130,29 @@ class GameNonogram extends HTMLElement {
     let cellSize = nonogramWidth / (maxLeftHints + matrix.length);
     document.documentElement.style.setProperty('--cell-size', cellSize + 'px');
 
+    const timer = shadowRoot.querySelector('#game-timer');
+
     shadowRoot.addEventListener('fill', (e) => {
       if (correctSolution === e.detail.currentSolution) {
-        console.log('You WON!');
+        timer.dispatchEvent(new CustomEvent('win'));
+        const minutes = timer.getAttribute('minutes');
+
+        let minutesStr = '';
+        if (!+minutes) {
+          minutesStr = '';
+        } else if (+minutes > 1) {
+          minutesStr += 'minutes ';
+        } else {
+          minutesStr += 'minute';
+        }
+
+        const seconds = timer.getAttribute('seconds');
+        let secondsStr = !seconds || `${seconds} second`;
+        secondsStr = +seconds > 1 ? secondsStr + 's' : secondsStr;
+
+        console.log(
+          `Great! You have solved the nonogram ${name[0].toUpperCase() + name.slice(1)} in ${minutesStr}${secondsStr}!`
+        );
       }
     });
 
@@ -149,7 +169,6 @@ class GameNonogram extends HTMLElement {
     shadowRoot.addEventListener(
       'starttimer',
       () => {
-        const timer = shadowRoot.querySelector('#game-timer');
         timer.launch();
       },
       {

@@ -29,7 +29,10 @@ class GameTimer extends HTMLElement {
         ? `0${this.getAttribute('seconds')}`
         : this.getAttribute('seconds');
 
-    this.innerHTML = `${minutes}:${seconds}`;
+    const duration = `${minutes}:${seconds}`;
+
+    this.currentDuration = duration;
+    this.innerHTML = duration;
   }
 
   static get observedAttributes() {
