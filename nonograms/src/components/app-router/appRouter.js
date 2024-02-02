@@ -1,11 +1,41 @@
+import { GameMenu } from './../gameMenu/gameMenu';
+import { GameNonogram } from './../gameNonogram/gameNonogram';
+
+customElements.define('game-menu', GameMenu);
+customElements.define('game-nonogram', GameNonogram);
+
 class AppRouter {
-  constructor(pageEl) {
-    this.page = pageEl;
+  constructor(app) {
+    this.app = app;
+
+    this.routes = [
+      {
+        hash: '',
+        view: '<game-menu></game-menu>',
+      },
+      {
+        hash: 'nonogram',
+        view: `
+          <game-nonogram name="tree" level="10x10">
+            <button slot="button" class="button" is="restart-btn">Restart Game</button>
+          </game-nonogram>`,
+      },
+    ];
+
+    window.addEventListener('popstate', this.changeRoute);
   }
 
-  changeRout(rout) {
-    // history.pushState(rout, '', rout);
-    this.currentRout = rout;
+  changeRoute(url) {
+    window.location.hash = url;
+    this.showRoute();
+  }
+
+  async showRoute() {
+    const match = this.routes.find(
+      (item) => item.hash === window.location.hash
+    );
+
+    this.app.innerHTML = match.view;
   }
 }
 
