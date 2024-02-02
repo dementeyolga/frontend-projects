@@ -1,4 +1,4 @@
-import timerStylesStr from './gameTimer.styles.scss';
+import timerStylesStr from './GameTimer.styles.scss';
 
 const timerStyles = document.createElement('style');
 timerStyles.textContent = timerStylesStr;

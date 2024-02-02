@@ -1,4 +1,4 @@
-import fieldStylesStr from './gameField.styles.scss';
+import fieldStylesStr from './GameField.styles.scss';
 
 const fieldStyles = document.createElement('style');
 fieldStyles.textContent = fieldStylesStr;

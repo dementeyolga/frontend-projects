@@ -1,6 +1,6 @@
 import './styles/main.scss';
-import { AppRouter } from './components/app-router/appRouter';
-import { GameHeader } from './components/gameHeader/gameHeader';
+import { AppRouter } from './components/app-router/AppRouter';
+import { GameHeader } from './components/gameHeader/GameHeader';
 // import { GameMenu } from './components/gameMenu/gameMenu';
 // import { GameNonogram } from './components/gameNonogram/gameNonogram';
 

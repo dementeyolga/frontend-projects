@@ -1,5 +1,5 @@
-import { GameMenu } from './../gameMenu/gameMenu';
-import { GameNonogram } from './../gameNonogram/gameNonogram';
+import { GameMenu } from './../gameMenu/GameMenu';
+import { GameNonogram } from './../gameNonogram/GameNonogram';
 
 customElements.define('game-menu', GameMenu);
 customElements.define('game-nonogram', GameNonogram);

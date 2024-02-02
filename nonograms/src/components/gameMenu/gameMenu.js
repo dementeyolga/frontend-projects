@@ -1,5 +1,5 @@
-import menuStyleStr from './gameMenu.styles.scss';
-import nonograms from './../../resources/nonograms.json';
+import menuStyleStr from './GameMenu.styles.scss';
+import nonograms from '../../resources/nonograms.json';
 
 const menuStyles = document.createElement('style');
 menuStyles.textContent = menuStyleStr;

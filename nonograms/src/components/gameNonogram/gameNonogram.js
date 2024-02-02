@@ -1,8 +1,8 @@
-import nonogramStylesStr from './gameNonogram.styles.scss';
-import { GameField } from './gameField/gameField';
-import { RestartBtn } from './restartBtn/restartBtn';
-import { GameTimer } from './gameTimer/gameTimer';
-import nonograms from './../../resources/nonograms.json';
+import nonogramStylesStr from './GameNonogram.styles.scss';
+import { GameField } from './gameField/GameField';
+import { RestartBtn } from './restartBtn/RestartBtn';
+import { GameTimer } from './gameTimer/GameTimer';
+import nonograms from '../../resources/nonograms.json';
 
 customElements.define('game-field', GameField);
 customElements.define('restart-btn', RestartBtn, { extends: 'button' });
