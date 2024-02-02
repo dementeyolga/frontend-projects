@@ -5,10 +5,10 @@ timerStyles.textContent = timerStylesStr;
 
 class GameTimer extends HTMLElement {
   connectedCallback() {
-    this.append(this.style);
+    this.append(timerStyles);
 
-    if (!this.getAttribute('minutes')) this.setAttribute('minutes', '0');
-    if (!this.getAttribute('seconds')) this.setAttribute('seconds', '0');
+    // if (!this.getAttribute('minutes')) this.setAttribute('minutes', '0');
+    // if (!this.getAttribute('seconds')) this.setAttribute('seconds', '0');
 
     if (!this.rendered) {
       this.render();

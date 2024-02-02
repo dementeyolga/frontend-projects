@@ -2,86 +2,93 @@
 @use './../../styles/abstract/variables' as *;
 
 :host {
-	* {
-		box-sizing: border-box;
-	}
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .nonogram {
-	display: grid;
-	grid-template-columns: auto;
-	grid-template-areas:
-		'a b b'
-		'c d d'
-		'c d d';
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  grid-template-areas:
+    'a b b'
+    'c d d'
+    'c d d';
 
-	.picture {
-		grid-area: a;
-	}
+  .summary {
+    // width: fit-content;
+    grid-area: a;
 
-	.top-pane {
-		grid-area: b;
-		width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
-		display: flex;
+  .top-pane {
+    grid-area: b;
+    width: fit-content;
 
-		border-top: 1px #000 solid;
-		border-right: 1px #000 solid;
-		border-left: 1px #000 solid;
+    display: flex;
 
-		&__hint {
-			width: $cell-size;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-end;
-			gap: 5px;
+    border-top: 1px #000 solid;
+    border-right: 1px #000 solid;
+    border-left: 1px #000 solid;
 
-			border-top: 1px #000 solid;
-			border-right: 1px #000 solid;
-			border-left: 1px #000 solid;
+    &__hint {
+      width: $cell-size;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
 
-			&:nth-child(5n):not(:last-child) {
-				border-right: 2px #000000 solid;
-			}
-		}
+      border-top: 1px #000 solid;
+      border-right: 1px #000 solid;
+      border-left: 1px #000 solid;
 
-		&__number {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-	}
+      &:nth-child(5n):not(:last-child) {
+        border-right: 2px #000000 solid;
+      }
+    }
 
-	.left-pane {
-		grid-area: c;
+    &__number {
+      height: $cell-size * 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 
-		border-top: 1px #000 solid;
-		border-bottom: 1px #000 solid;
-		border-left: 1px #000 solid;
+  .left-pane {
+    width: max-content;
+    grid-area: c;
 
-		&__hint {
-			height: $cell-size;
-			display: flex;
-			justify-content: flex-end;
-			gap: 5px;
+    border-top: 1px #000 solid;
+    border-bottom: 1px #000 solid;
+    border-left: 1px #000 solid;
 
-			border-top: 1px #000 solid;
-			border-bottom: 1px #000 solid;
-			border-left: 1px #000 solid;
+    &__hint {
+      height: $cell-size;
+      display: flex;
+      justify-content: flex-end;
 
-			&:nth-child(5n):not(:last-child) {
-				border-bottom: 2px #000000 solid;
-			}
-		}
+      border-top: 1px #000 solid;
+      border-bottom: 1px #000 solid;
+      border-left: 1px #000 solid;
 
-		&__number {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-	}
+      &:nth-child(5n):not(:last-child) {
+        border-bottom: 2px #000000 solid;
+      }
+    }
 
-	game-field {
-		grid-area: d;
-	}
+    &__number {
+      width: $cell-size * 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  game-field {
+    grid-area: d;
+  }
 }

@@ -13,11 +13,13 @@ nonogramStyles.textContent = nonogramStylesStr;
 
 const template = document.createElement('template');
 template.innerHTML = `
-	<slot name="button"></slot>
-  <game-timer id="game-timer"></game-timer>
+	<slot name="restart-button"></slot>
+  <a href="" data-link>Menu</a>
+  <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
   
   <div class="nonogram">
-    <div class="picture">Picture</div>
+    <div id="summary" class="summary">
+    </div>
     <div class="top-pane"></div>
     <div class="left-pane"></div>
   </div>
@@ -32,6 +34,11 @@ class GameNonogram extends HTMLElement {
     const level = this.getAttribute('level');
     const name = this.getAttribute('name');
 
+    shadowRoot.getElementById('summary').innerHTML = `
+      <p class="summary__level">${level}</p>
+      <p class="summary__name"> ${name}</p>
+    `;
+
     shadowRoot
       .querySelector('.nonogram')
       .insertAdjacentHTML(
@@ -43,10 +50,7 @@ class GameNonogram extends HTMLElement {
       (item) => item.name === name && item.level === level
     );
 
-    console.log(matrix);
-
     const correctSolution = matrix.flat().join('').toString();
-    console.log(correctSolution);
 
     // Show matrix solution
     let str = '';

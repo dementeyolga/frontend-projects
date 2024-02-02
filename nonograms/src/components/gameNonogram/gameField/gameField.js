@@ -11,8 +11,6 @@ class GameField extends HTMLElement {
 
     const level = this.getAttribute('level').split('x')[0];
 
-    console.log(level);
-
     const field = document.createElement('div');
     field.id = 'field';
     for (let i = 0; i < level; i += 1) {

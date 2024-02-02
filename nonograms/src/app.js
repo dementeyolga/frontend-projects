@@ -27,9 +27,24 @@ const router = new AppRouter(document.getElementById('main'));
 
 document.addEventListener('DOMContentLoaded', () => {
   document.body.addEventListener('click', (e) => {
-    if (e.target.matches('[data-link]')) {
+    const deepestEl = e.composedPath()[0];
+    if (deepestEl.matches('[data-link]')) {
       e.preventDefault();
-      router.changeRoute(e.target.href);
+      router.changeHash(deepestEl.getAttribute('href'));
+
+      let params = [];
+      if (deepestEl.getAttribute('href') === 'nonogram') {
+        console.log(
+          deepestEl.getAttribute('level'),
+          deepestEl.getAttribute('game-name')
+        );
+
+        params.push(deepestEl.getAttribute('game-name'));
+        params.push(deepestEl.getAttribute('level'));
+      }
+
+      router.showRoute(params);
+      console.log(deepestEl.getAttribute('href'));
     }
   });
 

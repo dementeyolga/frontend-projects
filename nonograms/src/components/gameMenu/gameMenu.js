@@ -12,7 +12,7 @@ const levelsHTML = levels
       .filter((item) => item.level === level)
       .map(
         (item) =>
-          `<a href="#${item.name}" class="menu__item" data-link>${item.name}</a>\n`
+          `<a href="nonogram" class="menu__item" level="${level}" game-name="${item.name}" data-link>${item.name}</a>\n`
       )
       .join('\n');
 
