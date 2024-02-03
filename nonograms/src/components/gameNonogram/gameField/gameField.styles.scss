@@ -26,6 +26,8 @@
   height: var(--cell-size);
   border: 1px #000000 solid;
 
+  transition: 0.2s;
+
   &:nth-child(5n):not(:last-child) {
     border-right: 2px #000000 solid;
   }

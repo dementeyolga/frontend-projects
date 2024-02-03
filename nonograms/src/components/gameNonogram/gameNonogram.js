@@ -45,7 +45,7 @@ class GameNonogram extends HTMLElement {
     const nonogram = shadowRoot.querySelector('#nonogram');
     nonogram.insertAdjacentHTML(
       'beforeend',
-      `<game-field class="game-field" level="${level}"></game-field>`
+      `<game-field id="game-field" class="game-field" level="${level}"></game-field>`
     );
 
     const { matrix } = nonograms.find(
@@ -132,9 +132,11 @@ class GameNonogram extends HTMLElement {
     document.documentElement.style.setProperty('--cell-size', cellSize + 'px');
 
     const timer = shadowRoot.querySelector('#game-timer');
+    const field = shadowRoot.querySelector('#game-field');
 
     shadowRoot.addEventListener('fill', (e) => {
       if (correctSolution === e.detail.currentSolution) {
+        field.dispatchEvent(new CustomEvent('win'));
         timer.dispatchEvent(new CustomEvent('win'));
         const minutes = timer.getAttribute('minutes');
 

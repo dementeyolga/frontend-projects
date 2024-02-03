@@ -27,6 +27,8 @@ class GameField extends HTMLElement {
 
     shadowRoot.append(field);
 
+    const cells = field.querySelectorAll('.cell');
+
     function checkSolution() {
       const currentSolution = [...field.querySelectorAll('.cell')].reduce(
         (acc, curr) => {
@@ -100,6 +102,10 @@ class GameField extends HTMLElement {
         once: true,
       }
     );
+
+    this.addEventListener('win', () => {
+      cells.forEach((cell) => cell.classList.remove('crossed'));
+    });
   }
 }
 
