@@ -4,7 +4,7 @@
   padding: 8px 12px;
 
   color: $color-text-reverse;
-  background-color: $color-accent-secondary;
+  background-color: $color-accent-secondary-1;
 
   border-radius: 10px;
 
@@ -12,6 +12,6 @@
 
   &:hover {
     cursor: pointer;
-    filter: brightness(105%);
+    filter: brightness(120%);
   }
 }

@@ -1,12 +1,14 @@
 import nonogramStylesStr from './GameNonogram.styles.scss';
 import { GameField } from './gameField/GameField';
 import { RestartBtn } from './restartBtn/RestartBtn';
+import { SolutionBtn } from './solutionBtn/SolutionBtn';
 import { GameTimer } from './gameTimer/GameTimer';
 import nonograms from '../../resources/nonograms.json';
 import winSoundFile from './../../assets/sound-effects/win-game.mp3';
 
 customElements.define('game-field', GameField);
-customElements.define('restart-btn', RestartBtn, { extends: 'button' });
+customElements.define('restart-btn', RestartBtn);
+customElements.define('solution-btn', SolutionBtn);
 customElements.define('game-timer', GameTimer);
 
 const nonogramStyles = document.createElement('style');
@@ -15,7 +17,8 @@ nonogramStyles.textContent = nonogramStylesStr;
 const template = document.createElement('template');
 template.innerHTML = `
   <div class="actions">
-    <slot name="restart-button"></slot>
+    <restart-btn></restart-btn>
+    <solution-btn></solution-btn>
     <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
     <a href="" data-link>Menu</a>
   </div>
@@ -162,13 +165,17 @@ class GameNonogram extends HTMLElement {
     });
 
     shadowRoot.addEventListener('restart', () => {
-      shadowRoot
-        .querySelector('game-field')
-        .shadowRoot.querySelectorAll('.cell')
-        .forEach((cell) => {
-          cell.classList.remove('filled');
-          cell.classList.remove('crossed');
-        });
+      field.dispatchEvent(new CustomEvent('restart'));
+    });
+
+    shadowRoot.addEventListener('solution', () => {
+      timer.stop();
+
+      field.dispatchEvent(
+        new CustomEvent('solution', {
+          detail: matrix.flat(),
+        })
+      );
     });
 
     shadowRoot.addEventListener(

@@ -39,7 +39,6 @@ class AppRouter {
 
           return `
             <game-nonogram name="${resolvedName}" level="${resolvedLevel}">
-              <button slot="restart-button" class="button" is="restart-btn">Restart Game</button>
             </game-nonogram>
           `;
         },

@@ -47,6 +47,18 @@ class GameField extends HTMLElement {
     }
 
     field.addEventListener('click', (e) => {
+      if (this.clicksDisabled) {
+        e.stopImmediatePropagation();
+      }
+    });
+
+    field.addEventListener('contextmenu', (e) => {
+      if (this.clicksDisabled) {
+        e.stopImmediatePropagation();
+      }
+    });
+
+    field.addEventListener('click', (e) => {
       e.target.classList.remove('crossed');
       e.target.classList.toggle('filled');
 
@@ -103,9 +115,33 @@ class GameField extends HTMLElement {
       }
     );
 
+    this.addEventListener('restart', () => {
+      cells.forEach((cell) => cell.classList.remove('filled', 'crossed'));
+    });
+
+    this.addEventListener('solution', (e) => {
+      this.disableClicks();
+
+      const solution = e.detail;
+
+      cells.forEach((cell, i) => {
+        if (solution[i]) {
+          cell.classList.remove('crossed');
+          cell.classList.add('filled');
+        } else {
+          cell.classList.remove('crossed');
+          cell.classList.remove('filled');
+        }
+      });
+    });
+
     this.addEventListener('win', () => {
       cells.forEach((cell) => cell.classList.remove('crossed'));
     });
+  }
+
+  disableClicks() {
+    this.clicksDisabled = true;
   }
 }
 

@@ -1,2 +1,6 @@
 @use './../../../styles/abstract/variables' as *;
 @use './../../../styles/components/button' as *;
+
+.button {
+  background-color: $color-accent-secondary-2;
+}
