@@ -1,4 +1,7 @@
 import fieldStylesStr from './GameField.styles.scss';
+import fillSoundFile from './../../../assets/sound-effects/fill-cell.mp3';
+import clearSoundFile from './../../../assets/sound-effects/clear-cell.mp3';
+import crossSoundFile from './../../../assets/sound-effects/cross-cell.mp3';
 
 const fieldStyles = document.createElement('style');
 fieldStyles.textContent = fieldStylesStr;
@@ -45,6 +48,12 @@ class GameField extends HTMLElement {
       e.target.classList.remove('crossed');
       e.target.classList.toggle('filled');
 
+      if (e.target.classList.contains('filled')) {
+        new Audio(fillSoundFile).play();
+      } else {
+        new Audio(clearSoundFile).play();
+      }
+
       checkSolution();
     });
 
@@ -52,6 +61,12 @@ class GameField extends HTMLElement {
       e.preventDefault();
       e.target.classList.remove('filled');
       e.target.classList.toggle('crossed');
+
+      if (e.target.classList.contains('crossed')) {
+        new Audio(crossSoundFile).play();
+      } else {
+        new Audio(clearSoundFile).play();
+      }
 
       checkSolution();
     });

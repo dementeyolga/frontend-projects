@@ -3,6 +3,7 @@ import { GameField } from './gameField/GameField';
 import { RestartBtn } from './restartBtn/RestartBtn';
 import { GameTimer } from './gameTimer/GameTimer';
 import nonograms from '../../resources/nonograms.json';
+import winSoundFile from './../../assets/sound-effects/win-game.mp3';
 
 customElements.define('game-field', GameField);
 customElements.define('restart-btn', RestartBtn, { extends: 'button' });
@@ -149,6 +150,8 @@ class GameNonogram extends HTMLElement {
         const seconds = timer.getAttribute('seconds');
         let secondsStr = !seconds || `${seconds} second`;
         secondsStr = +seconds > 1 ? secondsStr + 's' : secondsStr;
+
+        new Audio(winSoundFile).play();
 
         console.log(
           `Great! You have solved the nonogram ${name[0].toUpperCase() + name.slice(1)} in ${minutesStr}${secondsStr}!`
