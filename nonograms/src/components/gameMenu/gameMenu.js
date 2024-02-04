@@ -1,6 +1,6 @@
 import menuStyleStr from './GameMenu.styles.scss';
 import nonograms from '../../resources/nonograms.json';
-import { RandomBtn } from '../gameNonogram/randomBtn/RandonBtn';
+import { RandomBtn } from './randomBtn/RandonBtn';
 
 customElements.define('random-btn', RandomBtn);
 

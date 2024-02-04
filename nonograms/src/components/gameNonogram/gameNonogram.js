@@ -2,6 +2,7 @@ import nonogramStylesStr from './GameNonogram.styles.scss';
 import { GameField } from './gameField/GameField';
 import { RestartBtn } from './restartBtn/RestartBtn';
 import { SolutionBtn } from './solutionBtn/SolutionBtn';
+import { SaveGameBtn } from './saveGameBtn/SaveGameBtn';
 import { GameTimer } from './gameTimer/GameTimer';
 import nonograms from '../../resources/nonograms.json';
 import winSoundFile from './../../assets/sound-effects/win-game.mp3';
@@ -9,6 +10,7 @@ import winSoundFile from './../../assets/sound-effects/win-game.mp3';
 customElements.define('game-field', GameField);
 customElements.define('restart-btn', RestartBtn);
 customElements.define('solution-btn', SolutionBtn);
+customElements.define('save-btn', SaveGameBtn);
 customElements.define('game-timer', GameTimer);
 
 const nonogramStyles = document.createElement('style');
@@ -18,6 +20,7 @@ const template = document.createElement('template');
 template.innerHTML = `
   <div class="actions">
     <restart-btn></restart-btn>
+    <save-btn></save-btn>
     <solution-btn></solution-btn>
     <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
     <a href="" data-link>Menu</a>
