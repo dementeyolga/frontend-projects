@@ -24,13 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let params = [];
       if (deepestEl.getAttribute('href') === 'nonogram') {
-        console.log(
-          deepestEl.getAttribute('level'),
-          deepestEl.getAttribute('game-name')
-        );
+        if (deepestEl.getAttribute('game-name')) {
+          params.push(deepestEl.getAttribute('game-name'));
+        }
 
-        params.push(deepestEl.getAttribute('game-name'));
-        params.push(deepestEl.getAttribute('level'));
+        if (deepestEl.getAttribute('level')) {
+          params.push(deepestEl.getAttribute('level'));
+        }
+      }
+
+      if (deepestEl.matches('[random]')) {
+        params.push('random');
       }
 
       router.showRoute(params);

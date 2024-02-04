@@ -52,11 +52,21 @@ class AppRouter {
   }
 
   showRoute(params = []) {
+    const newParams = [...params];
+
+    if (params[0] === 'random') {
+      const randomNum = Math.floor(Math.random() * nonograms.length);
+      const randomNonogram = nonograms[randomNum];
+
+      newParams[0] = randomNonogram.name;
+      newParams[1] = randomNonogram.level;
+    }
+
     const match = this.routes.find(
       (item) => item.hash === window.location.hash.slice(1)
     );
 
-    this.app.innerHTML = match.view(...params);
+    this.app.innerHTML = match.view(...newParams);
   }
 }
 
