@@ -43,17 +43,25 @@ class GameTimer extends HTMLElement {
   }
 
   launch() {
-    if (!this.startTime) {
+    if (this.continue) {
+      const time = this.currentDuration.split(':');
+      const min = +time[0];
+      const sec = +time[1];
+
+      this.startTime = Date.now() - (min * 60 + sec) * 1000;
+    } else {
       this.startTime = Date.now();
-
-      this.intervalID = setInterval(() => {
-        const now = Date.now();
-        const duration = Math.trunc((now - this.startTime) / 1000);
-
-        this.setAttribute('seconds', duration % 60);
-        this.setAttribute('minutes', Math.floor(duration / 60));
-      }, 1000);
     }
+
+    clearInterval(this.intervalID);
+
+    this.intervalID = setInterval(() => {
+      const now = Date.now();
+      const duration = Math.trunc((now - this.startTime) / 1000);
+
+      this.setAttribute('seconds', duration % 60);
+      this.setAttribute('minutes', Math.floor(duration / 60));
+    }, 1000);
   }
 
   stop() {

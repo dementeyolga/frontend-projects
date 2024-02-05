@@ -47,6 +47,7 @@ class GameNonogram extends HTMLElement {
     // const savedSolution = this.getAttribute('savedsolution');
 
     const timer = shadowRoot.querySelector('#game-timer');
+    console.log('nonogram added to the doc');
 
     if (
       this.getAttribute('minutes') !== '0' ||
@@ -58,8 +59,7 @@ class GameNonogram extends HTMLElement {
       timer.setAttribute('minutes', savedMinutes);
       timer.setAttribute('seconds', savedSeconds);
 
-      timer.startTime =
-        Date.now() + (+savedMinutes * 60 + +savedSeconds) * 1000;
+      timer.continue = true;
     }
 
     shadowRoot.getElementById('summary').innerHTML = `
