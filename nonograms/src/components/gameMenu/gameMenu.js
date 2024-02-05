@@ -1,8 +1,10 @@
 import menuStyleStr from './GameMenu.styles.scss';
 import nonograms from '../../resources/nonograms.json';
 import { RandomBtn } from './randomBtn/RandonBtn';
+import { ContinueBtn } from './continueBtn/ContinueBtn';
 
 customElements.define('random-btn', RandomBtn);
+customElements.define('continue-btn', ContinueBtn);
 
 const menuStyles = document.createElement('style');
 menuStyles.textContent = menuStyleStr;
@@ -31,7 +33,13 @@ const levelsHTML = levels
   .join('\n');
 
 const template = document.createElement('template');
-template.innerHTML = `<random-btn></random-btn>` + levelsHTML;
+template.innerHTML = `
+                      <div class="actions">
+                        <random-btn></random-btn>
+                        <continue-btn></continue-btn>
+                      </div>
+                      
+                      ${levelsHTML}`;
 
 class GameMenu extends HTMLElement {
   connectedCallback() {

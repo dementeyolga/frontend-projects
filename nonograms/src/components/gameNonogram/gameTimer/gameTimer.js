@@ -28,6 +28,8 @@ class GameTimer extends HTMLElement {
 
     const duration = `${minutes}:${seconds}`;
 
+    this.minutes = minutes;
+    this.seconds = seconds;
     this.currentDuration = duration;
     this.innerHTML = duration;
   }

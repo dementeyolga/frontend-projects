@@ -37,6 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
         params.push('random');
       }
 
+      if (deepestEl.matches('[continue]')) {
+        params.push('continue');
+      }
+
       router.showRoute(params);
     }
   });

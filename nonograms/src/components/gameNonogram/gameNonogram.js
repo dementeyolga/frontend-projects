@@ -44,6 +44,23 @@ class GameNonogram extends HTMLElement {
 
     const level = this.getAttribute('level');
     const name = this.getAttribute('name');
+    // const savedSolution = this.getAttribute('savedsolution');
+
+    const timer = shadowRoot.querySelector('#game-timer');
+
+    if (
+      this.getAttribute('minutes') !== '0' ||
+      this.getAttribute('seconds') !== '0'
+    ) {
+      const savedMinutes = this.getAttribute('minutes');
+      const savedSeconds = this.getAttribute('seconds');
+
+      timer.setAttribute('minutes', savedMinutes);
+      timer.setAttribute('seconds', savedSeconds);
+
+      timer.startTime =
+        Date.now() + (+savedMinutes * 60 + +savedSeconds) * 1000;
+    }
 
     shadowRoot.getElementById('summary').innerHTML = `
       <p class="summary__level">${level}</p>
@@ -55,6 +72,7 @@ class GameNonogram extends HTMLElement {
       'beforeend',
       `<game-field id="game-field" class="game-field" level="${level}"></game-field>`
     );
+    const field = shadowRoot.querySelector('#game-field');
 
     const { matrix } = nonograms.find(
       (item) => item.name === name && item.level === level
@@ -139,9 +157,6 @@ class GameNonogram extends HTMLElement {
     let cellSize = nonogramWidth / (maxLeftHints + matrix.length);
     document.documentElement.style.setProperty('--cell-size', cellSize + 'px');
 
-    const timer = shadowRoot.querySelector('#game-timer');
-    const field = shadowRoot.querySelector('#game-field');
-
     shadowRoot.firstElementChild.addEventListener('fill', () => {
       if (correctSolution === field.currentSolution) {
         field.dispatchEvent(new CustomEvent('win'));
@@ -189,7 +204,10 @@ class GameNonogram extends HTMLElement {
         level,
         name,
         currentSolution: field.currentSolution,
-        time: timer.currentDuration,
+        time: {
+          minutes: timer.minutes,
+          seconds: timer.seconds,
+        },
       };
 
       localStorage.setItem('savedGame', JSON.stringify(game));
