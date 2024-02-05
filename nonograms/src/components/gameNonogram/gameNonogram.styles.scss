@@ -20,17 +20,27 @@
 
 .nonogram {
   &__container {
+    min-height: calc(100%);
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
-  width: 45%;
+  &__wrapper {
+    width: 100%;
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  width: 40%;
 
   @include max-1200 {
-    width: 55%;
+    width: 50%;
   }
 
   @include portrait {
@@ -43,7 +53,7 @@
 
   display: grid;
   grid-template-columns:
-    auto,
+    auto
     1fr 1fr;
   grid-template-areas:
     'a b b'
@@ -57,9 +67,8 @@
   grid-area: a;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  gap: 16px;
 
   text-align: center;
 }
@@ -73,6 +82,8 @@
   border-top: 1px #000 solid;
   border-right: 1px #000 solid;
   border-left: 1px #000 solid;
+
+  background-color: #0000001f;
 
   &__hint {
     width: var(--cell-size);
@@ -104,6 +115,8 @@
   border-top: 1px #000 solid;
   border-bottom: 1px #000 solid;
   border-left: 1px #000 solid;
+
+  background-color: #0000001f;
 
   &__hint {
     height: var(--cell-size);

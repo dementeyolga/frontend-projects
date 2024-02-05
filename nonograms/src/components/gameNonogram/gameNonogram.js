@@ -26,13 +26,18 @@ template.innerHTML = `
       <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
       <a href="" data-link>Menu</a>
     </div>
+
+    <div id="summary" class="summary">
+      </div>  
     
-    <div id="nonogram" class="nonogram">
-      <div id="summary" class="summary">
+    <div class="nonogram__wrapper">
+      <div id="nonogram" class="nonogram">
+      
+        <div class="top-pane"></div>
+        <div class="left-pane"></div>
       </div>
-      <div class="top-pane"></div>
-      <div class="left-pane"></div>
-    </div>
+    </div>  
+    
   </div>
 `;
 
