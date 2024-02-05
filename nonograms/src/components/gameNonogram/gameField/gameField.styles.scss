@@ -1,0 +1,67 @@
+@use './../../../styles/abstract/variables' as *;
+@use './../../../styles/base/normalize' as *;
+
+:host {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  border: 1px #000000 solid;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.row {
+  display: flex;
+  height: var(--cell-size);
+
+  &:nth-child(5n):not(:last-child) {
+    border-bottom: 2px #000000 solid;
+  }
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px #000000 solid;
+
+  transition: 0.2s;
+
+  &:nth-child(5n):not(:last-child) {
+    border-right: 2px #000000 solid;
+  }
+
+  &.filled {
+    background-color: #000000;
+  }
+
+  &.crossed {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      width: calc(var(--cell-size) * 0.9);
+      height: 3px;
+      background-color: #000000;
+
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      width: calc(var(--cell-size) * 0.9);
+      height: 3px;
+      background-color: #000000;
+
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}
