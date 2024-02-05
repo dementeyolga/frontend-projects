@@ -16,7 +16,7 @@ class AppRouter {
       },
       {
         hash: 'nonogram',
-        view: (name, level, savedSolution, minutes, seconds) => {
+        view: (name, level, savedSolution, crossed, minutes, seconds) => {
           let resolvedName;
           let resolvedLevel;
 
@@ -38,7 +38,7 @@ class AppRouter {
           }
 
           return `
-            <game-nonogram name="${resolvedName}" level="${resolvedLevel}"  savedsolution="${savedSolution || ''}" minutes="${minutes || '0'}" seconds="${seconds || '0'}">
+            <game-nonogram name="${resolvedName}" level="${resolvedLevel}"  savedsolution="${savedSolution || ''}" crossed="${crossed || ''}" minutes="${minutes || '0'}" seconds="${seconds || '0'}">
             </game-nonogram>
           `;
         },
@@ -70,8 +70,9 @@ class AppRouter {
       newParams[0] = saved.name;
       newParams[1] = saved.level;
       newParams[2] = saved.currentSolution;
-      newParams[3] = saved.time.minutes;
-      newParams[4] = saved.time.seconds;
+      newParams[3] = saved.crossed;
+      newParams[4] = saved.time.minutes;
+      newParams[5] = saved.time.seconds;
     }
 
     let match = this.routes.find(

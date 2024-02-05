@@ -9,13 +9,13 @@ fieldStyles.textContent = fieldStylesStr;
 class GameField extends HTMLElement {
   connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: 'open' });
-
     shadowRoot.append(fieldStyles);
 
     this.level = this.getAttribute('level').split('x')[0];
 
     this.field = document.createElement('div');
     this.field.id = 'field';
+
     for (let i = 0; i < this.level; i += 1) {
       let row = document.createElement('div');
       row.classList.add('row');
@@ -29,7 +29,24 @@ class GameField extends HTMLElement {
 
     this.cells = this.field.querySelectorAll('.cell');
 
-    this.currentSolution = new Array(this.cells.length).fill(0).join('');
+    this.currentSolution =
+      this.savedSolution || new Array(this.cells.length).fill(0).join('');
+
+    if (this.savedSolution) {
+      this.cells.forEach((cell, i) => {
+        if (this.savedSolution[i] === '1') {
+          cell.classList.add('filled');
+        }
+      });
+    }
+
+    if (this.crossed) {
+      this.cells.forEach((cell, i) => {
+        if (this.crossed[i] === 'x') {
+          cell.classList.add('crossed');
+        }
+      });
+    }
 
     this.field.addEventListener('click', (e) => {
       if (this.clicksDisabled) {
@@ -70,35 +87,29 @@ class GameField extends HTMLElement {
       this.checkSolution();
     });
 
-    this.field.addEventListener(
-      'click',
-      () => {
-        this.field.dispatchEvent(
-          new CustomEvent('starttimer', {
-            bubbles: true,
-            composed: true,
-          })
-        );
-      },
-      {
-        once: true,
-      }
-    );
+    this.field.addEventListener('click', () => {
+      if (this.timerStarted) return;
+      this.timerStarted = true;
 
-    this.field.addEventListener(
-      'contextmenu',
-      () => {
-        this.dispatchEvent(
-          new CustomEvent('starttimer', {
-            bubbles: true,
-            composed: true,
-          })
-        );
-      },
-      {
-        once: true,
-      }
-    );
+      this.field.dispatchEvent(
+        new CustomEvent('starttimer', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    });
+
+    this.field.addEventListener('contextmenu', () => {
+      if (this.timerStarted) return;
+      this.timerStarted = true;
+
+      this.dispatchEvent(
+        new CustomEvent('starttimer', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    });
 
     this.addEventListener('restart', () => {
       this.enableClicks();
@@ -130,6 +141,10 @@ class GameField extends HTMLElement {
   checkSolution() {
     this.currentSolution = [...this.cells].reduce((acc, curr) => {
       return curr.classList.contains('filled') ? acc + '1' : acc + '0';
+    }, '');
+
+    this.currentCrossed = [...this.cells].reduce((acc, curr) => {
+      return curr.classList.contains('crossed') ? acc + 'x' : acc + '0';
     }, '');
 
     this.field.dispatchEvent(

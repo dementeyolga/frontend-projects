@@ -69,10 +69,13 @@ class GameTimer extends HTMLElement {
   }
 
   restart() {
-    console.log('in restart');
     this.startTime = null;
+    this.continue = false;
 
-    this.launch();
+    this.setAttribute('seconds', '0');
+    this.setAttribute('minutes', '0');
+
+    this.stop();
   }
 
   disconnectedCallback() {
