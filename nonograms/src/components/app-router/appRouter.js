@@ -1,6 +1,6 @@
-import { GameMenu } from './../gameMenu/GameMenu';
-import { GameNonogram } from './../gameNonogram/GameNonogram';
-import nonograms from './../../resources/nonograms.json';
+import { GameMenu } from '../gameMenu/GameMenu';
+import { GameNonogram } from '../gameNonogram/GameNonogram';
+import nonograms from '../../resources/nonograms.json';
 
 customElements.define('game-menu', GameMenu);
 customElements.define('game-nonogram', GameNonogram);
@@ -65,8 +65,6 @@ class AppRouter {
     let match = this.routes.find(
       (item) => item.hash === window.location.hash.slice(1)
     );
-
-    console.log(match);
 
     if (!match) {
       match = this.routes.find((item) => item.hash === '');

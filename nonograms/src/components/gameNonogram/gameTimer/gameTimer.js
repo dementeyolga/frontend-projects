@@ -7,9 +7,6 @@ class GameTimer extends HTMLElement {
   connectedCallback() {
     this.append(timerStyles);
 
-    // if (!this.getAttribute('minutes')) this.setAttribute('minutes', '0');
-    // if (!this.getAttribute('seconds')) this.setAttribute('seconds', '0');
-
     if (!this.rendered) {
       this.render();
       this.rendered = true;
@@ -59,6 +56,13 @@ class GameTimer extends HTMLElement {
 
   stop() {
     clearInterval(this.intervalID);
+  }
+
+  restart() {
+    console.log('in restart');
+    this.startTime = null;
+
+    this.launch();
   }
 
   disconnectedCallback() {

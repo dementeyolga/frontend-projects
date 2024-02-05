@@ -2,9 +2,11 @@
 
 .button {
   padding: 8px 12px;
+  display: block;
   width: fit-content;
 
   color: $color-text-reverse;
+  text-decoration: none;
   background-color: $color-accent-secondary-1;
 
   border-radius: 10px;

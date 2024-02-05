@@ -6,11 +6,6 @@
   * {
     box-sizing: border-box;
   }
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .actions {
@@ -24,6 +19,14 @@
 }
 
 .nonogram {
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   width: 45%;
 
   @include max-1200 {
@@ -39,7 +42,9 @@
   }
 
   display: grid;
-  grid-template-columns: min(auto, 10%) 1fr 1fr;
+  grid-template-columns:
+    auto,
+    1fr 1fr;
   grid-template-areas:
     'a b b'
     'c d d'

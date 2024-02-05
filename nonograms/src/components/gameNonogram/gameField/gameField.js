@@ -12,53 +12,38 @@ class GameField extends HTMLElement {
 
     shadowRoot.append(fieldStyles);
 
-    const level = this.getAttribute('level').split('x')[0];
+    this.level = this.getAttribute('level').split('x')[0];
 
-    const field = document.createElement('div');
-    field.id = 'field';
-    for (let i = 0; i < level; i += 1) {
+    this.field = document.createElement('div');
+    this.field.id = 'field';
+    for (let i = 0; i < this.level; i += 1) {
       let row = document.createElement('div');
       row.classList.add('row');
-      for (let j = 0; j < level; j += 1) {
+      for (let j = 0; j < this.level; j += 1) {
         row.insertAdjacentHTML('beforeend', `<div class="cell"></div>`);
       }
-      field.append(row);
+      this.field.append(row);
     }
 
-    shadowRoot.append(field);
+    shadowRoot.append(this.field);
 
-    const cells = field.querySelectorAll('.cell');
+    this.cells = this.field.querySelectorAll('.cell');
 
-    function checkSolution() {
-      const currentSolution = [...field.querySelectorAll('.cell')].reduce(
-        (acc, curr) => {
-          return curr.classList.contains('filled') ? acc + '1' : acc + '0';
-        },
-        ''
-      );
+    this.currentSolution = new Array(this.cells.length).fill(0).join('');
 
-      field.dispatchEvent(
-        new CustomEvent('fill', {
-          bubbles: true,
-          composed: true,
-          detail: { currentSolution },
-        })
-      );
-    }
-
-    field.addEventListener('click', (e) => {
+    this.field.addEventListener('click', (e) => {
       if (this.clicksDisabled) {
         e.stopImmediatePropagation();
       }
     });
 
-    field.addEventListener('contextmenu', (e) => {
+    this.field.addEventListener('contextmenu', (e) => {
       if (this.clicksDisabled) {
         e.stopImmediatePropagation();
       }
     });
 
-    field.addEventListener('click', (e) => {
+    this.field.addEventListener('click', (e) => {
       e.target.classList.remove('crossed');
       e.target.classList.toggle('filled');
 
@@ -68,10 +53,10 @@ class GameField extends HTMLElement {
         new Audio(clearSoundFile).play();
       }
 
-      checkSolution();
+      this.checkSolution();
     });
 
-    field.addEventListener('contextmenu', (e) => {
+    this.field.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       e.target.classList.remove('filled');
       e.target.classList.toggle('crossed');
@@ -82,13 +67,13 @@ class GameField extends HTMLElement {
         new Audio(clearSoundFile).play();
       }
 
-      checkSolution();
+      this.checkSolution();
     });
 
-    field.addEventListener(
+    this.field.addEventListener(
       'click',
       () => {
-        field.dispatchEvent(
+        this.field.dispatchEvent(
           new CustomEvent('starttimer', {
             bubbles: true,
             composed: true,
@@ -100,10 +85,10 @@ class GameField extends HTMLElement {
       }
     );
 
-    field.addEventListener(
+    this.field.addEventListener(
       'contextmenu',
       () => {
-        field.dispatchEvent(
+        this.dispatchEvent(
           new CustomEvent('starttimer', {
             bubbles: true,
             composed: true,
@@ -116,7 +101,8 @@ class GameField extends HTMLElement {
     );
 
     this.addEventListener('restart', () => {
-      cells.forEach((cell) => cell.classList.remove('filled', 'crossed'));
+      this.enableClicks();
+      this.cells.forEach((cell) => cell.classList.remove('filled', 'crossed'));
     });
 
     this.addEventListener('solution', (e) => {
@@ -124,7 +110,7 @@ class GameField extends HTMLElement {
 
       const solution = e.detail;
 
-      cells.forEach((cell, i) => {
+      this.cells.forEach((cell, i) => {
         if (solution[i]) {
           cell.classList.remove('crossed');
           cell.classList.add('filled');
@@ -136,12 +122,30 @@ class GameField extends HTMLElement {
     });
 
     this.addEventListener('win', () => {
-      cells.forEach((cell) => cell.classList.remove('crossed'));
+      this.disableClicks();
+      this.cells.forEach((cell) => cell.classList.remove('crossed'));
     });
+  }
+
+  checkSolution() {
+    this.currentSolution = [...this.cells].reduce((acc, curr) => {
+      return curr.classList.contains('filled') ? acc + '1' : acc + '0';
+    }, '');
+
+    this.field.dispatchEvent(
+      new CustomEvent('fill', {
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   disableClicks() {
     this.clicksDisabled = true;
+  }
+
+  enableClicks() {
+    this.clicksDisabled = false;
   }
 }
 

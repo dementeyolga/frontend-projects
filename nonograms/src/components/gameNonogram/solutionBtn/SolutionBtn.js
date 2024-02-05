@@ -11,8 +11,8 @@ class SolutionBtn extends HTMLElement {
     `;
     shadowRoot.append(solutionBtnStyles);
 
-    shadowRoot.firstElementChild.onclick = () => {
-      this.dispatchEvent(
+    shadowRoot.firstElementChild.onclick = (e) => {
+      e.currentTarget.dispatchEvent(
         new CustomEvent('solution', {
           bubbles: true,
           composed: true,

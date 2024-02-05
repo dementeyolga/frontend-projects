@@ -2,7 +2,7 @@ import nonogramStylesStr from './GameNonogram.styles.scss';
 import { GameField } from './gameField/GameField';
 import { RestartBtn } from './restartBtn/RestartBtn';
 import { SolutionBtn } from './solutionBtn/SolutionBtn';
-import { SaveGameBtn } from './saveGameBtn/SaveGameBtn';
+import { SaveBtn } from './saveBtn/SaveBtn';
 import { GameTimer } from './gameTimer/GameTimer';
 import nonograms from '../../resources/nonograms.json';
 import winSoundFile from './../../assets/sound-effects/win-game.mp3';
@@ -10,7 +10,7 @@ import winSoundFile from './../../assets/sound-effects/win-game.mp3';
 customElements.define('game-field', GameField);
 customElements.define('restart-btn', RestartBtn);
 customElements.define('solution-btn', SolutionBtn);
-customElements.define('save-btn', SaveGameBtn);
+customElements.define('save-btn', SaveBtn);
 customElements.define('game-timer', GameTimer);
 
 const nonogramStyles = document.createElement('style');
@@ -18,19 +18,21 @@ nonogramStyles.textContent = nonogramStylesStr;
 
 const template = document.createElement('template');
 template.innerHTML = `
-  <div class="actions">
-    <restart-btn></restart-btn>
-    <save-btn></save-btn>
-    <solution-btn></solution-btn>
-    <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
-    <a href="" data-link>Menu</a>
-  </div>
-	
-  <div id="nonogram" class="nonogram">
-    <div id="summary" class="summary">
+  <div class="nonogram__container">
+    <div class="actions">
+      <restart-btn></restart-btn>
+      <save-btn></save-btn>
+      <solution-btn></solution-btn>
+      <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
+      <a href="" data-link>Menu</a>
     </div>
-    <div class="top-pane"></div>
-    <div class="left-pane"></div>
+    
+    <div id="nonogram" class="nonogram">
+      <div id="summary" class="summary">
+      </div>
+      <div class="top-pane"></div>
+      <div class="left-pane"></div>
+    </div>
   </div>
 `;
 
@@ -140,8 +142,8 @@ class GameNonogram extends HTMLElement {
     const timer = shadowRoot.querySelector('#game-timer');
     const field = shadowRoot.querySelector('#game-field');
 
-    shadowRoot.addEventListener('fill', (e) => {
-      if (correctSolution === e.detail.currentSolution) {
+    shadowRoot.firstElementChild.addEventListener('fill', () => {
+      if (correctSolution === field.currentSolution) {
         field.dispatchEvent(new CustomEvent('win'));
         timer.dispatchEvent(new CustomEvent('win'));
         const minutes = timer.getAttribute('minutes');
@@ -167,11 +169,12 @@ class GameNonogram extends HTMLElement {
       }
     });
 
-    shadowRoot.addEventListener('restart', () => {
+    shadowRoot.firstElementChild.addEventListener('restart', () => {
       field.dispatchEvent(new CustomEvent('restart'));
+      timer.restart();
     });
 
-    shadowRoot.addEventListener('solution', () => {
+    shadowRoot.firstElementChild.addEventListener('solution', () => {
       timer.stop();
 
       field.dispatchEvent(
@@ -181,7 +184,18 @@ class GameNonogram extends HTMLElement {
       );
     });
 
-    shadowRoot.addEventListener(
+    shadowRoot.firstElementChild.addEventListener('save-game', () => {
+      const game = {
+        level,
+        name,
+        currentSolution: field.currentSolution,
+        time: timer.currentDuration,
+      };
+
+      localStorage.setItem('savedGame', JSON.stringify(game));
+    });
+
+    shadowRoot.firstElementChild.addEventListener(
       'starttimer',
       () => {
         timer.launch();
