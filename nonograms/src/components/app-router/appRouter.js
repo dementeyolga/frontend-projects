@@ -62,9 +62,15 @@ class AppRouter {
       newParams[1] = randomNonogram.level;
     }
 
-    const match = this.routes.find(
+    let match = this.routes.find(
       (item) => item.hash === window.location.hash.slice(1)
     );
+
+    console.log(match);
+
+    if (!match) {
+      match = this.routes.find((item) => item.hash === '');
+    }
 
     this.app.innerHTML = match.view(...newParams);
   }
