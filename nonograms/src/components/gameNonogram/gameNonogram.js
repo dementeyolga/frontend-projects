@@ -26,13 +26,18 @@ template.innerHTML = `
       <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
       <a href="" data-link>Menu</a>
     </div>
+
+    <div id="summary" class="summary">
+      </div>  
     
-    <div id="nonogram" class="nonogram">
-      <div id="summary" class="summary">
+    <div class="nonogram__wrapper">
+      <div id="nonogram" class="nonogram">
+      
+        <div class="top-pane"></div>
+        <div class="left-pane"></div>
       </div>
-      <div class="top-pane"></div>
-      <div class="left-pane"></div>
-    </div>
+    </div>  
+    
   </div>
 `;
 
@@ -44,9 +49,11 @@ class GameNonogram extends HTMLElement {
 
     const level = this.getAttribute('level');
     const name = this.getAttribute('name');
-    // const savedSolution = this.getAttribute('savedsolution');
+    const savedSolution = this.getAttribute('savedsolution');
+    const crossed = this.getAttribute('crossed');
 
     const timer = shadowRoot.querySelector('#game-timer');
+    console.log('nonogram added to the doc');
 
     if (
       this.getAttribute('minutes') !== '0' ||
@@ -58,8 +65,7 @@ class GameNonogram extends HTMLElement {
       timer.setAttribute('minutes', savedMinutes);
       timer.setAttribute('seconds', savedSeconds);
 
-      timer.startTime =
-        Date.now() + (+savedMinutes * 60 + +savedSeconds) * 1000;
+      timer.continue = true;
     }
 
     shadowRoot.getElementById('summary').innerHTML = `
@@ -68,11 +74,14 @@ class GameNonogram extends HTMLElement {
     `;
 
     const nonogram = shadowRoot.querySelector('#nonogram');
-    nonogram.insertAdjacentHTML(
-      'beforeend',
-      `<game-field id="game-field" class="game-field" level="${level}"></game-field>`
-    );
-    const field = shadowRoot.querySelector('#game-field');
+    const field = document.createElement('game-field');
+    field.id = 'game-field';
+    field.classList.add('game-field');
+    field.savedSolution = savedSolution;
+    field.crossed = crossed;
+    field.setAttribute('level', level);
+
+    nonogram.append(field);
 
     const { matrix } = nonograms.find(
       (item) => item.name === name && item.level === level
@@ -185,6 +194,7 @@ class GameNonogram extends HTMLElement {
     });
 
     shadowRoot.firstElementChild.addEventListener('restart', () => {
+      field.timerStarted = false;
       field.dispatchEvent(new CustomEvent('restart'));
       timer.restart();
     });
@@ -204,6 +214,7 @@ class GameNonogram extends HTMLElement {
         level,
         name,
         currentSolution: field.currentSolution,
+        crossed: field.currentCrossed,
         time: {
           minutes: timer.minutes,
           seconds: timer.seconds,
@@ -213,15 +224,9 @@ class GameNonogram extends HTMLElement {
       localStorage.setItem('savedGame', JSON.stringify(game));
     });
 
-    shadowRoot.firstElementChild.addEventListener(
-      'starttimer',
-      () => {
-        timer.launch();
-      },
-      {
-        once: true,
-      }
-    );
+    shadowRoot.firstElementChild.addEventListener('starttimer', () => {
+      timer.launch();
+    });
   }
 }
 

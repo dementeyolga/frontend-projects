@@ -18,6 +18,12 @@ const router = new AppRouter(document.getElementById('main'));
 document.addEventListener('DOMContentLoaded', () => {
   document.body.addEventListener('click', (e) => {
     const deepestEl = e.composedPath()[0];
+
+    if (deepestEl.classList.contains('disabled')) {
+      e.preventDefault();
+      return;
+    }
+
     if (deepestEl.matches('[data-link]')) {
       e.preventDefault();
       router.changeHash(deepestEl.getAttribute('href'));

@@ -17,4 +17,14 @@
     cursor: pointer;
     filter: brightness(120%);
   }
+
+  &.disabled {
+    cursor: default;
+    filter: opacity(0.6) grayscale(0.5);
+
+    &:hover {
+      cursor: default;
+      filter: opacity(0.6) grayscale(0.5);
+    }
+  }
 }
