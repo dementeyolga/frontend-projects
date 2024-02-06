@@ -4,6 +4,7 @@ import { RestartBtn } from './restartBtn/RestartBtn';
 import { SolutionBtn } from './solutionBtn/SolutionBtn';
 import { SaveBtn } from './saveBtn/SaveBtn';
 import { GameTimer } from './gameTimer/GameTimer';
+import { ResultModal } from './resultModal/ResultModal';
 import nonograms from '../../resources/nonograms.json';
 import winSoundFile from './../../assets/sound-effects/win-game.mp3';
 
@@ -12,6 +13,7 @@ customElements.define('restart-btn', RestartBtn);
 customElements.define('solution-btn', SolutionBtn);
 customElements.define('save-btn', SaveBtn);
 customElements.define('game-timer', GameTimer);
+customElements.define('result-modal', ResultModal);
 
 const nonogramStyles = document.createElement('style');
 nonogramStyles.textContent = nonogramStylesStr;
@@ -22,9 +24,8 @@ template.innerHTML = `
     <div class="actions">
       <restart-btn></restart-btn>
       <save-btn></save-btn>
-      <solution-btn></solution-btn>
       <game-timer id="game-timer" minutes="0" seconds="0"></game-timer>
-      <a href="" data-link>Menu</a>
+      <solution-btn></solution-btn>
     </div>
 
     <div id="summary" class="summary">
@@ -190,6 +191,10 @@ class GameNonogram extends HTMLElement {
         console.log(
           `Great! You have solved the nonogram ${name[0].toUpperCase() + name.slice(1)} in ${minutesStr}${secondsStr}!`
         );
+
+        const modal = document.createElement('result-modal');
+        modal.message = `Great! You have solved the nonogram ${name[0].toUpperCase() + name.slice(1)} in ${minutesStr}${secondsStr}!`;
+        shadowRoot.append(modal);
       }
     });
 
