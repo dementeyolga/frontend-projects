@@ -11,3 +11,42 @@
     color: $color-background;
   }
 }
+
+a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+game-menu {
+  display: flex;
+  transition: 0.3s;
+
+  &.hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &.absolute {
+    position: absolute;
+    top: 76px;
+    left: 0;
+    right: 0;
+
+    padding: 0 16px 20px 16px;
+
+    flex-direction: column;
+
+    background-color: $color-accent;
+  }
+}
+
+.wrapper {
+  padding: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,8 +1,5 @@
 import continueBtnStylesStr from './ContinueBtn.styles.scss';
 
-const continueBtnStyles = document.createElement('style');
-continueBtnStyles.textContent = continueBtnStylesStr;
-
 class ContinueBtn extends HTMLElement {
   connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: 'open' });
@@ -18,6 +15,9 @@ class ContinueBtn extends HTMLElement {
     }
 
     shadowRoot.append(btn);
+
+    const continueBtnStyles = document.createElement('style');
+    continueBtnStyles.textContent = continueBtnStylesStr;
     shadowRoot.append(continueBtnStyles);
   }
 }
