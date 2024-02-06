@@ -1,0 +1,40 @@
+@use './../../styles/abstract/mixins' as *;
+@use './../../styles/abstract/variables' as *;
+
+.burger-icon {
+  display: none;
+
+  width: 44px;
+  height: 44px;
+
+  @include max-768 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  $btn: &;
+
+  &.active {
+    #{$btn}__stroke {
+      &:nth-child(1) {
+        transform: translateY(5px) rotate(45deg);
+      }
+
+      &:nth-child(2) {
+        transform: translateY(-5px) rotate(-45deg);
+      }
+    }
+  }
+
+  &__stroke {
+    width: 24px;
+    height: 2px;
+    background-color: $color-background;
+    border-radius: 2px;
+
+    transition: 0.3s;
+  }
+}

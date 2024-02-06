@@ -1,8 +1,5 @@
 import randomBtnStylesStr from './RandomBtn.styles.scss';
 
-const randomBtnStyles = document.createElement('style');
-randomBtnStyles.textContent = randomBtnStylesStr;
-
 class RandomBtn extends HTMLElement {
   connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: 'open' });
@@ -14,6 +11,9 @@ class RandomBtn extends HTMLElement {
     btn.innerText = 'Random';
 
     shadowRoot.append(btn);
+
+    const randomBtnStyles = document.createElement('style');
+    randomBtnStyles.textContent = randomBtnStylesStr;
     shadowRoot.append(randomBtnStyles);
   }
 }

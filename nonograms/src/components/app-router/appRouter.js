@@ -12,7 +12,7 @@ class AppRouter {
     this.routes = [
       {
         hash: '',
-        view: () => '<game-menu></game-menu>',
+        view: () => '<game-menu main-page="true"></game-menu>',
       },
       {
         hash: 'nonogram',
@@ -52,6 +52,12 @@ class AppRouter {
   }
 
   showRoute(params = []) {
+    const header = document.querySelector('game-header');
+    const burgerMenu = header.shadowRoot.querySelector('game-menu.absolute');
+    if (burgerMenu) {
+      burgerMenu.classList.add('hidden');
+    }
+
     const newParams = [...params];
 
     if (params[0] === 'random') {
@@ -64,8 +70,6 @@ class AppRouter {
 
     if (params[0] === 'continue') {
       const saved = JSON.parse(localStorage.getItem('savedGame'));
-
-      console.log(saved);
 
       newParams[0] = saved.name;
       newParams[1] = saved.level;
