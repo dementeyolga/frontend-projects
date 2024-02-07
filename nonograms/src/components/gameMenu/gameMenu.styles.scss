@@ -2,6 +2,7 @@
 
 .actions {
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 
@@ -16,18 +17,18 @@
 .menu {
   &__item {
     padding: 8px 12px;
-    border: 1px solid $color-text-main;
+    border: 1px solid var(--color-text-main);
     border-radius: 10px;
-    background-color: $color-accent-secondary-2-transparent;
+    background-color: var(--color-accent-secondary-2-transparent);
 
-    color: $color-text-main;
+    color: var(--color-text-main);
     text-decoration: none;
 
     transition: 0.3s;
 
     &:hover {
       cursor: pointer;
-      background-color: $color-accent-secondary-1-transparent;
+      background-color: var(--color-accent-secondary-1-transparent);
     }
   }
 }

@@ -5,9 +5,9 @@
   display: block;
   width: fit-content;
 
-  color: $color-text-reverse;
+  color: var(--color-text-light);
   text-decoration: none;
-  background-color: $color-accent-secondary-1;
+  background-color: var(--color-accent-secondary-1);
 
   border-radius: 10px;
 

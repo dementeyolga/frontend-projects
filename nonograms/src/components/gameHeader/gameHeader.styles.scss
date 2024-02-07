@@ -6,10 +6,10 @@
   margin-bottom: 20px;
 
   display: flex;
-  background: $color-accent;
+  background: var(--color-accent);
 
   * {
-    color: $color-background;
+    color: var(--color-text-light);
   }
 }
 
@@ -46,7 +46,7 @@ game-menu {
 
     flex-direction: column;
 
-    background-color: $color-accent;
+    background-color: var(--color-accent);
   }
 }
 

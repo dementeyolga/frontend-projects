@@ -180,11 +180,9 @@ class GameNonogram extends HTMLElement {
         let secondsStr = !seconds || `${seconds} second`;
         secondsStr = +seconds > 1 ? secondsStr + 's' : secondsStr;
 
-        new Audio(winSoundFile).play();
-
-        console.log(
-          `Great! You have solved the nonogram ${name[0].toUpperCase() + name.slice(1)} in ${minutesStr}${secondsStr}!`
-        );
+        if (localStorage.getItem('muted') !== 'true') {
+          new Audio(winSoundFile).play();
+        }
 
         const modal = document.createElement('result-modal');
         modal.classList.add('hidden');

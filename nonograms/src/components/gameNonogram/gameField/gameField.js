@@ -64,10 +64,12 @@ class GameField extends HTMLElement {
       e.target.classList.remove('crossed');
       e.target.classList.toggle('filled');
 
-      if (e.target.classList.contains('filled')) {
-        new Audio(fillSoundFile).play();
-      } else {
-        new Audio(clearSoundFile).play();
+      if (localStorage.getItem('muted') !== 'true') {
+        if (e.target.classList.contains('filled')) {
+          new Audio(fillSoundFile).play();
+        } else {
+          new Audio(clearSoundFile).play();
+        }
       }
 
       this.checkSolution();
@@ -78,10 +80,12 @@ class GameField extends HTMLElement {
       e.target.classList.remove('filled');
       e.target.classList.toggle('crossed');
 
-      if (e.target.classList.contains('crossed')) {
-        new Audio(crossSoundFile).play();
-      } else {
-        new Audio(clearSoundFile).play();
+      if (localStorage.getItem('muted') !== 'true') {
+        if (e.target.classList.contains('crossed')) {
+          new Audio(crossSoundFile).play();
+        } else {
+          new Audio(clearSoundFile).play();
+        }
       }
 
       this.checkSolution();
