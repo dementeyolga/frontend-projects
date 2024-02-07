@@ -3,10 +3,12 @@ import nonograms from '../../resources/nonograms.json';
 import { RandomBtn } from './randomBtn/RandonBtn';
 import { ContinueBtn } from './continueBtn/ContinueBtn';
 import { TemplatesBtn } from './templatesBtn/TemplatesBtn';
+import { HighScoreBtn } from './highScoreBtn/HighScoreBtn';
 
 customElements.define('random-btn', RandomBtn);
 customElements.define('continue-btn', ContinueBtn);
 customElements.define('templates-btn', TemplatesBtn);
+customElements.define('high-score-btn', HighScoreBtn);
 
 const levels = [...new Set(nonograms.map((item) => item.level))];
 
@@ -37,6 +39,7 @@ template.innerHTML = `
                         <templates-btn></templates-btn>
                         <random-btn></random-btn>
                         <continue-btn></continue-btn>
+                        <high-score-btn></high-score-btn>
                       </div>
 `;
 
@@ -55,7 +58,7 @@ class GameMenu extends HTMLElement {
       actions.style.display = 'none';
     }
 
-    if (!this.isBurger) {
+    if (!this.isBurger && !this.inHeader) {
       shadowRoot.lastElementChild.insertAdjacentHTML('afterend', levelsHTML);
     } else if (this.isBurger) {
       actions.style.flexDirection = 'column';

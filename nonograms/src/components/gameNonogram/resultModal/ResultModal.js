@@ -31,6 +31,7 @@ class ResultModal extends HTMLElement {
 
     close.onclick = () => {
       wrapper.classList.add('hidden');
+      wrapper.addEventListener('transitionend', () => wrapper.remove());
     };
   }
 }

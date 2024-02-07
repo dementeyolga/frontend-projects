@@ -173,14 +173,8 @@ class GameNonogram extends HTMLElement {
         timer.dispatchEvent(new CustomEvent('win'));
         const minutes = timer.getAttribute('minutes');
 
-        let minutesStr = '';
-        if (!+minutes) {
-          minutesStr = '';
-        } else if (+minutes > 1) {
-          minutesStr += 'minutes ';
-        } else {
-          minutesStr += 'minute';
-        }
+        let minutesStr = !minutes || `${minutes} minute`;
+        minutesStr = +minutes > 1 ? minutesStr + 's ' : minutesStr + ' ';
 
         const seconds = timer.getAttribute('seconds');
         let secondsStr = !seconds || `${seconds} second`;
@@ -193,8 +187,28 @@ class GameNonogram extends HTMLElement {
         );
 
         const modal = document.createElement('result-modal');
+        modal.classList.add('hidden');
         modal.message = `Great! You have solved the nonogram ${name[0].toUpperCase() + name.slice(1)} in ${minutesStr}${secondsStr}!`;
         shadowRoot.append(modal);
+
+        setTimeout(() => {
+          modal.classList.remove('hidden');
+        }, 0);
+
+        const savedResult = {
+          name,
+          level,
+          time: timer.currentDuration,
+          duration: +minutes * 60 + +seconds,
+        };
+
+        let highScoreTable = JSON.parse(localStorage.getItem('highScoreTable'));
+        if (!highScoreTable) highScoreTable = [];
+        highScoreTable.unshift(savedResult);
+        localStorage.setItem(
+          'highScoreTable',
+          JSON.stringify(highScoreTable.slice(0, 5))
+        );
       }
     });
 
@@ -227,6 +241,15 @@ class GameNonogram extends HTMLElement {
       };
 
       localStorage.setItem('savedGame', JSON.stringify(game));
+
+      const header = document.querySelector('game-header');
+      const continueBtn = header.shadowRoot
+        .querySelector('game-menu.header')
+        .shadowRoot.querySelector('continue-btn');
+      const inner = continueBtn.shadowRoot.querySelector('.button');
+      inner.classList.remove('disabled');
+
+      console.log(inner);
     });
 
     shadowRoot.firstElementChild.addEventListener('starttimer', () => {

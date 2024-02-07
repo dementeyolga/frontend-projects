@@ -1,0 +1,25 @@
+@use './../../styles/abstract/variables' as *;
+
+.high-scores {
+  &__scores {
+    border-collapse: collapse;
+    border-radius: 10px;
+  }
+
+  &__score {
+    th {
+      background-color: $color-accent-secondary-1;
+      color: $color-text-reverse;
+      font-weight: 500;
+    }
+
+    th,
+    td {
+      padding: 10px;
+
+      text-align: center;
+
+      border: 1px solid $color-text-main;
+    }
+  }
+}
