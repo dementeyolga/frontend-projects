@@ -1,3 +1,4 @@
+@use './../abstract/mixins' as *;
 @use './../abstract/variables' as *;
 
 .button {
@@ -12,6 +13,11 @@
   border-radius: 10px;
 
   transition: 0.3s;
+
+  @include max-450 {
+    padding: 6px 10px;
+    font-size: 1.6rem;
+  }
 
   &:hover {
     cursor: pointer;
