@@ -58,11 +58,16 @@ class AppRouter {
   }
 
   showRoute(params = []) {
-    const header = document.querySelector('game-header');
-    const burgerMenu = header.shadowRoot.querySelector('game-menu.absolute');
+    const header = document.querySelector('game-header').shadowRoot;
+    const burgerMenu = header.querySelector('game-menu.absolute');
     if (burgerMenu) {
       burgerMenu.classList.add('hidden');
     }
+
+    const burgerBtn = header
+      .querySelector('burger-btn')
+      .shadowRoot.querySelector('.burger-icon');
+    burgerBtn.classList.remove('active');
 
     const newParams = [...params];
 

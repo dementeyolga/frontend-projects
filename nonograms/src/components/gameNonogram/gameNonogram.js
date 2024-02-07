@@ -54,7 +54,6 @@ class GameNonogram extends HTMLElement {
     const crossed = this.getAttribute('crossed');
 
     const timer = shadowRoot.querySelector('#game-timer');
-    console.log('nonogram added to the doc');
 
     if (
       this.getAttribute('minutes') !== '0' ||
@@ -171,14 +170,20 @@ class GameNonogram extends HTMLElement {
       if (correctSolution === field.currentSolution) {
         field.dispatchEvent(new CustomEvent('win'));
         timer.dispatchEvent(new CustomEvent('win'));
-        const minutes = timer.getAttribute('minutes');
 
-        let minutesStr = !minutes || `${minutes} minute`;
-        minutesStr = +minutes > 1 ? minutesStr + 's ' : minutesStr + ' ';
+        const minutes = timer.getAttribute('minutes');
+        let minutesStr = '';
+        if (+minutes) {
+          minutesStr =
+            +minutes > 1 ? minutes + ' minutes ' : minutes + ' minute ';
+        }
 
         const seconds = timer.getAttribute('seconds');
-        let secondsStr = !seconds || `${seconds} second`;
-        secondsStr = +seconds > 1 ? secondsStr + 's' : secondsStr;
+        let secondsStr = '';
+        if (+seconds) {
+          secondsStr =
+            +seconds > 1 ? seconds + ' seconds' : seconds + ' second';
+        }
 
         if (localStorage.getItem('muted') !== 'true') {
           new Audio(winSoundFile).play();
@@ -246,8 +251,6 @@ class GameNonogram extends HTMLElement {
         .shadowRoot.querySelector('continue-btn');
       const inner = continueBtn.shadowRoot.querySelector('.button');
       inner.classList.remove('disabled');
-
-      console.log(inner);
     });
 
     shadowRoot.firstElementChild.addEventListener('starttimer', () => {
