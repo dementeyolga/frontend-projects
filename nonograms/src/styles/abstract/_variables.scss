@@ -1,13 +1,34 @@
 // Colors
 
-$color-background: #fbf3f2;
-$color-accent: #1c768f;
-$color-accent-secondary-1: #fa991c;
-$color-accent-secondary-2: #fa1c66;
-$color-accent-secondary-3: #621cfa;
+:root {
+  --color-background: #fbf3f2;
+  --color-accent: #007596;
+  --color-accent-secondary-1: #fa991c;
+  --color-accent-secondary-1-transparent: #fa991c25;
+  --color-accent-secondary-2: #f0316a;
+  --color-accent-secondary-2-transparent: #fa1c6625;
+  --color-accent-secondary-3: #6b32e6;
+  --color-accent-secondary-4: #16a77c;
 
-$color-text-main: #262626;
-$color-text-reverse: #ffffff;
+  --color-text-main: #262626;
+  --color-text-reverse: #ffffff;
+  --color-text-light: #ffffff;
+}
+
+:root.dark {
+  --color-background: #263238;
+  --color-accent: #192227;
+  --color-accent-secondary-1: #aa7228;
+  --color-accent-secondary-1-transparent: #fa991c25;
+  --color-accent-secondary-2: #962849;
+  --color-accent-secondary-2-transparent: #fa1c6625;
+  --color-accent-secondary-3: #5e3ea1;
+  --color-accent-secondary-4: #176850;
+
+  --color-text-main: #ffffff;
+  --color-text-reverse: #262626;
+  --color-text-light: #ffffff;
+}
 
 // Sizes
 

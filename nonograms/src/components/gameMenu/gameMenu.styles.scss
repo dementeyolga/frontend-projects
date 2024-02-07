@@ -1,4 +1,34 @@
+@use './../../styles/abstract/variables' as *;
+
 .actions {
   display: flex;
+  align-items: center;
   gap: 20px;
+}
+
+.level {
+  &__games {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+.menu {
+  &__item {
+    padding: 8px 12px;
+    border: 1px solid var(--color-text-main);
+    border-radius: 10px;
+    background-color: var(--color-accent-secondary-2-transparent);
+
+    color: var(--color-text-main);
+    text-decoration: none;
+
+    transition: 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-accent-secondary-1-transparent);
+    }
+  }
 }

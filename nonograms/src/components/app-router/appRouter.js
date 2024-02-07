@@ -1,9 +1,11 @@
 import { GameMenu } from '../gameMenu/GameMenu';
 import { GameNonogram } from '../gameNonogram/GameNonogram';
+import { HighScoreTable } from '../highScoreTable/HighScoreTable';
 import nonograms from '../../resources/nonograms.json';
 
 customElements.define('game-menu', GameMenu);
 customElements.define('game-nonogram', GameNonogram);
+customElements.define('high-score-table', HighScoreTable);
 
 class AppRouter {
   constructor(app) {
@@ -42,6 +44,10 @@ class AppRouter {
             </game-nonogram>
           `;
         },
+      },
+      {
+        hash: 'high-score',
+        view: () => '<high-score-table></high-score-table>',
       },
     ];
   }

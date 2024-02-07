@@ -1,3 +1,4 @@
+@use './../../styles/abstract/mixins' as *;
 @use './../../styles/abstract/variables' as *;
 @use './../../styles/layout/basic' as *;
 
@@ -5,10 +6,10 @@
   margin-bottom: 20px;
 
   display: flex;
-  background: $color-accent;
+  background: var(--color-accent);
 
   * {
-    color: $color-background;
+    color: var(--color-text-light);
   }
 }
 
@@ -23,6 +24,12 @@ a {
 game-menu {
   display: flex;
   transition: 0.3s;
+
+  &.header {
+    @include max-768 {
+      display: none;
+    }
+  }
 
   &.hidden {
     visibility: hidden;
@@ -39,7 +46,7 @@ game-menu {
 
     flex-direction: column;
 
-    background-color: $color-accent;
+    background-color: var(--color-accent);
   }
 }
 

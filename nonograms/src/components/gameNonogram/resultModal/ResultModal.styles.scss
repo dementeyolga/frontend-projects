@@ -26,7 +26,7 @@
   position: relative;
   padding: 40px;
   border-radius: 20px;
-  background-color: $color-background;
+  background-color: var(--color-background);
 
   &__close {
     position: absolute;
@@ -48,7 +48,7 @@
     &-stroke {
       width: 24px;
       height: 2px;
-      background-color: $color-text-main;
+      background-color: var(--color-text-main);
       border-radius: 2px;
 
       transition: 0.3s;
