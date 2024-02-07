@@ -21,6 +21,7 @@ class GameHeader extends HTMLElement {
 
     const gameMenu = document.createElement('game-menu');
     gameMenu.inHeader = true;
+    gameMenu.classList.add('header');
     shadowRoot.getElementById('wrapper').append(gameMenu);
   }
 }

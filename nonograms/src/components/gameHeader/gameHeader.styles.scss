@@ -1,3 +1,4 @@
+@use './../../styles/abstract/mixins' as *;
 @use './../../styles/abstract/variables' as *;
 @use './../../styles/layout/basic' as *;
 
@@ -23,6 +24,12 @@ a {
 game-menu {
   display: flex;
   transition: 0.3s;
+
+  &.header {
+    @include max-768 {
+      display: none;
+    }
+  }
 
   &.hidden {
     visibility: hidden;

@@ -55,12 +55,7 @@ class GameMenu extends HTMLElement {
       actions.style.display = 'none';
     }
 
-    if (this.inHeader) {
-      console.log(document.documentElement.clientWidth);
-      if (document.documentElement.clientWidth <= 768) {
-        this.style.display = 'none';
-      }
-    } else if (!this.isBurger) {
+    if (!this.isBurger) {
       shadowRoot.lastElementChild.insertAdjacentHTML('afterend', levelsHTML);
     } else if (this.isBurger) {
       actions.style.flexDirection = 'column';
