@@ -30,6 +30,12 @@
   }
 }
 
+@mixin max-450 {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+
 @mixin max-380 {
   @media (max-width: 380px) {
     @content;
