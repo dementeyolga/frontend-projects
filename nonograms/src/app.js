@@ -29,13 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
       router.changeHash(deepestEl.getAttribute('href'));
 
       let params = [];
-      if (deepestEl.getAttribute('href') === 'nonogram') {
+      if (deepestEl.getAttribute('href') === '') {
         if (deepestEl.getAttribute('game-name')) {
           params.push(deepestEl.getAttribute('game-name'));
         }
-
-        if (deepestEl.getAttribute('level')) {
-          params.push(deepestEl.getAttribute('level'));
+        if (deepestEl.getAttribute('game-size')) {
+          params.push(deepestEl.getAttribute('game-size'));
+        }
+        if (deepestEl.getAttribute('game-level')) {
+          params.push(deepestEl.getAttribute('game-level'));
         }
       }
 

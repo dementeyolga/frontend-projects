@@ -9,7 +9,7 @@ headerStyles.textContent = headerStylesStr;
 const template = document.createElement('template');
 template.innerHTML = `
   <div id="wrapper" class="wrapper">
-    <a href="" data-link>Nonograms</a>
+    <a href="templates" data-link>Nonograms</a>
     <burger-btn></burger-btn>
   </div>  
 `;

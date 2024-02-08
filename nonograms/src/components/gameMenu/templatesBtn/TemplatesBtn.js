@@ -4,7 +4,7 @@ class TemplatesBtn extends HTMLElement {
   connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: 'open' });
     const btn = document.createElement('a');
-    btn.href = '';
+    btn.href = 'templates';
     btn.classList.add('button');
     btn.setAttribute('data-link', true);
     btn.innerText = 'Templates';

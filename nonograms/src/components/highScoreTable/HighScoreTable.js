@@ -14,8 +14,9 @@ class HighScoreTable extends HTMLElement {
         (result, i) => `  <tr class="high-scores__score">
                         <td>${i + 1}.</td>
                         <td>${result.time}</td>
-                        <td>${result.level}</td>
-                        <td>${result.name}</td>
+                        <td>${result.level[0].toUpperCase() + result.level.slice(1)}</td>
+                        <td>${result.size}</td>
+                        <td>${result.name[0].toUpperCase() + result.name.slice(1)}</td>
                       </tr>
                     `
       );
@@ -32,6 +33,7 @@ class HighScoreTable extends HTMLElement {
         <th>No</th>
         <th>Time</th>
         <th>Level</th>
+        <th>Size</th>
         <th>Game name</th>
         </tr>
         `

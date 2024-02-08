@@ -22,13 +22,13 @@ let levelsHTML = levels
       .filter((item) => item.level === level)
       .map(
         (item) =>
-          `<a href="nonogram" class="menu__item" level="${level}" game-name="${item.name}" data-link>${item.name}</a>\n`
+          `<a href="" class="menu__item" game-level="${item.level}" game-name="${item.name}" game-size="${item.size}" data-link>${item.name[0].toUpperCase() + item.name.slice(1)}</a>\n`
       )
       .join('\n');
 
     return `
       <div class="level">
-        <h3 class="level__title">${level}</h3>
+        <h3 class="level__title">${level[0].toUpperCase() + level.slice(1)}</h3>
         <div class="level__games">
           ${gameNames}
         </div>

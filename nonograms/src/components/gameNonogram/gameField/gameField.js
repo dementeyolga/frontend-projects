@@ -11,15 +11,15 @@ class GameField extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: 'open' });
     shadowRoot.append(fieldStyles);
 
-    this.level = this.getAttribute('level').split('x')[0];
+    this.size = this.getAttribute('size').split('x')[0];
 
     this.field = document.createElement('div');
     this.field.id = 'field';
 
-    for (let i = 0; i < this.level; i += 1) {
+    for (let i = 0; i < this.size; i += 1) {
       let row = document.createElement('div');
       row.classList.add('row');
-      for (let j = 0; j < this.level; j += 1) {
+      for (let j = 0; j < this.size; j += 1) {
         row.insertAdjacentHTML('beforeend', `<div class="cell"></div>`);
       }
       this.field.append(row);

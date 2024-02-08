@@ -13,34 +13,39 @@ class AppRouter {
 
     this.routes = [
       {
-        hash: '',
+        hash: 'templates',
         view: () => '<game-menu main-page="true"></game-menu>',
       },
       {
-        hash: 'nonogram',
-        view: (name, level, savedSolution, crossed, minutes, seconds) => {
+        hash: '',
+        view: (name, size, level, savedSolution, crossed, minutes, seconds) => {
           let resolvedName;
+          let resolvedSize;
           let resolvedLevel;
 
-          if (name && level) {
+          if (name && size && level) {
             resolvedName = name;
+            resolvedSize = size;
             resolvedLevel = level;
 
-            localStorage.setItem('game-name', name);
-            localStorage.setItem('game-level', level);
-          } else if (
-            localStorage.getItem('game-name') &&
-            localStorage.getItem('game-level')
-          ) {
-            resolvedName = localStorage.getItem('game-name');
-            resolvedLevel = localStorage.getItem('game-level');
+            // localStorage.setItem('game-name', name);
+            // localStorage.setItem('game-size', size);
+            // localStorage.setItem('game-level', level);
+            // } else if (
+            //   localStorage.getItem('game-name') &&
+            //   localStorage.getItem('game-size') &&
+            // localStorage.getItem('game-level')
+            // ) {
+            //   resolvedName = localStorage.getItem('game-name');
+            //   resolvedSize = localStorage.getItem('game-size');
           } else {
             resolvedName = nonograms[0].name;
+            resolvedSize = nonograms[0].size;
             resolvedLevel = nonograms[0].level;
           }
 
           return `
-            <game-nonogram name="${resolvedName}" level="${resolvedLevel}"  savedsolution="${savedSolution || ''}" crossed="${crossed || ''}" minutes="${minutes || '0'}" seconds="${seconds || '0'}">
+            <game-nonogram name="${resolvedName}" size="${resolvedSize}" level="${resolvedLevel}"  savedsolution="${savedSolution || ''}" crossed="${crossed || ''}" minutes="${minutes || '0'}" seconds="${seconds || '0'}">
             </game-nonogram>
           `;
         },
@@ -76,18 +81,20 @@ class AppRouter {
       const randomNonogram = nonograms[randomNum];
 
       newParams[0] = randomNonogram.name;
-      newParams[1] = randomNonogram.level;
+      newParams[1] = randomNonogram.size;
+      newParams[2] = randomNonogram.level;
     }
 
     if (params[0] === 'continue') {
       const saved = JSON.parse(localStorage.getItem('savedGame'));
 
       newParams[0] = saved.name;
-      newParams[1] = saved.level;
-      newParams[2] = saved.currentSolution;
-      newParams[3] = saved.crossed;
-      newParams[4] = saved.time.minutes;
-      newParams[5] = saved.time.seconds;
+      newParams[1] = saved.size;
+      newParams[2] = saved.level;
+      newParams[3] = saved.currentSolution;
+      newParams[4] = saved.crossed;
+      newParams[5] = saved.time.minutes;
+      newParams[6] = saved.time.seconds;
     }
 
     let match = this.routes.find(
