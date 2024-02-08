@@ -49,6 +49,7 @@ class GameNonogram extends HTMLElement {
     shadowRoot.append(nonogramStyles);
 
     const level = this.getAttribute('level');
+    const size = this.getAttribute('size');
     const name = this.getAttribute('name');
     const savedSolution = this.getAttribute('savedsolution');
     const crossed = this.getAttribute('crossed');
@@ -69,7 +70,7 @@ class GameNonogram extends HTMLElement {
     }
 
     shadowRoot.getElementById('summary').innerHTML = `
-      <p class="summary__level">${level}</p>
+      <p class="summary__level">${level[0].toUpperCase() + level.slice(1)} (${size})</p> -
       <p class="summary__name"> ${name[0].toUpperCase() + name.slice(1)}</p>
     `;
 
@@ -80,11 +81,12 @@ class GameNonogram extends HTMLElement {
     field.savedSolution = savedSolution;
     field.crossed = crossed;
     field.setAttribute('level', level);
+    field.setAttribute('size', size);
 
     nonogram.append(field);
 
     const { matrix } = nonograms.find(
-      (item) => item.name === name && item.level === level
+      (item) => item.name === name && item.size === size
     );
 
     const correctSolution = matrix.flat().join('').toString();
@@ -121,7 +123,8 @@ class GameNonogram extends HTMLElement {
 
         if (
           (counterLeft && !matrix[i][j]) ||
-          (counterLeft && j === matrix.length - 1)
+          (counterLeft && j === matrix.length - 1) ||
+          (j === matrix.length - 1 && leftHint.children.length === 0)
         ) {
           leftHint.insertAdjacentHTML(
             'beforeend',
@@ -201,6 +204,7 @@ class GameNonogram extends HTMLElement {
         const savedResult = {
           name,
           level,
+          size,
           time: timer.currentDuration,
           duration: +minutes * 60 + +seconds,
         };
@@ -234,6 +238,7 @@ class GameNonogram extends HTMLElement {
     shadowRoot.firstElementChild.addEventListener('save-game', () => {
       const game = {
         level,
+        size,
         name,
         currentSolution: field.currentSolution,
         crossed: field.currentCrossed,

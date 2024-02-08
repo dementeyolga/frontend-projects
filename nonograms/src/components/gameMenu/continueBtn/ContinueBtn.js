@@ -4,7 +4,7 @@ class ContinueBtn extends HTMLElement {
   connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: 'open' });
     const btn = document.createElement('a');
-    btn.href = 'nonogram';
+    btn.href = '';
     btn.classList.add('button');
     btn.setAttribute('continue', true);
     btn.setAttribute('data-link', true);

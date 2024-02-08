@@ -1,6 +1,7 @@
 [
   {
-    "level": "5x5",
+    "size": "5x5",
+    "level": "easy",
     "name": "android",
     "matrix": [
       [0, 1, 1, 1, 0],
@@ -12,7 +13,8 @@
     "picture": "./"
   },
   {
-    "level": "5x5",
+    "size": "5x5",
+    "level": "easy",
     "name": "flower",
     "matrix": [
       [0, 1, 1, 1, 0],
@@ -24,7 +26,8 @@
     "picture": "./"
   },
   {
-    "level": "5x5",
+    "size": "5x5",
+    "level": "easy",
     "name": "rune",
     "matrix": [
       [0, 1, 1, 0, 0],
@@ -36,7 +39,8 @@
     "picture": "./"
   },
   {
-    "level": "5x5",
+    "size": "5x5",
+    "level": "easy",
     "name": "smile",
     "matrix": [
       [1, 1, 0, 1, 1],
@@ -48,7 +52,8 @@
     "picture": "./"
   },
   {
-    "level": "5x5",
+    "size": "5x5",
+    "level": "easy",
     "name": "tower",
     "matrix": [
       [1, 0, 1, 0, 1],
@@ -60,7 +65,8 @@
     "picture": "./"
   },
   {
-    "level": "5x5",
+    "size": "5x5",
+    "level": "easy",
     "name": "airplane",
     "matrix": [
       [0, 0, 1, 0, 0],
@@ -72,7 +78,8 @@
     "picture": "./"
   },
   {
-    "level": "5x5",
+    "size": "5x5",
+    "level": "easy",
     "name": "car",
     "matrix": [
       [0, 0, 0, 0, 0],
@@ -84,7 +91,8 @@
     "picture": "./"
   },
   {
-    "level": "5x5",
+    "size": "5x5",
+    "level": "easy",
     "name": "dog",
     "matrix": [
       [0, 0, 0, 1, 0],
@@ -96,7 +104,8 @@
     "picture": "./"
   },
   {
-    "level": "10x10",
+    "size": "10x10",
+    "level": "medium",
     "name": "mouse",
     "matrix": [
       [0, 0, 1, 1, 0, 0, 0, 1, 1, 0],
@@ -113,7 +122,8 @@
     "picture": "./"
   },
   {
-    "level": "10x10",
+    "size": "10x10",
+    "level": "medium",
     "name": "alarm",
     "matrix": [
       [0, 1, 1, 0, 0, 0, 0, 1, 1, 0],
@@ -130,7 +140,8 @@
     "picture": "./"
   },
   {
-    "level": "10x10",
+    "size": "10x10",
+    "level": "medium",
     "name": "cup of coffee",
     "matrix": [
       [0, 0, 1, 0, 1, 0, 1, 0, 0, 0],
@@ -147,7 +158,8 @@
     "picture": "./"
   },
   {
-    "level": "10x10",
+    "size": "10x10",
+    "level": "medium",
     "name": "leaf",
     "matrix": [
       [0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
@@ -164,7 +176,8 @@
     "picture": "./"
   },
   {
-    "level": "10x10",
+    "size": "10x10",
+    "level": "medium",
     "name": "TV",
     "matrix": [
       [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
@@ -181,7 +194,8 @@
     "picture": "./"
   },
   {
-    "level": "10x10",
+    "size": "10x10",
+    "level": "medium",
     "name": "tree",
     "matrix": [
       [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
@@ -198,7 +212,8 @@
     "picture": "./"
   },
   {
-    "level": "10x10",
+    "size": "10x10",
+    "level": "medium",
     "name": "question",
     "matrix": [
       [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
@@ -215,7 +230,8 @@
     "picture": "./"
   },
   {
-    "level": "10x10",
+    "size": "10x10",
+    "level": "medium",
     "name": "hot air balloon",
     "matrix": [
       [1, 1, 1, 0, 0, 0, 0, 0, 1, 1],
@@ -232,7 +248,8 @@
     "picture": "./"
   },
   {
-    "level": "15x15",
+    "size": "15x15",
+    "level": "hard",
     "name": "deer",
     "matrix": [
       [1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1],
@@ -254,7 +271,8 @@
     "picture": "./"
   },
   {
-    "level": "15x15",
+    "size": "15x15",
+    "level": "hard",
     "name": "flower",
     "matrix": [
       [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -276,7 +294,8 @@
     "picture": "./"
   },
   {
-    "level": "15x15",
+    "size": "15x15",
+    "level": "hard",
     "name": "alarm",
     "matrix": [
       [0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0],
@@ -298,7 +317,8 @@
     "picture": "./"
   },
   {
-    "level": "15x15",
+    "size": "15x15",
+    "level": "hard",
     "name": "castle",
     "matrix": [
       [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -320,7 +340,8 @@
     "picture": "./"
   },
   {
-    "level": "15x15",
+    "size": "15x15",
+    "level": "hard",
     "name": "dolphin",
     "matrix": [
       [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -342,7 +363,8 @@
     "picture": "./"
   },
   {
-    "level": "15x15",
+    "size": "15x15",
+    "level": "hard",
     "name": "duck",
     "matrix": [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
@@ -364,7 +386,8 @@
     "picture": "./"
   },
   {
-    "level": "15x15",
+    "size": "15x15",
+    "level": "hard",
     "name": "clover",
     "matrix": [
       [0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0],
