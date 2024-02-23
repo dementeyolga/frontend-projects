@@ -1,3 +1,5 @@
+import { Endpoint } from './types';
+
 export interface SourceItem {
     category: string;
     country: string;
@@ -41,6 +43,6 @@ export interface SourcesOptions {
 }
 
 export interface GetRespOptions {
-    endpoint: string;
+    endpoint: Endpoint;
     options?: SourcesOptions;
 }

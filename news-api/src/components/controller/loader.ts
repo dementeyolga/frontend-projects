@@ -1,10 +1,6 @@
-import { LoaderOptions, SourcesOptions } from '../../types/interfaces';
-import { GetRespOptions } from '../../types/interfaces';
-import { DataProcessCallback } from '../../types/types';
-import { NewsItem } from '../../types/interfaces';
-import { SourceItem } from '../../types/interfaces';
-import { ErrorCodes } from '../../types/enums';
-import { HTTPMethods } from '../../types/enums';
+import { LoaderOptions, SourcesOptions, GetRespOptions, NewsItem, SourceItem } from '../../types/interfaces';
+import { DataProcessCallback, Endpoint } from '../../types/types';
+import { ErrorCodes, HTTPMethods } from '../../types/enums';
 
 class Loader {
     protected baseLink: string;
@@ -34,7 +30,7 @@ class Loader {
         return res;
     }
 
-    private makeUrl(options: SourcesOptions, endpoint: string): string {
+    private makeUrl(options: SourcesOptions, endpoint: Endpoint): string {
         const urlOptions: LoaderOptions & SourcesOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
@@ -47,7 +43,12 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    private load(method: string, endpoint: string, callback: DataProcessCallback, options: SourcesOptions = {}): void {
+    private load(
+        method: string,
+        endpoint: Endpoint,
+        callback: DataProcessCallback,
+        options: SourcesOptions = {}
+    ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res: Response) => res.json())
