@@ -29,3 +29,18 @@ export interface NewsResponse {
     totalResults: number;
     articles: NewsItem[];
 }
+
+export interface LoaderOptions {
+    apiKey: string;
+    [key: string]: string | undefined;
+}
+
+export interface SourcesOptions {
+    sources?: string;
+    [key: string]: string | undefined;
+}
+
+export interface GetRespOptions {
+    endpoint: string;
+    options?: SourcesOptions;
+}
