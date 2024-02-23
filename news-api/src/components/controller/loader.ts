@@ -3,6 +3,8 @@ import { GetRespOptions } from '../../types/interfaces';
 import { DataProcessCallback } from '../../types/types';
 import { NewsItem } from '../../types/interfaces';
 import { SourceItem } from '../../types/interfaces';
+import { ErrorCodes } from '../../types/enums';
+import { HTTPMethods } from '../../types/enums';
 
 class Loader {
     protected baseLink: string;
@@ -19,12 +21,12 @@ class Loader {
             console.error('No callback for GET response');
         }
     ): void {
-        this.load('GET', endpoint, callback, options);
+        this.load(HTTPMethods.GET, endpoint, callback, options);
     }
 
     private errorHandler(res: Response): Response {
         if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
+            if (res.status === ErrorCodes.Unauthorized || res.status === ErrorCodes.NotFound)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }
