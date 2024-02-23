@@ -1,6 +1,8 @@
-import { NewsItem } from './interfaces';
-import { SourceItem } from './interfaces';
+import { NewsResponse } from './interfaces';
+import { SourcesResponse } from './interfaces';
 
-export type DataProcessCallback = (data: NewsItem | SourceItem) => void;
+export type ResponseData = NewsResponse | SourcesResponse;
+
+export type DataProcessCallback = (data: ResponseData) => void;
 
 export type Endpoint = 'sources' | 'everything';

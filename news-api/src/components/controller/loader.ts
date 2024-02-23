@@ -1,5 +1,5 @@
-import { LoaderOptions, SourcesOptions, GetRespOptions, NewsItem, SourceItem } from '../../types/interfaces';
-import { DataProcessCallback, Endpoint } from '../../types/types';
+import { LoaderOptions, SourcesOptions, GetRespOptions } from '../../types/interfaces';
+import { DataProcessCallback, Endpoint, ResponseData } from '../../types/types';
 import { ErrorCodes, HTTPMethods } from '../../types/enums';
 
 class Loader {
@@ -52,8 +52,9 @@ class Loader {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res: Response) => res.json())
-            .then((data: NewsItem | SourceItem) => {
+            .then((data: ResponseData) => {
                 callback(data);
+                console.log(data);
             })
             .catch((err: Error) => console.error(err));
     }

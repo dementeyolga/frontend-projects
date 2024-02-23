@@ -1,9 +1,6 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import { NewsItem } from '../../types/interfaces';
-import { NewsResponse } from '../../types/interfaces';
-import { SourceItem } from '../../types/interfaces';
-import { SourcesResponse } from '../../types/interfaces';
+import { NewsItem, SourceItem, SourcesResponse, NewsResponse } from '../../types/interfaces';
 
 export class AppView {
     protected news: News;
