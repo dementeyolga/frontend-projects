@@ -1,4 +1,4 @@
-export interface Source {
+export interface SourceItem {
     category: string;
     country: string;
     description: string;
@@ -10,15 +10,15 @@ export interface Source {
 
 export interface SourcesResponse {
     status: string;
-    sources: Source[];
+    sources: SourceItem[];
 }
 
-export interface News {
+export interface NewsItem {
     author: string;
     content: string;
     description: string;
     publishedAt: string;
-    source: Pick<Source, 'id' | 'name'>;
+    source: Pick<SourceItem, 'id' | 'name'>;
     title: string;
     url: string;
     urlToImage: string;
@@ -27,5 +27,5 @@ export interface News {
 export interface NewsResponse {
     status: string;
     totalResults: number;
-    articles: News[];
+    articles: NewsItem[];
 }
