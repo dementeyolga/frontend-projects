@@ -38,7 +38,10 @@ class Loader {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
-            .then((data) => callback(data))
+            .then((data) => {
+                callback(data);
+                console.log('loaded data: ', data, ' from callback: ', callback);
+            })
             .catch((err) => console.error(err));
     }
 }
