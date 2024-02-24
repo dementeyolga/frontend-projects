@@ -5,7 +5,9 @@
     height: 120px;
     overflow: auto;
     align-items: center;
-    font: 300 1em 'Fira Sans', sans-serif;
+    font:
+        300 1em 'Fira Sans',
+        sans-serif;
 }
 
 .source__item {
@@ -31,4 +33,21 @@
 .source__item-name {
     font-weight: 400;
     white-space: nowrap;
+}
+
+.sources {
+    --scrollbar-foreground: #30c5ff;
+    --scrollbar-background: #0d303e;
+    scrollbar-color: var(--scrollbar-foreground) var(--scrollbar-background);
+}
+.sources::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.sources::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-foreground);
+}
+
+.sources::-webkit-scrollbar-track {
+    background: var(--scrollbar-background);
 }
