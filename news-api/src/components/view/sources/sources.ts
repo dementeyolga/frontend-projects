@@ -3,42 +3,42 @@ import { SourceItem } from '../../../types/interfaces';
 
 class Sources {
     draw(data: SourceItem[]): void {
-        if (!data) throw new Error('Data not passed to draw function');
-
         const fragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
 
-        if (sourceItemTemp) {
+        if (sourceItemTemp instanceof HTMLTemplateElement) {
             data.forEach((item) => {
                 const sourceClone: Node | null = sourceItemTemp.content.cloneNode(true);
 
                 if (sourceClone instanceof DocumentFragment) {
                     const sourceItemName: HTMLSpanElement | null = sourceClone.querySelector('.source__item-name');
-                    if (sourceItemName) {
+                    if (sourceItemName instanceof HTMLSpanElement) {
                         sourceItemName.textContent = item.name;
                     } else {
-                        throw new Error("Element with selector '.source__item-name' doesn't exist");
+                        throw new Error(`Element with selector '.source__item-name' is not of type HTMLSpanElement`);
                     }
 
                     const sourseItem: HTMLDivElement | null = sourceClone.querySelector('.source__item');
-                    if (sourseItem) {
+                    if (sourseItem instanceof HTMLDivElement) {
                         sourseItem.setAttribute('data-source-id', item.id);
                     } else {
-                        throw new Error("Element with selector '.source__item' doesn't exist");
+                        throw new Error(`Element with selector '.source__item' is not of type HTMLDivElement`);
                     }
 
                     fragment.append(sourceClone);
+                } else {
+                    throw new Error(`Copy of Source item template content is not of type DocumentFragment`);
                 }
             });
         } else {
-            throw new Error("Element with selector '#sourceItemTemp' doesn't exist");
+            throw new Error(`Element with selector '#sourceItemTemp' is not of type HTMLTemplateElement`);
         }
 
         const sources: HTMLDivElement | null = document.querySelector('.sources');
-        if (sources) {
+        if (sources instanceof HTMLDivElement) {
             sources.append(fragment);
         } else {
-            throw new Error("Element with selector '.sources' doesn't exist");
+            throw new Error(`Element with selector '.sources' is not of type HTMLDivElement`);
         }
     }
 }
