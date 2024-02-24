@@ -71,8 +71,8 @@ class News {
                         );
                     }
 
-                    const newsReadMoreLink: HTMLParagraphElement | null = newsClone.querySelector('.news__read-more a');
-                    if (newsReadMoreLink instanceof HTMLParagraphElement) {
+                    const newsReadMoreLink: HTMLAnchorElement | null = newsClone.querySelector('.news__read-more a');
+                    if (newsReadMoreLink instanceof HTMLAnchorElement) {
                         newsReadMoreLink.setAttribute('href', item.url);
                     } else {
                         throw new Error(
