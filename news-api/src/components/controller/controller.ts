@@ -1,9 +1,10 @@
 import AppLoader from './appLoader';
 import { DataProcessCallback } from '../../types/types';
+import { NewsResponse, SourcesResponse } from '../../types/interfaces';
 
 class AppController extends AppLoader {
-    getSources(callback: DataProcessCallback): void {
-        super.getResp(
+    getSources(callback: DataProcessCallback<SourcesResponse>): void {
+        super.getResp<SourcesResponse>(
             {
                 endpoint: 'sources',
             },
@@ -11,7 +12,7 @@ class AppController extends AppLoader {
         );
     }
 
-    getNews(e: MouseEvent, callback: DataProcessCallback): void {
+    getNews(e: MouseEvent, callback: DataProcessCallback<NewsResponse>): void {
         let target: EventTarget | null = e.target;
         const newsContainer: EventTarget | null = e.currentTarget;
 
@@ -22,7 +23,7 @@ class AppController extends AppLoader {
                         const sourceId: string | null = target.getAttribute('data-source-id');
                         if (newsContainer.getAttribute('data-source') !== sourceId && sourceId) {
                             newsContainer.setAttribute('data-source', sourceId);
-                            super.getResp(
+                            super.getResp<NewsResponse>(
                                 {
                                     endpoint: 'everything',
                                     options: {

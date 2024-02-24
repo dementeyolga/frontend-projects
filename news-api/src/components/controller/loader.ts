@@ -11,9 +11,9 @@ class Loader {
         this.options = options;
     }
 
-    protected getResp(
+    protected getResp<T extends ResponseData>(
         { endpoint, options = {} }: GetRespOptions,
-        callback: DataProcessCallback = () => {
+        callback: DataProcessCallback<T> = () => {
             console.error('No callback for GET response');
         }
     ): void {
@@ -43,19 +43,16 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    private load(
+    private load<T extends ResponseData>(
         method: string,
         endpoint: Endpoint,
-        callback: DataProcessCallback,
+        callback: DataProcessCallback<T>,
         options: SourcesOptions = {}
     ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res: Response) => res.json())
-            .then((data: ResponseData) => {
-                callback(data);
-                console.log(data);
-            })
+            .then((data: T) => callback(data))
             .catch((err: Error) => console.error(err));
     }
 }

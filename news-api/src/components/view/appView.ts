@@ -11,7 +11,7 @@ export class AppView {
         this.sources = new Sources();
     }
 
-    drawNews(data: NewsResponse): void {
+    drawNews<T extends NewsResponse>(data?: T): void {
         if (!data) {
             throw new Error('Data not provided to drawNews function');
         } else {
@@ -20,7 +20,7 @@ export class AppView {
         }
     }
 
-    drawSources(data: SourcesResponse): void {
+    drawSources<T extends SourcesResponse>(data?: T): void {
         if (!data) {
             throw new Error('Data not provided to drawSources function');
         } else {
