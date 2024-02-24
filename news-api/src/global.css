@@ -14,22 +14,57 @@ header h1 {
 }
 
 footer {
+    padding: 10px 30px;
     height: 100px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
+
 footer .copyright {
+    position: relative;
     font-size: 14px;
-    color: #333;
+    color: #656565;
     text-align: center;
 }
+
 footer .copyright a {
-    color: #444;
+    color: #9c9c9c;
+    text-decoration: none;
+    transition: 0.3s;
 }
+
 footer .copyright a:hover {
-    color: #555;
+    color: #7e7e7e;
 }
-footer .copyright:before {
-    content: '©';
+
+footer .rs-school {
+    fill: #fff;
+    transition: 0.3s;
+}
+
+footer .rs-school:hover {
+    fill: #c7c6c6;
+}
+
+footer .github {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+footer .github:hover {
+    color: #c7c6c6;
+}
+
+footer .github svg {
+    fill: #fff;
+    transition: 0.3s;
+}
+
+footer .github:hover svg {
+    fill: #c7c6c6;
 }
