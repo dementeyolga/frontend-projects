@@ -9,6 +9,7 @@ header {
 }
 
 header h1 {
+    margin: 20px 0 10px;
     font-size: 40px;
     font-weight: 800;
 }
@@ -67,4 +68,14 @@ footer .github svg {
 
 footer .github:hover svg {
     fill: #c7c6c6;
+}
+
+@media (max-width: 576px) {
+    footer {
+        flex-direction: column;
+    }
+
+    header h1 {
+        text-align: center;
+    }
 }

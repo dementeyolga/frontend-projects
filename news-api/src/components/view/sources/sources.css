@@ -1,8 +1,9 @@
 .sources {
+    margin-bottom: 30px;
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
-    height: 120px;
+    height: 110px;
     overflow: auto;
     align-items: center;
     font:
@@ -50,4 +51,11 @@
 
 .sources::-webkit-scrollbar-track {
     background: var(--scrollbar-background);
+}
+
+@media (max-width: 576px) {
+    .sources {
+        height: fit-content;
+        padding-bottom: 10px;
+    }
 }

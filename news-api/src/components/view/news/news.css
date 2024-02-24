@@ -92,7 +92,6 @@
     content: '→';
     margin-left: -10px;
     opacity: 0;
-    vertical-align: middle;
     transition:
         margin 0.4s,
         opacity 0.4s;
