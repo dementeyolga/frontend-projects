@@ -3,7 +3,8 @@ import Sources from './sources/sources';
 import { SourceItem } from '../../../types/interfaces';
 
 class Categories {
-    private: Sources = new Sources();
+    private sources: Sources = new Sources();
+    private currentCategoryBtn: HTMLDivElement | null = null;
 
     draw(data: SourceItem[]): void {
         const categories: string[] = Array.from(new Set(data.map((item) => item.category)));
@@ -44,9 +45,28 @@ class Categories {
         if (categoriesEl instanceof HTMLDivElement) {
             categoriesEl.append(categoriesFragment);
 
-            categoriesEl.addEventListener('click', (e: MouseEvent) =>
-                console.log('e.target', e.target, 'e.currentTarget', e.currentTarget)
-            );
+            categoriesEl.addEventListener('click', ({ target }: MouseEvent) => {
+                if (target instanceof HTMLElement) {
+                    const categoryButton: HTMLDivElement | null = target.closest('.category__item');
+
+                    if (categoryButton instanceof HTMLDivElement) {
+                        if (this.currentCategoryBtn) {
+                            this.currentCategoryBtn.classList.remove('active');
+                        }
+
+                        this.currentCategoryBtn = categoryButton;
+                        categoryButton.classList.add('active');
+
+                        const currentCategory: string | undefined = categoryButton.dataset.category;
+
+                        if (currentCategory) {
+                            const sourcesInCategory = data.filter((item) => item.category === currentCategory);
+
+                            this.sources.draw(sourcesInCategory);
+                        }
+                    }
+                }
+            });
         } else {
             throw new Error(`Element with selector '.categories' is not of type HTMLDivElement`);
         }

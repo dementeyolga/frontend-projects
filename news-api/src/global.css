@@ -1,4 +1,7 @@
 body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     color: #fff;
     background: #17181c;
     font-family: sans-serif;
@@ -10,8 +13,13 @@ header {
 
 header h1 {
     margin: 20px 0 10px;
+    text-align: center;
     font-size: 40px;
     font-weight: 800;
+}
+
+main {
+    flex-grow: 1;
 }
 
 footer {
@@ -72,6 +80,7 @@ footer .github:hover svg {
 
 @media (max-width: 576px) {
     footer {
+        height: auto;
         flex-direction: column;
     }
 
