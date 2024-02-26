@@ -18,7 +18,7 @@ class App {
             throw new Error(`Element with selector '.sources' doesn't exist or has the wrong type.`);
         }
 
-        this.controller.getSources((data) => this.view.drawSources(data));
+        this.controller.getSources((data) => this.view.drawCategories(data));
     }
 }
 

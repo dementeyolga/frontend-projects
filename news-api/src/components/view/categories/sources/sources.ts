@@ -1,9 +1,9 @@
 import './sources.css';
-import { SourceItem } from '../../../types/interfaces';
+import { SourceItem } from './../../../../types/interfaces';
 
 class Sources {
     draw(data: SourceItem[]): void {
-        const fragment: DocumentFragment = document.createDocumentFragment();
+        const sourcesFragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
 
         if (sourceItemTemp instanceof HTMLTemplateElement) {
@@ -25,7 +25,7 @@ class Sources {
                         throw new Error(`Element with selector '.source__item' is not of type HTMLDivElement`);
                     }
 
-                    fragment.append(sourceClone);
+                    sourcesFragment.append(sourceClone);
                 } else {
                     throw new Error(`Copy of Source item template content is not of type DocumentFragment`);
                 }
@@ -36,7 +36,7 @@ class Sources {
 
         const sources: HTMLDivElement | null = document.querySelector('.sources');
         if (sources instanceof HTMLDivElement) {
-            sources.append(fragment);
+            sources.append(sourcesFragment);
         } else {
             throw new Error(`Element with selector '.sources' is not of type HTMLDivElement`);
         }

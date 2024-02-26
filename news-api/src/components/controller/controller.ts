@@ -3,6 +3,15 @@ import { DataProcessCallback } from '../../types/types';
 import { NewsResponse, SourcesResponse } from '../../types/interfaces';
 
 class AppController extends AppLoader {
+    getCategories(callback: DataProcessCallback<SourcesResponse>): void {
+        super.getResp<SourcesResponse>(
+            {
+                endpoint: 'sources',
+            },
+            callback
+        );
+    }
+
     getSources(callback: DataProcessCallback<SourcesResponse>): void {
         super.getResp<SourcesResponse>(
             {

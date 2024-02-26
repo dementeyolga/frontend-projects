@@ -1,14 +1,14 @@
 import News from './news/news';
-import Sources from './sources/sources';
+import Categories from './categories/categories';
 import { NewsItem, SourceItem, SourcesResponse, NewsResponse } from '../../types/interfaces';
 
 export class AppView {
     protected news: News;
-    protected sources: Sources;
+    protected categories: Categories;
 
     constructor() {
         this.news = new News();
-        this.sources = new Sources();
+        this.categories = new Categories();
     }
 
     drawNews<T extends NewsResponse>(data?: T): void {
@@ -20,12 +20,12 @@ export class AppView {
         }
     }
 
-    drawSources<T extends SourcesResponse>(data?: T): void {
+    drawCategories<T extends SourcesResponse>(data?: T): void {
         if (!data) {
-            throw new Error('Data not provided to drawSources function');
+            throw new Error('Data not provided to drawCategories function');
         } else {
             const values: SourceItem[] = data.sources ? data.sources : [];
-            this.sources.draw(values);
+            this.categories.draw(values);
         }
     }
 }
