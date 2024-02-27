@@ -1,5 +1,4 @@
-import { NewsResponse } from './interfaces';
-import { SourcesResponse } from './interfaces';
+import { NewsResponse, SourcesResponse } from './interfaces';
 
 export type ResponseData = NewsResponse | SourcesResponse;
 

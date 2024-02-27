@@ -2,15 +2,9 @@ import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 
 class App {
-    private controller: AppController;
-    private view: AppView;
-    private currentSourceBtn: HTMLDivElement | null;
-
-    constructor() {
-        this.controller = new AppController();
-        this.view = new AppView();
-        this.currentSourceBtn = null;
-    }
+    private controller: AppController = new AppController();
+    private view: AppView = new AppView();
+    private currentSourceBtn: HTMLDivElement | null = null;
 
     start(): void {
         const sources: HTMLDivElement | null = document.querySelector('.sources');
@@ -35,7 +29,7 @@ class App {
             throw new Error(`Element with selector '.sources' doesn't exist or has the wrong type.`);
         }
 
-        this.controller.getSources((data) => this.view.drawCategories(data));
+        this.controller.getCategories((data) => this.view.drawCategories(data));
     }
 }
 

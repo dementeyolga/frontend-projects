@@ -12,15 +12,6 @@ class AppController extends AppLoader {
         );
     }
 
-    getSources(callback: DataProcessCallback<SourcesResponse>): void {
-        super.getResp<SourcesResponse>(
-            {
-                endpoint: 'sources',
-            },
-            callback
-        );
-    }
-
     getNews(e: MouseEvent, callback: DataProcessCallback<NewsResponse>): void {
         let target: EventTarget | null = e.target;
         const newsContainer: EventTarget | null = e.currentTarget;

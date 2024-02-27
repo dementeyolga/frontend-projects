@@ -1,9 +1,9 @@
-export enum ErrorCodes {
+export const enum ErrorCodes {
     Unauthorized = 401,
     NotFound = 404,
 }
 
-export enum HTTPMethods {
+export const enum HTTPMethods {
     GET = 'GET',
     POST = 'POST',
     HEAD = 'HEAD',

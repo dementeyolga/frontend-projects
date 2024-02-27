@@ -3,13 +3,8 @@ import Categories from './categories/categories';
 import { NewsItem, SourceItem, SourcesResponse, NewsResponse } from '../../types/interfaces';
 
 export class AppView {
-    protected news: News;
-    protected categories: Categories;
-
-    constructor() {
-        this.news = new News();
-        this.categories = new Categories();
-    }
+    protected news: News = new News();
+    protected categories: Categories = new Categories();
 
     drawNews<T extends NewsResponse>(data?: T): void {
         if (!data) {

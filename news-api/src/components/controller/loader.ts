@@ -3,10 +3,10 @@ import { DataProcessCallback, Endpoint, ResponseData } from '../../types/types';
 import { ErrorCodes, HTTPMethods } from '../../types/enums';
 
 class Loader {
-    protected baseLink: string;
-    protected options: LoaderOptions;
+    private baseLink: string;
+    private options: LoaderOptions;
 
-    constructor(baseLink: string, options: LoaderOptions) {
+    protected constructor(baseLink: string, options: LoaderOptions) {
         this.baseLink = baseLink;
         this.options = options;
     }
@@ -44,7 +44,7 @@ class Loader {
     }
 
     private load<T extends ResponseData>(
-        method: string,
+        method: HTTPMethods,
         endpoint: Endpoint,
         callback: DataProcessCallback<T>,
         options: SourcesOptions = {}
