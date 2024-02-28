@@ -3,8 +3,8 @@ import Categories from './categories/categories';
 import { NewsItem, SourceItem, SourcesResponse, NewsResponse } from '../../types/interfaces';
 
 export class AppView {
-    protected news: News = new News();
-    protected categories: Categories = new Categories();
+    private news: News = new News();
+    private categories: Categories = new Categories();
 
     drawNews<T extends NewsResponse>(data?: T): void {
         if (!data) {
