@@ -1,0 +1,24 @@
+@import 'node_modules/modern-normalize/modern-normalize.css';
+
+.h1 {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.app {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-image: linear-gradient(
+    to right top,
+    #ff4281,
+    #ff5b6b,
+    #ff7757,
+    #ff9249,
+    #ffad42
+  );
+}
