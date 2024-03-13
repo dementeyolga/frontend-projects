@@ -1,7 +1,7 @@
 import { EventCallbacks } from '../../types/types';
 
 export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
-  private readonly children: BaseComponentView[] = [];
+  protected readonly children: BaseComponentView[] = [];
 
   protected readonly element: T;
 

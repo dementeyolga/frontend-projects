@@ -7,9 +7,26 @@ import { div } from '../../utils/tagViews';
 import { EventCallbacks } from '../../types/types';
 import classes from './LoginForm.module.scss';
 
+type StringObject = {
+  [key: string]: string;
+};
+
 const loginFormEventCallbacks: EventCallbacks<HTMLFormElement> = {
   submit(ev: Event) {
     ev.preventDefault();
+
+    if (ev.currentTarget instanceof HTMLFormElement) {
+      const inputs = ev.currentTarget.querySelectorAll('input');
+
+      const obj: StringObject = {};
+      const data: StringObject = [...inputs].reduce((acc, curr) => {
+        acc[curr.name] = curr.value;
+
+        return acc;
+      }, obj);
+
+      localStorage.setItem('rss-puzzle_form-data', JSON.stringify(data));
+    }
   },
 };
 
