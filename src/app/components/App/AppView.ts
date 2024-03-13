@@ -8,6 +8,7 @@ export default class AppView extends BaseComponentView {
   constructor() {
     super(
       { tagName: 'div', className: classes.app },
+      undefined,
       h1(classes.h1, 'RSS Puzzle'),
       new LoginFormView(),
     );

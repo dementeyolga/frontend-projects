@@ -1,15 +1,26 @@
+import { EventCallbacks } from '../../types/types';
+
 export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
   private readonly children: BaseComponentView[] = [];
 
   protected readonly element: T;
 
-  constructor(params: Partial<T>, ...children: BaseComponentView[]) {
+  constructor(
+    params: Partial<T>,
+    eventCallbacks?: EventCallbacks<T>,
+    ...children: BaseComponentView[]
+  ) {
     const element = document.createElement(params.tagName || 'div') as T;
     this.element = element;
     this.setParameters(params);
+
     if (children) {
       this.children = children;
       this.addChildrenComponents(children);
+    }
+
+    if (eventCallbacks) {
+      this.setEventCallbacks(eventCallbacks);
     }
   }
 
@@ -27,6 +38,17 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     if (className) {
       this.setClassName(className);
     }
+  }
+
+  protected setEventCallbacks(validationCallbacks: EventCallbacks<T>): void {
+    Object.keys(validationCallbacks).forEach((key) => {
+      this.element.addEventListener(
+        key as keyof EventCallbacks<T>,
+        validationCallbacks[
+          key as keyof EventCallbacks<T>
+        ] as EventListenerOrEventListenerObject,
+      );
+    });
   }
 
   private addChildrenComponents(children: BaseComponentView[]): void {

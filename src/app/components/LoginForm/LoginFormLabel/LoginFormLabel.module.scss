@@ -1,4 +1,8 @@
 .label {
+  position: relative;
+
+  margin-bottom: 6px;
+
   display: flex;
   flex-direction: column;
   row-gap: 6px;

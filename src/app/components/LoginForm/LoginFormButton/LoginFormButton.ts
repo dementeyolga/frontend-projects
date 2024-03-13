@@ -2,8 +2,6 @@ import BaseComponentView from '../../BaseComponent/BaseComponentView';
 import classes from './LoginFormButton.module.scss';
 
 export default class LoginFormButtonView extends BaseComponentView<HTMLButtonElement> {
-  protected declare element: HTMLButtonElement;
-
   constructor(className: string) {
     super({
       tagName: 'button',
