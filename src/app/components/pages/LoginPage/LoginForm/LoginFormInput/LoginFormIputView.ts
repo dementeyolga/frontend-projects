@@ -1,5 +1,5 @@
-import { EventCallbacks } from '../../../types/types';
-import BaseComponentView from '../../BaseComponent/BaseComponentView';
+import { EventCallbacks } from '../../../../../types/types';
+import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
 import classes from './LoginFormInput.module.scss';
 import errorClasses from '../LoginFormErrorMessage/LoginFormErrorMessage.module.scss';
 

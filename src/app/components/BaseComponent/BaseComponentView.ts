@@ -1,7 +1,7 @@
 import { EventCallbacks } from '../../types/types';
 
 export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
-  protected readonly children: BaseComponentView[] = [];
+  protected children: BaseComponentView[] = [];
 
   protected readonly element: T;
 
@@ -14,9 +14,8 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     this.element = element;
     this.setParameters(params);
 
-    if (children) {
-      this.children = children;
-      this.addChildrenComponents(children);
+    if (children.length) {
+      this.addChildrenComponents(...children);
     }
 
     if (eventCallbacks) {
@@ -51,24 +50,39 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     });
   }
 
-  private addChildrenComponents(children: BaseComponentView[]): void {
-    children.forEach((component) => this.addChild(component.getElement()));
-    this.children.push(...children);
+  public async addChildrenComponents(
+    ...children: BaseComponentView[]
+  ): Promise<void> {
+    children.forEach(async (component) => {
+      await this.addChild(component.getElement());
+      this.children.push(component);
+    });
   }
 
-  private addChild(element: HTMLElement): void {
+  protected async addChild(element: HTMLElement): Promise<void> {
     this.element.append(element);
   }
 
-  private setClassName(className: string): void {
+  public async removeChildrenComponents() {
+    this.children.length = 0;
+
+    const currentEl = this.getElement();
+    currentEl.innerHTML = '';
+    // while (currentEl.firstElementChild) {
+    //   currentEl.firstElementChild.remove();
+    //   console.log('children are removed');
+    // }
+  }
+
+  protected setClassName(className: string): void {
     this.element.className = className;
   }
 
-  private addClass(className: string): void {
+  protected addClass(className: string): void {
     this.element.classList.add(className);
   }
 
-  private removeClass(className: string): void {
+  protected removeClass(className: string): void {
     this.element.classList.remove(className);
   }
 }

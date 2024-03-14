@@ -1,7 +1,7 @@
-import BaseComponentView from '../../BaseComponent/BaseComponentView';
+import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
 import classes from './LoginFormLabel.module.scss';
 
-export default class LoginFormLabelView extends BaseComponentView {
+export default class LoginFormLabelView extends BaseComponentView<HTMLLabelElement> {
   protected declare element: HTMLLabelElement;
 
   constructor(labelName: string) {

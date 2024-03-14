@@ -1,0 +1,7 @@
+@use './../../../../../../styles/components/button' as *;
+
+.button {
+  @extend .button;
+
+  margin-top: 10px;
+}

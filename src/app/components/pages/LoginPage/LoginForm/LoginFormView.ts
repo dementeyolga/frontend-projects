@@ -1,11 +1,12 @@
-import BaseComponentView from '../BaseComponent/BaseComponentView';
+import BaseComponentView from '../../../BaseComponent/BaseComponentView';
 import LoginFormButtonView from './LoginFormButton/LoginFormButton';
 import LoginFormLabelView from './LoginFormLabel/LoginFormLabelView';
 import LoginFormInputView from './LoginFormInput/LoginFormIputView';
 import LoginFormErrorMessageView from './LoginFormErrorMessage/LoginFormErrorMessageView';
-import { div } from '../../utils/tagViews';
-import { EventCallbacks } from '../../types/types';
+import { div } from '../../../../utils/tagViews';
+import { EventCallbacks } from '../../../../types/types';
 import classes from './LoginForm.module.scss';
+import { FormFields, LocalStorageValues } from '../../../../types/enums';
 
 type StringObject = {
   [key: string]: string;
@@ -16,6 +17,8 @@ const loginFormEventCallbacks: EventCallbacks<HTMLFormElement> = {
     ev.preventDefault();
 
     if (ev.currentTarget instanceof HTMLFormElement) {
+      if (!ev.currentTarget.checkValidity()) return;
+
       const inputs = ev.currentTarget.querySelectorAll('input');
 
       const obj: StringObject = {};
@@ -25,7 +28,11 @@ const loginFormEventCallbacks: EventCallbacks<HTMLFormElement> = {
         return acc;
       }, obj);
 
-      localStorage.setItem('rss-puzzle_form-data', JSON.stringify(data));
+      localStorage.setItem(LocalStorageValues.FormData, JSON.stringify(data));
+
+      if (ev instanceof SubmitEvent && ev.submitter) {
+        ev.submitter.click();
+      }
     }
   },
 };
@@ -41,7 +48,7 @@ export default class LoginFormView extends BaseComponentView<HTMLFormElement> {
         new LoginFormLabelView('First Name'),
         new LoginFormInputView(
           'text',
-          'First name',
+          FormFields.FirstName,
           true,
           3,
           '[A-Z]{1}[a-z\\-]{2,}',
@@ -54,14 +61,14 @@ export default class LoginFormView extends BaseComponentView<HTMLFormElement> {
         new LoginFormLabelView('Surname'),
         new LoginFormInputView(
           'text',
-          'Surname',
+          FormFields.Surname,
           true,
           4,
           '[A-Z]{1}[a-z\\-]{3,}',
         ),
         new LoginFormErrorMessageView(),
       ),
-      new LoginFormButtonView(classes.button),
+      new LoginFormButtonView(classes.button, '/'),
     );
   }
 
