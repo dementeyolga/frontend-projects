@@ -1,5 +1,7 @@
+@use './../../../../styles/layout/padding' as *;
+
 .header {
-  padding: 20px;
+  @extend %wrapper-padding;
 
   display: flex;
   justify-content: space-between;

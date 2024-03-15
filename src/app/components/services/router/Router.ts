@@ -19,8 +19,6 @@ class Router {
       const { target } = event;
 
       if (target instanceof HTMLElement && target.dataset.navigate) {
-        console.log('click to navigate');
-
         const path = target.dataset.navigate;
 
         await this.showRoute(path);

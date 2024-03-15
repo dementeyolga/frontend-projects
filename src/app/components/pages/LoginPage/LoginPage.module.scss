@@ -1,6 +1,7 @@
+@use './../../../../styles/base/headings' as *;
+
 .h1 {
-  font-size: 2rem;
-  color: #ffffff;
+  @extend %h1;
 }
 
 .page {

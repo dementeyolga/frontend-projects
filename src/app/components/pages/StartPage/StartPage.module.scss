@@ -1,3 +1,6 @@
+@use './../../../../styles/base/headings' as *;
+@use './../../../../styles/layout/padding' as *;
+
 .page {
   min-width: 100%;
 
@@ -5,4 +8,23 @@
   flex-direction: column;
 
   flex-grow: 1;
+}
+
+.pageMain {
+  @extend %wrapper-padding;
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.h1 {
+  @extend %h1;
+}
+
+.description {
+  text-align: center;
+  color: #ffffff;
 }

@@ -1,8 +1,9 @@
 import { LocalStorageValues, Path } from '../../../types/enums';
+import BaseComponentView from '../../BaseComponent/BaseComponentView';
 
 export type Route = {
   path: string;
-  callback: () => Promise;
+  callback: () => Promise<BaseComponentView>;
 };
 
 export const appRoutes: Route[] = [
