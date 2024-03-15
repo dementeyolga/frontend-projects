@@ -10,7 +10,7 @@ export default class HeaderView extends BaseComponentView<HTMLElement> {
         className: classes.header,
       },
       undefined,
-      new LogoutButtonView('/'),
+      new LogoutButtonView('#'),
     );
   }
 }

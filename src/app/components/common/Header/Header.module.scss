@@ -4,7 +4,7 @@
   @extend %wrapper-padding;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 
   background: rgba(255, 255, 255, 0.712);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);

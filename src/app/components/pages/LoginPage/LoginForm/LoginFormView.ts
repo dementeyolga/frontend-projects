@@ -68,7 +68,7 @@ export default class LoginFormView extends BaseComponentView<HTMLFormElement> {
         ),
         new LoginFormErrorMessageView(),
       ),
-      new LoginFormButtonView(classes.button, '/'),
+      new LoginFormButtonView(classes.button, '#'),
     );
   }
 

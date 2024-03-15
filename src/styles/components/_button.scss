@@ -1,9 +1,12 @@
+@use './../abstract/variables' as *;
+
 .button {
+  padding: 0 8px;
   height: 30px;
 
-  color: #ffffff;
+  color: $color-neutral;
   font-weight: 500;
-  background-color: #ff4281;
+  background-color: $color-accent;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 
   outline: none;
@@ -14,6 +17,15 @@
 
   &:hover {
     cursor: pointer;
-    background-color: #ff5b6b;
+    background-color: $color-accent;
+  }
+
+  &.primary {
+    color: $color-accent;
+    background-color: $color-neutral;
+
+    &:hover {
+      color: $color-neutral;
+    }
   }
 }

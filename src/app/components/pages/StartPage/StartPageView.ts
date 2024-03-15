@@ -3,13 +3,10 @@ import { UserInfo } from '../../../types/types';
 import { div, h1, p } from '../../../utils/tagViews';
 import BaseComponentView from '../../BaseComponent/BaseComponentView';
 import HeaderView from '../../common/Header/HeaderView';
+import StartButtonView from './StartButton/StartButtonView';
 import classes from './StartPage.module.scss';
 
 export default class StartPageView extends BaseComponentView<HTMLDivElement> {
-  private [FormFields.FirstName]: string | null = null;
-
-  private [FormFields.Surname]: string | null = null;
-
   private mainContent: BaseComponentView<HTMLDivElement>;
 
   constructor() {
@@ -21,6 +18,7 @@ export default class StartPageView extends BaseComponentView<HTMLDivElement> {
         classes.description,
         'RSS Puzzle is an interactive mini-game aimed at enhancing English language skills. Put words in the right order to make correct sentences.',
       ),
+      new StartButtonView('game'),
     );
 
     super(

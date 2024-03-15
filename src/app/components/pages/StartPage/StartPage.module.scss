@@ -1,13 +1,9 @@
 @use './../../../../styles/base/headings' as *;
 @use './../../../../styles/layout/padding' as *;
+@use './../../../../styles/layout/page' as *;
 
 .page {
-  min-width: 100%;
-
-  display: flex;
-  flex-direction: column;
-
-  flex-grow: 1;
+  @extend %page;
 }
 
 .pageMain {

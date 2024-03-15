@@ -1,6 +1,6 @@
 export const enum Path {
-  Start = '/',
-  Game = '/game',
+  Start = '',
+  Game = 'game',
 }
 
 export const enum FormFields {

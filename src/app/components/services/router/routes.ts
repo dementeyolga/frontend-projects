@@ -10,19 +10,37 @@ export const appRoutes: Route[] = [
   {
     path: Path.Start,
     callback: async () => {
-      if (localStorage.getItem(LocalStorageValues.FormData)) {
+      try {
+        if (localStorage.getItem(LocalStorageValues.FormData)) {
+          const { default: View } = await import(
+            '../../pages/StartPage/StartPageView'
+          );
+
+          return new View();
+        }
+
         const { default: View } = await import(
-          '../../pages/StartPage/StartPageView'
+          '../../pages/LoginPage/LoginPageView'
         );
 
         return new View();
+      } catch {
+        throw new Error('Module not found.');
       }
+    },
+  },
+  {
+    path: Path.Game,
+    callback: async () => {
+      try {
+        const { default: View } = await import(
+          '../../pages/GamePage/GamePageView'
+        );
 
-      const { default: View } = await import(
-        '../../pages/LoginPage/LoginPageView'
-      );
-
-      return new View();
+        return new View();
+      } catch {
+        throw new Error('Module not found.');
+      }
     },
   },
 ];

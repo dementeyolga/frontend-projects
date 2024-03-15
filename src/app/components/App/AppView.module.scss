@@ -1,3 +1,4 @@
+@use './../../../styles/abstract/variables' as *;
 @import 'node_modules/modern-normalize/modern-normalize.css';
 
 .app {
@@ -10,10 +11,7 @@
 
   background-image: linear-gradient(
     to right top,
-    #ff4281,
-    #ff5b6b,
-    #ff7757,
-    #ff9249,
-    #ffad42
+    $color-accent,
+    $color-accent-2
   );
 }
