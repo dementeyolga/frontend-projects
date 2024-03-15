@@ -14,7 +14,6 @@ export default class AppPresenter {
 
   async setContent(view: BaseComponentView): Promise<void> {
     await this.view.removeChildrenComponents();
-    await this.view.addChildrenComponents(view);
-    console.log('view after new components added', this.view);
+    await this.view.addChildrenComponents('end', view);
   }
 }

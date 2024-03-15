@@ -15,7 +15,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     this.setParameters(params);
 
     if (children.length) {
-      this.addChildrenComponents(...children);
+      this.addChildrenComponents('end', ...children);
     }
 
     if (eventCallbacks) {
@@ -51,16 +51,24 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
   }
 
   public async addChildrenComponents(
+    position?: 'begin' | 'end',
     ...children: BaseComponentView[]
   ): Promise<void> {
     children.forEach(async (component) => {
-      await this.addChild(component.getElement());
+      await this.addChild(component.getElement(), position);
       this.children.push(component);
     });
   }
 
-  protected async addChild(element: HTMLElement): Promise<void> {
-    this.element.append(element);
+  protected async addChild(
+    element: HTMLElement,
+    position?: 'begin' | 'end',
+  ): Promise<void> {
+    if (position === 'begin') {
+      this.element.prepend(element);
+    } else {
+      this.element.append(element);
+    }
   }
 
   public async removeChildrenComponents() {
@@ -68,10 +76,6 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
 
     const currentEl = this.getElement();
     currentEl.innerHTML = '';
-    // while (currentEl.firstElementChild) {
-    //   currentEl.firstElementChild.remove();
-    //   console.log('children are removed');
-    // }
   }
 
   protected setClassName(className: string): void {
