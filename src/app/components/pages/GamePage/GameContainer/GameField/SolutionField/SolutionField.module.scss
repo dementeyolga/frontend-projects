@@ -1,0 +1,11 @@
+@use './../../../../../../../styles/abstract/variables' as *;
+
+.field {
+  padding: 10px;
+  min-height: 20px;
+
+  display: flex;
+
+  border: 1px solid $color-border-pale;
+  border-radius: $small-border-radius;
+}

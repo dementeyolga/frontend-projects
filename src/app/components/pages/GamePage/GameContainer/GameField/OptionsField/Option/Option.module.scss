@@ -1,0 +1,18 @@
+@use './../../../../../../../../styles/abstract/variables' as *;
+
+.option {
+  padding: 5px 7px;
+
+  display: flex;
+  justify-content: center;
+
+  border: 1px solid $color-border-pale;
+  border-radius: $small-border-radius;
+
+  transition: 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $color-accent-light;
+  }
+}

@@ -1,0 +1,16 @@
+@use './../../../../../../styles/base/background' as *;
+
+.field {
+  padding: 20px;
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  flex-grow: 1;
+
+  @extend %light-background;
+  border-radius: 16px;
+}

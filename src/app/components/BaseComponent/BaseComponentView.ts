@@ -39,6 +39,36 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     }
   }
 
+  async addChildrenComponents(
+    position?: 'begin' | 'end',
+    ...children: BaseComponentView[]
+  ): Promise<void> {
+    children.forEach(async (component) => {
+      await this.addChild(component.getElement(), position);
+      this.children.push(component);
+    });
+  }
+
+  async removeChildrenComponents() {
+    this.children.length = 0;
+
+    const currentEl = this.getElement();
+    currentEl.innerHTML = '';
+  }
+
+  removeChildComponent(element: HTMLElement) {
+    const component = this.children.find(
+      (comp) => comp.getElement() === element,
+    );
+
+    if (component) {
+      const index = this.children.indexOf(component);
+      this.children.splice(index, 1);
+
+      element.remove();
+    }
+  }
+
   protected setEventCallbacks(validationCallbacks: EventCallbacks<T>): void {
     Object.keys(validationCallbacks).forEach((key) => {
       this.element.addEventListener(
@@ -47,16 +77,6 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
           key as keyof EventCallbacks<T>
         ] as EventListenerOrEventListenerObject,
       );
-    });
-  }
-
-  public async addChildrenComponents(
-    position?: 'begin' | 'end',
-    ...children: BaseComponentView[]
-  ): Promise<void> {
-    children.forEach(async (component) => {
-      await this.addChild(component.getElement(), position);
-      this.children.push(component);
     });
   }
 
@@ -69,13 +89,6 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     } else {
       this.element.append(element);
     }
-  }
-
-  public async removeChildrenComponents() {
-    this.children.length = 0;
-
-    const currentEl = this.getElement();
-    currentEl.innerHTML = '';
   }
 
   protected setClassName(className: string): void {
