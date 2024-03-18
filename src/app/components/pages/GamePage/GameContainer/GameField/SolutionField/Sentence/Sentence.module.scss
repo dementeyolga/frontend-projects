@@ -1,13 +1,13 @@
-@use './../../../../../../../styles/abstract/variables' as *;
+@use './../../../../../../../../styles/abstract/variables' as *;
 
-.field {
+.sentence {
   padding: 10px;
   min-height: 20px;
+  min-width: 100%;
 
   align-self: stretch;
 
   display: flex;
-  flex-direction: column;
 
   border: 1px solid $color-border-pale;
   border-radius: $small-border-radius;

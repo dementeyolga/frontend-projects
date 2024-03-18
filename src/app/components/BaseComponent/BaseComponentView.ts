@@ -1,7 +1,7 @@
 import { EventCallbacks } from '../../types/types';
 
 export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
-  protected children: BaseComponentView[] = [];
+  children: BaseComponentView[] = [];
 
   protected readonly element: T;
 
@@ -23,7 +23,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  getElement(): HTMLElement {
+  getElement(): T {
     return this.element;
   }
 
@@ -41,7 +41,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
 
   async addChildrenComponents(
     position?: 'begin' | 'end',
-    ...children: BaseComponentView[]
+    ...children: typeof this.children
   ): Promise<void> {
     children.forEach(async (component) => {
       await this.addChild(component.getElement(), position);
@@ -56,7 +56,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     currentEl.innerHTML = '';
   }
 
-  removeChildComponent(element: HTMLElement) {
+  async removeChildComponent(element: HTMLElement): Promise<void> {
     const component = this.children.find(
       (comp) => comp.getElement() === element,
     );

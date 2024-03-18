@@ -1,6 +1,6 @@
 import { LocalStorageValues } from '../../../types/enums';
 import { EventCallbacks } from '../../../types/types';
-import BaseComponentView from '../../BaseComponent/BaseComponentView';
+import ButtonView from '../Button/ButtonView';
 import classes from './LogoutButton.module.scss';
 
 const buttonCallbacks: EventCallbacks<HTMLButtonElement> = {
@@ -9,14 +9,14 @@ const buttonCallbacks: EventCallbacks<HTMLButtonElement> = {
   },
 };
 
-export default class LogoutButtonView extends BaseComponentView<HTMLButtonElement> {
+export default class LogoutButtonView extends ButtonView {
   constructor(link?: string) {
     super(
-      {
-        tagName: 'button',
-        className: classes.button,
-        textContent: 'Logout',
-      },
+      classes.button,
+      'button',
+      'Logout',
+      undefined,
+      false,
       buttonCallbacks,
     );
 

@@ -1,8 +1,11 @@
+@use './../../../../../styles/components/button' as *;
+
 .form {
   padding: 30px;
 
   display: flex;
   flex-direction: column;
+  align-items: center;
   row-gap: 10px;
 
   background: rgba(255, 255, 255, 0.4);
@@ -11,19 +14,6 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-
-  &:invalid {
-    .button {
-      color: #5a5a5a;
-      font-weight: 400;
-      background-color: #b6b6b6;
-
-      &:hover {
-        cursor: default;
-        pointer-events: none;
-      }
-    }
-  }
 }
 
 .inputWrapper {

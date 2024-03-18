@@ -1,6 +1,6 @@
-import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
 import { EventCallbacks } from '../../../../../types/types';
 import classes from './LoginFormButton.module.scss';
+import ButtonView from '../../../../common/Button/ButtonView';
 
 const buttonCallbacks: EventCallbacks<HTMLButtonElement> = {
   click(event) {
@@ -10,29 +10,8 @@ const buttonCallbacks: EventCallbacks<HTMLButtonElement> = {
   },
 };
 
-export default class LoginFormButtonView extends BaseComponentView<HTMLButtonElement> {
-  constructor(className: string, link?: string) {
-    super(
-      {
-        tagName: 'button',
-        type: 'submit',
-        textContent: 'Login',
-        className: `${className} ${classes.button}`,
-      },
-      buttonCallbacks,
-    );
-
-    if (link) {
-      this.element.dataset.navigate = link;
-    }
-  }
-
-  protected override setParameters(params: Partial<HTMLButtonElement>): void {
-    super.setParameters(params);
-
-    const { type } = params;
-    if (type) {
-      this.element.type = type;
-    }
+export default class LoginFormButtonView extends ButtonView {
+  constructor(link?: string, disabled?: boolean) {
+    super(classes.button, 'submit', 'Login', link, disabled, buttonCallbacks);
   }
 }

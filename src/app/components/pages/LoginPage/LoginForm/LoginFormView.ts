@@ -35,6 +35,19 @@ const loginFormEventCallbacks: EventCallbacks<HTMLFormElement> = {
       }
     }
   },
+  change(ev: Event) {
+    if (ev.currentTarget instanceof HTMLFormElement) {
+      if (ev.currentTarget.checkValidity()) {
+        const submitButton = ev.currentTarget.querySelector(
+          'button[type="submit"]',
+        );
+
+        if (submitButton instanceof HTMLButtonElement) {
+          submitButton.disabled = false;
+        }
+      }
+    }
+  },
 };
 
 export default class LoginFormView extends BaseComponentView<HTMLFormElement> {
@@ -68,7 +81,7 @@ export default class LoginFormView extends BaseComponentView<HTMLFormElement> {
         ),
         new LoginFormErrorMessageView(),
       ),
-      new LoginFormButtonView(classes.button, '#'),
+      new LoginFormButtonView('#', true),
     );
   }
 
