@@ -51,9 +51,6 @@ export default class OptionsFieldView extends BaseComponentView<HTMLDivElement> 
             }),
           );
         }
-
-        // if (lastSentence.isInRightOrder()) {
-        // }
       }
     });
   }

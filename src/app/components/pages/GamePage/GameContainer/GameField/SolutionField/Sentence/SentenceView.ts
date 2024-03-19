@@ -14,6 +14,8 @@ export default class SentenceView extends BaseComponentView<HTMLDivElement> {
 
     this.correctSolution = correctSolution;
     this.initClickListener();
+
+    console.log(correctSolution);
   }
 
   isInRightOrder(): boolean {

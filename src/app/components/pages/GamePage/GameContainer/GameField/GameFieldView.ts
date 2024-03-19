@@ -94,6 +94,24 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
         this.solutionField.children[this.solutionField.children.length - 1];
 
       lastSentence.checkSentenceElements();
+
+      if (lastSentence.isInRightOrder()) {
+        this.checkContinueButton.transformToContinue();
+      }
+    });
+
+    this.element.addEventListener(CustomEventNames.NextRound, (ev) => {
+      if (ev instanceof CustomEvent) {
+        const { detail: level } = ev;
+
+        const words = level.textExample.split(' ');
+        const shuffled: string[] = shuffleStringArray(words);
+        this.optionsField.renderOptions(shuffled);
+        this.solutionField.addChildrenComponents(
+          'end',
+          new SentenceView(level.textExample),
+        );
+      }
     });
 
     this.element.addEventListener(CustomEventNames.EnableCheckButton, () => {

@@ -17,4 +17,6 @@ export const enum CustomEventNames {
   MoveOption = 'move-option',
   EnableCheckButton = 'enable-check-button',
   DisableCheckButton = 'disable-check-button',
+  NextRound = 'next-round',
+  NextLevel = 'next-level',
 }

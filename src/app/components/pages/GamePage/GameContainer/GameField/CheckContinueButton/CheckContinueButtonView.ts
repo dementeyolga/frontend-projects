@@ -8,6 +8,8 @@ export default class CheckContinueButtonView extends ButtonView {
 
   private currentLevelIndex: number = 0;
 
+  private isContinue: boolean = false;
+
   constructor(levels: Words) {
     super(classes.button, 'button', 'Check', undefined, true);
 
@@ -16,23 +18,38 @@ export default class CheckContinueButtonView extends ButtonView {
     this.initClickListener();
   }
 
+  transformToContinue(): void {
+    this.setTextContent('Continue');
+    this.addClass(classes.continue);
+    this.isContinue = true;
+  }
+
   private initClickListener() {
     this.element.addEventListener('click', () => {
-      this.element.dispatchEvent(
-        new CustomEvent(CustomEventNames.CheckSolution, { bubbles: true }),
-      );
-      // Continue button functions
-      // if (this.currentLevelIndex !== this.levels.length - 1) {
-      //   this.currentLevelIndex += 1;
-      //   outerCallback(this.levels[this.currentLevelIndex]);
-      //   this.element.disabled = true;
-      // } else {
-      //   this.element.dispatchEvent(
-      //     new CustomEvent('next-level', {
-      //       bubbles: true,
-      //     }),
-      //   );
-      // }
+      if (!this.isContinue) {
+        this.element.dispatchEvent(
+          new CustomEvent(CustomEventNames.CheckSolution, { bubbles: true }),
+        );
+      } else if (this.currentLevelIndex !== this.levels.length - 1) {
+        this.isContinue = false;
+        this.setTextContent('Check');
+
+        this.currentLevelIndex += 1;
+        this.element.dispatchEvent(
+          new CustomEvent(CustomEventNames.NextRound, {
+            bubbles: true,
+            detail: this.levels[this.currentLevelIndex],
+          }),
+        );
+
+        this.element.disabled = true;
+      } else {
+        this.element.dispatchEvent(
+          new CustomEvent(CustomEventNames.NextLevel, {
+            bubbles: true,
+          }),
+        );
+      }
     });
   }
 }

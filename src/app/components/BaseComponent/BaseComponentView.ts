@@ -27,6 +27,10 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     return this.element;
   }
 
+  setTextContent(text: string): void {
+    this.element.textContent = text;
+  }
+
   protected setParameters(params: Partial<T>) {
     const { textContent, className } = params;
 
