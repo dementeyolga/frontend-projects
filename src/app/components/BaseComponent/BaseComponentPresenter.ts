@@ -1,11 +1,7 @@
-import BaseComponentModel from './BaseComponentModel';
 import BaseComponentView from './BaseComponentView';
 
 export default class BaseComponentPresenter {
-  constructor(
-    private readonly view: BaseComponentView,
-    private readonly model: BaseComponentModel,
-  ) {}
+  constructor(private readonly view: BaseComponentView) {}
 
   getElement(): HTMLElement {
     return this.view.getElement();

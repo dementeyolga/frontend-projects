@@ -1,22 +1,18 @@
 import BaseComponentView from '../../../../../BaseComponent/BaseComponentView';
-import SolutionFieldView from '../SolutionField/SolutionFieldView';
 import OptionView from './Option/OptionView';
 import classes from './OptionsField.module.scss';
 import optionClasses from './Option/Option.module.scss';
-import ContinueButtonView from '../ContinueButton/ContinueButtonView';
+import ContinueButtonView from '../CheckContinueButton/CheckContinueButtonView';
+import { CustomEventNames } from '../../../../../../types/enums';
 
 export default class OptionsFieldView extends BaseComponentView<HTMLDivElement> {
-  private solutionField: SolutionFieldView;
+  checkContinueButton?: ContinueButtonView;
 
-  continueButton?: ContinueButtonView;
-
-  constructor(options: string[], solutionField: SolutionFieldView) {
+  constructor(options: string[]) {
     super({
       tagName: 'div',
       className: classes.field,
     });
-
-    this.solutionField = solutionField;
 
     this.renderOptions(options);
 
@@ -39,23 +35,25 @@ export default class OptionsFieldView extends BaseComponentView<HTMLDivElement> 
         target instanceof HTMLDivElement &&
         target.classList.contains(optionClasses.option)
       ) {
-        const lastSentence =
-          this.solutionField.children[this.solutionField.children.length - 1];
-
-        await lastSentence.addChildrenComponents(
-          'end',
-          new OptionView(target.textContent || ''),
+        target.dispatchEvent(
+          new CustomEvent(CustomEventNames.MoveOption, {
+            bubbles: true,
+            detail: { source: this },
+          }),
         );
 
         await this.removeChildComponent(target);
 
-        console.log(lastSentence);
-
-        if (lastSentence.isInRightOrder()) {
-          if (this.continueButton) {
-            this.continueButton.getElement().disabled = false;
-          }
+        if (this.children.length === 0) {
+          this.element.dispatchEvent(
+            new CustomEvent(CustomEventNames.EnableCheckButton, {
+              bubbles: true,
+            }),
+          );
         }
+
+        // if (lastSentence.isInRightOrder()) {
+        // }
       }
     });
   }

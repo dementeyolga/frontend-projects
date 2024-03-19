@@ -1,11 +1,9 @@
 import BaseComponentView from '../../../../../../BaseComponent/BaseComponentView';
 import classes from './Sentence.module.scss';
 import optionClasses from '../../OptionsField/Option/Option.module.scss';
-import OptionView from '../../OptionsField/Option/OptionView';
+import { CustomEventNames } from '../../../../../../../types/enums';
 
 export default class SentenceView extends BaseComponentView<HTMLDivElement> {
-  optionsField?: BaseComponentView;
-
   private correctSolution: string;
 
   constructor(correctSolution: string) {
@@ -26,18 +24,38 @@ export default class SentenceView extends BaseComponentView<HTMLDivElement> {
     return solution === this.correctSolution;
   }
 
+  checkSentenceElements(): void {
+    const solutionArr = this.correctSolution.split(' ');
+
+    this.children.forEach((comp, index) => {
+      const element = comp.getElement();
+
+      if (element.textContent === solutionArr[index]) {
+        element.classList.add(optionClasses.correct);
+      } else {
+        element.classList.add(optionClasses.wrong);
+      }
+    });
+  }
+
   private initClickListener(): void {
     this.element.addEventListener('click', (event) => {
       const { target } = event;
 
       if (
         target instanceof HTMLDivElement &&
-        target.classList.contains(optionClasses.option) &&
-        this.optionsField
+        target.classList.contains(optionClasses.option)
       ) {
-        this.optionsField.addChildrenComponents(
-          'end',
-          new OptionView(target.textContent || ''),
+        this.children.forEach((comp) => {
+          comp.removeClass(optionClasses.correct);
+          comp.removeClass(optionClasses.wrong);
+        });
+
+        target.dispatchEvent(
+          new CustomEvent(CustomEventNames.MoveOption, {
+            bubbles: true,
+            detail: { source: this },
+          }),
         );
 
         this.removeChildComponent(target);

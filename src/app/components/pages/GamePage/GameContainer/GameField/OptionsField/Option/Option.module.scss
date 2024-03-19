@@ -15,4 +15,14 @@
     cursor: pointer;
     background-color: $color-accent-light;
   }
+
+  &.correct {
+    background: $color-accent-correct;
+    border-color: $color-accent-correct-border;
+  }
+
+  &.wrong {
+    background: $color-accent-wrong;
+    border-color: $color-accent-wrong-border;
+  }
 }

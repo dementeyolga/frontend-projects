@@ -45,7 +45,12 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
   ): Promise<void> {
     children.forEach(async (component) => {
       await this.addChild(component.getElement(), position);
-      this.children.push(component);
+
+      if (position === 'end') {
+        this.children.push(component);
+      } else {
+        this.children.unshift(component);
+      }
     });
   }
 
@@ -91,15 +96,15 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  protected setClassName(className: string): void {
+  setClassName(className: string): void {
     this.element.className = className;
   }
 
-  protected addClass(className: string): void {
+  addClass(className: string): void {
     this.element.classList.add(className);
   }
 
-  protected removeClass(className: string): void {
+  removeClass(className: string): void {
     this.element.classList.remove(className);
   }
 }

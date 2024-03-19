@@ -11,3 +11,10 @@ export const enum FormFields {
 export const enum LocalStorageValues {
   FormData = 'rss-puzzle_form-data',
 }
+
+export const enum CustomEventNames {
+  CheckSolution = 'check-solution',
+  MoveOption = 'move-option',
+  EnableCheckButton = 'enable-check-button',
+  DisableCheckButton = 'disable-check-button',
+}
