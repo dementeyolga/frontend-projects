@@ -1,1 +1,0 @@
-import{B as t}from"./index-Ii5aEt4b.js";const s=(a,e)=>new t({tagName:"h1",className:a,textContent:e}),m=(a,e,...n)=>new t({tagName:"div",className:a},e,...n),p=(a,e)=>new t({tagName:"p",className:a,textContent:e});export{m as d,s as h,p};
