@@ -1,4 +1,9 @@
+@use './../../../../../../../styles/abstract/variables' as *;
+
 .field {
+  width: 100%;
+  border: 1px solid $color-border-pale;
+
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

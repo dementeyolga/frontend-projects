@@ -1,6 +1,6 @@
 import BaseComponentView from '../../../../../BaseComponent/BaseComponentView';
-import classes from './SolutionField.module.scss';
 import SentenceView from './Sentence/SentenceView';
+import classes from './SolutionField.module.scss';
 
 export default class SolutionFieldView extends BaseComponentView<HTMLDivElement> {
   optionsField?: BaseComponentView;

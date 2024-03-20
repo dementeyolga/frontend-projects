@@ -5,11 +5,11 @@ import { div } from '../../../../../utils/tagViews';
 import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
 import AutoCompleteButtonView from './AutoCompleteButton/AutoCompleteButtonView';
 import CheckContinueButton from './CheckContinueButton/CheckContinueButtonView';
-import classes from './GameField.module.scss';
 import OptionView from './OptionsField/Option/OptionView';
 import OptionsFieldView from './OptionsField/OptionsFieldView';
 import SentenceView from './SolutionField/Sentence/SentenceView';
 import SolutionFieldView from './SolutionField/SolutionFieldView';
+import classes from './GameField.module.scss';
 
 export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
   private optionsField: OptionsFieldView;
@@ -102,6 +102,8 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
         const lastSentence =
           this.solutionField.children[this.solutionField.children.length - 1];
         lastSentence.getElement().onclick = () => false;
+        lastSentence.getElement().style.pointerEvents = 'none';
+        lastSentence.removeClass(classes.droppable);
 
         const { detail: level } = ev;
 
@@ -116,8 +118,6 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
     });
 
     this.element.addEventListener(CustomEventNames.EnableCheckButton, () => {
-      console.log('button enabled');
-
       this.checkContinueButton.getElement().disabled = false;
     });
 
@@ -128,7 +128,35 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
       await this.optionsField.removeChildrenComponents();
       await lastSentence.addChildrenComponents('end', ...options);
       lastSentence.showCorrectOrder();
+      lastSentence.getElement().style.pointerEvents = 'none';
       this.checkContinueButton.transformToContinue();
+    });
+
+    this.element.addEventListener(CustomEventNames.DropOption, (ev) => {
+      if (ev instanceof CustomEvent) {
+        const { target, detail } = ev;
+
+        if (detail && target instanceof HTMLElement) {
+          const lastSentence =
+            this.solutionField.children[this.solutionField.children.length - 1];
+
+          if (detail === lastSentence.getElement()) {
+            this.optionsField.removeChildComponent(target);
+
+            lastSentence.addChildrenComponents(
+              'end',
+              new OptionView(target.textContent || ''),
+            );
+          } else if (detail === this.optionsField.getElement()) {
+            lastSentence.removeChildComponent(target);
+
+            this.optionsField.addChildrenComponents(
+              'end',
+              new OptionView(target.textContent || ''),
+            );
+          }
+        }
+      }
     });
   }
 }

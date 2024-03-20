@@ -20,4 +20,7 @@ export const enum CustomEventNames {
   NextRound = 'next-round',
   NextLevel = 'next-level',
   AutoComplete = 'auto-complete',
+  DropToOptions = 'drop-to-options',
+  DropToSolution = 'drop-to-solution',
+  DropOption = 'drop-option',
 }

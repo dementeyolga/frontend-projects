@@ -29,6 +29,10 @@ export default class GameContainerView extends BaseComponentView<HTMLDivElement>
       this.addChildrenComponents('end', new GameFieldView(round.rounds[0])),
     );
 
+    this.initListeners();
+  }
+
+  private initListeners() {
     this.element.addEventListener('next-level', () => {
       if (this.currentLevel < levels.length) {
         this.removeChildrenComponents();

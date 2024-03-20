@@ -1,9 +1,10 @@
 import BaseComponentView from '../../../../../BaseComponent/BaseComponentView';
 import OptionView from './Option/OptionView';
-import classes from './OptionsField.module.scss';
-import optionClasses from './Option/Option.module.scss';
 import ContinueButtonView from '../CheckContinueButton/CheckContinueButtonView';
 import { CustomEventNames } from '../../../../../../types/enums';
+import classes from './OptionsField.module.scss';
+import gameFieldClasses from '../GameField.module.scss';
+import optionClasses from './Option/Option.module.scss';
 
 export default class OptionsFieldView extends BaseComponentView<HTMLDivElement> {
   checkContinueButton?: ContinueButtonView;
@@ -11,7 +12,7 @@ export default class OptionsFieldView extends BaseComponentView<HTMLDivElement> 
   constructor(options: string[]) {
     super({
       tagName: 'div',
-      className: classes.field,
+      className: `${classes.field} ${gameFieldClasses.droppable}`,
     });
 
     this.renderOptions(options);
@@ -30,6 +31,8 @@ export default class OptionsFieldView extends BaseComponentView<HTMLDivElement> 
   private initClickListener(): void {
     this.element.addEventListener('click', async (event) => {
       const { target } = event;
+
+      console.log('target', target);
 
       if (
         target instanceof HTMLDivElement &&

@@ -2,6 +2,7 @@ import BaseComponentView from '../../../../../../BaseComponent/BaseComponentView
 import classes from './Sentence.module.scss';
 import optionClasses from '../../OptionsField/Option/Option.module.scss';
 import { CustomEventNames } from '../../../../../../../types/enums';
+import gameFieldClasses from '../../GameField.module.scss';
 
 export default class SentenceView extends BaseComponentView<HTMLDivElement> {
   private correctSolution: string;
@@ -11,7 +12,7 @@ export default class SentenceView extends BaseComponentView<HTMLDivElement> {
   constructor(correctSolution: string) {
     super({
       tagName: 'div',
-      className: classes.sentence,
+      className: `${classes.sentence} ${gameFieldClasses.droppable}`,
     });
 
     this.correctSolution = correctSolution;

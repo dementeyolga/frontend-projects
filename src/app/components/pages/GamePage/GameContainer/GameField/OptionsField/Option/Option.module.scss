@@ -8,8 +8,11 @@
 
   border: 1px solid $color-border-pale;
   border-radius: $small-border-radius;
+  background-color: $color-neutral;
 
-  transition: 1s;
+  box-shadow: 0px 1px 3px 1px #858585;
+
+  transition: background-color order 0.3s;
 
   &:hover {
     cursor: pointer;
@@ -24,5 +27,11 @@
   &.wrong {
     background: $color-accent-wrong;
     border-color: $color-accent-wrong-border;
+  }
+}
+
+.clone {
+  &:hover {
+    cursor: grab;
   }
 }
