@@ -1,7 +1,9 @@
 import { CustomEventNames } from '../../../../../types/enums';
 import { Round } from '../../../../../types/types';
 import shuffleStringArray from '../../../../../utils/shuffleArray';
+import { div } from '../../../../../utils/tagViews';
 import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
+import AutoCompleteButtonView from './AutoCompleteButton/AutoCompleteButtonView';
 import CheckContinueButton from './CheckContinueButton/CheckContinueButtonView';
 import classes from './GameField.module.scss';
 import OptionView from './OptionsField/Option/OptionView';
@@ -35,23 +37,18 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
     this.optionsField = new OptionsFieldView(shuffledOptions);
     this.solutionField.optionsField = this.optionsField;
 
-    // const appendNewLevelCallback = (level: Word) => {
-    //   const words = level.textExample.split(' ');
-    //   const shuffled: string[] = shuffleStringArray(words);
-    //   this.optionsField.renderOptions(shuffled);
-    //   solutionField.addChildrenComponents(
-    //     'end',
-    //     new SentenceView(level.textExample),
-    //   );
-    // };
-
     this.checkContinueButton = new CheckContinueButton(round.words);
     this.optionsField.checkContinueButton = this.checkContinueButton;
 
     this.addChildrenComponents(
       'end',
       this.optionsField,
-      this.checkContinueButton,
+      div(
+        classes.buttons,
+        undefined,
+        this.checkContinueButton,
+        new AutoCompleteButtonView(),
+      ),
     );
 
     this.initListeners();
@@ -102,6 +99,10 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
 
     this.element.addEventListener(CustomEventNames.NextRound, (ev) => {
       if (ev instanceof CustomEvent) {
+        const lastSentence =
+          this.solutionField.children[this.solutionField.children.length - 1];
+        lastSentence.getElement().onclick = () => false;
+
         const { detail: level } = ev;
 
         const words = level.textExample.split(' ');
@@ -118,6 +119,16 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
       console.log('button enabled');
 
       this.checkContinueButton.getElement().disabled = false;
+    });
+
+    this.element.addEventListener(CustomEventNames.AutoComplete, async () => {
+      const lastSentence =
+        this.solutionField.children[this.solutionField.children.length - 1];
+      const options = [...this.optionsField.children];
+      await this.optionsField.removeChildrenComponents();
+      await lastSentence.addChildrenComponents('end', ...options);
+      lastSentence.showCorrectOrder();
+      this.checkContinueButton.transformToContinue();
     });
   }
 }

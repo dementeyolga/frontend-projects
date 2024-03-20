@@ -19,4 +19,5 @@ export const enum CustomEventNames {
   DisableCheckButton = 'disable-check-button',
   NextRound = 'next-round',
   NextLevel = 'next-level',
+  AutoComplete = 'auto-complete',
 }

@@ -15,3 +15,8 @@
   @extend %light-background;
   border-radius: 16px;
 }
+
+.buttons {
+  display: flex;
+  gap: 20px;
+}

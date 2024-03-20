@@ -19,6 +19,7 @@ export default class CheckContinueButtonView extends ButtonView {
   }
 
   transformToContinue(): void {
+    if (this.element.disabled) this.element.disabled = false;
     this.setTextContent('Continue');
     this.addClass(classes.continue);
     this.isContinue = true;

@@ -6,6 +6,8 @@ import { CustomEventNames } from '../../../../../../../types/enums';
 export default class SentenceView extends BaseComponentView<HTMLDivElement> {
   private correctSolution: string;
 
+  private solutionArr: string[];
+
   constructor(correctSolution: string) {
     super({
       tagName: 'div',
@@ -13,6 +15,7 @@ export default class SentenceView extends BaseComponentView<HTMLDivElement> {
     });
 
     this.correctSolution = correctSolution;
+    this.solutionArr = this.correctSolution.split(' ');
     this.initClickListener();
 
     console.log(correctSolution);
@@ -27,12 +30,10 @@ export default class SentenceView extends BaseComponentView<HTMLDivElement> {
   }
 
   checkSentenceElements(): void {
-    const solutionArr = this.correctSolution.split(' ');
-
     this.children.forEach((comp, index) => {
       const element = comp.getElement();
 
-      if (element.textContent === solutionArr[index]) {
+      if (element.textContent === this.solutionArr[index]) {
         element.classList.add(optionClasses.correct);
       } else {
         element.classList.add(optionClasses.wrong);
@@ -40,8 +41,21 @@ export default class SentenceView extends BaseComponentView<HTMLDivElement> {
     });
   }
 
+  showCorrectOrder(): void {
+    this.solutionArr.forEach((word, index) => {
+      const currentWordComponent = this.children.find(
+        (comp) => comp.getElement().textContent === word,
+      );
+
+      if (currentWordComponent) {
+        const el = currentWordComponent.getElement();
+        el.style.order = String(index);
+      }
+    });
+  }
+
   private initClickListener(): void {
-    this.element.addEventListener('click', (event) => {
+    this.element.onclick = (event) => {
       const { target } = event;
 
       if (
@@ -62,6 +76,6 @@ export default class SentenceView extends BaseComponentView<HTMLDivElement> {
 
         this.removeChildComponent(target);
       }
-    });
+    };
   }
 }
