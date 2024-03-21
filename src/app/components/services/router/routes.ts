@@ -33,6 +33,14 @@ export const appRoutes: Route[] = [
     path: Path.Game,
     callback: async () => {
       try {
+        if (!localStorage.getItem(LocalStorageValues.FormData)) {
+          const { default: View } = await import(
+            '../../pages/LoginPage/LoginPageView'
+          );
+
+          return new View();
+        }
+
         const { default: View } = await import(
           '../../pages/GamePage/GamePageView'
         );

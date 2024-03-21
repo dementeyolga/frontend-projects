@@ -3,8 +3,11 @@
 .option {
   padding: 5px 7px;
 
+  height: $option-height;
+
   display: flex;
   justify-content: center;
+  align-items: center;
 
   border: 1px solid $color-border-pale;
   border-radius: $small-border-radius;
@@ -12,7 +15,8 @@
 
   box-shadow: 0px 1px 3px 1px #858585;
 
-  transition: background-color order 0.3s;
+  transition: background-color 0.3s;
+  transition: order 0.3s;
 
   &:hover {
     cursor: pointer;
@@ -27,6 +31,12 @@
   &.wrong {
     background: $color-accent-wrong;
     border-color: $color-accent-wrong-border;
+  }
+
+  &.completed {
+    box-shadow: none;
+    background-color: $color-background-pale;
+    border: 1px solid $color-border-pale;
   }
 }
 

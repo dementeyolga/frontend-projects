@@ -9,22 +9,22 @@ import optionClasses from './Option/Option.module.scss';
 export default class OptionsFieldView extends BaseComponentView<HTMLDivElement> {
   checkContinueButton?: ContinueButtonView;
 
-  constructor(options: string[]) {
+  constructor(options: string[], solution: string) {
     super({
       tagName: 'div',
       className: `${classes.field} ${gameFieldClasses.droppable}`,
     });
 
-    this.renderOptions(options);
+    this.renderOptions(options, solution);
 
     this.initClickListener();
   }
 
-  renderOptions(options: string[]) {
+  renderOptions(options: string[], solution: string) {
     this.removeChildrenComponents();
 
     options.forEach((option) =>
-      this.addChildrenComponents('end', new OptionView(option)),
+      this.addChildrenComponents('end', new OptionView(option, solution)),
     );
   }
 

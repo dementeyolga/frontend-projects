@@ -1,8 +1,8 @@
 @use './../../../../../../../styles/abstract/variables' as *;
 
 .field {
-  padding: 10px;
-  min-height: 20px;
+  padding: 16px;
+  height: $option-height * 10 + 32px;
 
   align-self: stretch;
 
@@ -10,5 +10,4 @@
   flex-direction: column;
 
   border: 1px solid $color-border-pale;
-  border-radius: $small-border-radius;
 }

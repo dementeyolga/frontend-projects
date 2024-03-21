@@ -5,7 +5,7 @@ import { CustomEventNames } from '../../../../../../../types/enums';
 import gameFieldClasses from '../../GameField.module.scss';
 
 export default class SentenceView extends BaseComponentView<HTMLDivElement> {
-  private correctSolution: string;
+  correctSolution: string;
 
   private solutionArr: string[];
 
@@ -23,17 +23,15 @@ export default class SentenceView extends BaseComponentView<HTMLDivElement> {
   }
 
   isInRightOrder(): boolean {
-    const solution = this.children
-      .map((comp) => comp.getElement().textContent)
+    const solution = [...this.element.children]
+      .map((element) => element.textContent)
       .join(' ');
 
     return solution === this.correctSolution;
   }
 
   checkSentenceElements(): void {
-    this.children.forEach((comp, index) => {
-      const element = comp.getElement();
-
+    [...this.element.children].forEach((element, index) => {
       if (element.textContent === this.solutionArr[index]) {
         element.classList.add(optionClasses.correct);
       } else {

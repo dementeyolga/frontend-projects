@@ -10,7 +10,7 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
 
   private clone?: HTMLElement | null;
 
-  constructor(textContent: string) {
+  constructor(textContent: string, sentence: string) {
     super({
       tagName: 'div',
       className: classes.option,
@@ -18,6 +18,9 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
     });
 
     this.initDragEvent();
+
+    const solutionLettersQuantity = sentence.split(' ').join('').length;
+    this.element.style.width = `${(textContent.length / solutionLettersQuantity) * 100}%`;
   }
 
   private initDragEvent(): void {
@@ -110,13 +113,9 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
     initialDroppable: HTMLElement | null,
     initialOption: HTMLElement | null,
   ) {
-    console.log(this.clone instanceof HTMLElement);
-
     if (this.clone instanceof HTMLElement) {
       const droppableBelow = this.getDroppableUnderClone(ev);
       const optionBelow = this.getOptionUnderClone(ev);
-
-      console.log('option', initialOption, optionBelow);
 
       this.clone.remove();
       this.clone = null;
@@ -128,6 +127,12 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
       }
 
       if (initialDroppable === droppableBelow && droppableBelow) {
+        this.element.dispatchEvent(
+          new CustomEvent(CustomEventNames.OptionsDefaultStyle, {
+            bubbles: true,
+          }),
+        );
+
         if (optionBelow) {
           const coords = optionBelow.getBoundingClientRect();
 
@@ -150,7 +155,6 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
       }
 
       if (droppableBelow) {
-        console.log('enter a new droppable');
         this.element.dispatchEvent(
           new CustomEvent(CustomEventNames.DropOption, {
             bubbles: true,

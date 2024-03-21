@@ -10,6 +10,8 @@ import OptionsFieldView from './OptionsField/OptionsFieldView';
 import SentenceView from './SolutionField/Sentence/SentenceView';
 import SolutionFieldView from './SolutionField/SolutionFieldView';
 import classes from './GameField.module.scss';
+import sentenceClasses from './SolutionField/Sentence/Sentence.module.scss';
+import optionClasses from './OptionsField/Option/Option.module.scss';
 
 export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
   private optionsField: OptionsFieldView;
@@ -34,7 +36,10 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
     const options = round.words[0].textExample.split(' ');
     const shuffledOptions: string[] = shuffleStringArray(options);
 
-    this.optionsField = new OptionsFieldView(shuffledOptions);
+    this.optionsField = new OptionsFieldView(
+      shuffledOptions,
+      round.words[0].textExample,
+    );
     this.solutionField.optionsField = this.optionsField;
 
     this.checkContinueButton = new CheckContinueButton(round.words);
@@ -59,6 +64,8 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
       if (ev instanceof CustomEvent) {
         const { target, detail } = ev;
 
+        const lastSentence = this.getLastSentence();
+
         if (
           detail.source instanceof SentenceView &&
           target instanceof HTMLDivElement
@@ -69,26 +76,28 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
 
           this.optionsField.addChildrenComponents(
             'end',
-            new OptionView(target.textContent || ''),
+            new OptionView(
+              target.textContent || '',
+              lastSentence.correctSolution,
+            ),
           );
         } else if (
           detail.source instanceof OptionsFieldView &&
           target instanceof HTMLDivElement
         ) {
-          const lastSentence =
-            this.solutionField.children[this.solutionField.children.length - 1];
-
           lastSentence.addChildrenComponents(
             'end',
-            new OptionView(target.textContent || ''),
+            new OptionView(
+              target.textContent || '',
+              lastSentence.correctSolution,
+            ),
           );
         }
       }
     });
 
     this.element.addEventListener(CustomEventNames.CheckSolution, () => {
-      const lastSentence =
-        this.solutionField.children[this.solutionField.children.length - 1];
+      const lastSentence = this.getLastSentence();
 
       lastSentence.checkSentenceElements();
 
@@ -99,17 +108,20 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
 
     this.element.addEventListener(CustomEventNames.NextRound, (ev) => {
       if (ev instanceof CustomEvent) {
-        const lastSentence =
-          this.solutionField.children[this.solutionField.children.length - 1];
+        const lastSentence = this.getLastSentence();
         lastSentence.getElement().onclick = () => false;
         lastSentence.getElement().style.pointerEvents = 'none';
         lastSentence.removeClass(classes.droppable);
+        lastSentence.addClass(sentenceClasses.completed);
+        lastSentence.children.forEach((comp) =>
+          comp.addClass(optionClasses.completed),
+        );
 
         const { detail: level } = ev;
 
         const words = level.textExample.split(' ');
         const shuffled: string[] = shuffleStringArray(words);
-        this.optionsField.renderOptions(shuffled);
+        this.optionsField.renderOptions(shuffled, level.textExample);
         this.solutionField.addChildrenComponents(
           'end',
           new SentenceView(level.textExample),
@@ -122,8 +134,7 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
     });
 
     this.element.addEventListener(CustomEventNames.AutoComplete, async () => {
-      const lastSentence =
-        this.solutionField.children[this.solutionField.children.length - 1];
+      const lastSentence = this.getLastSentence();
       const options = [...this.optionsField.children];
       await this.optionsField.removeChildrenComponents();
       await lastSentence.addChildrenComponents('end', ...options);
@@ -137,26 +148,43 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
         const { target, detail } = ev;
 
         if (detail && target instanceof HTMLElement) {
-          const lastSentence =
-            this.solutionField.children[this.solutionField.children.length - 1];
+          const lastSentence = this.getLastSentence();
 
           if (detail === lastSentence.getElement()) {
             this.optionsField.removeChildComponent(target);
 
             lastSentence.addChildrenComponents(
               'end',
-              new OptionView(target.textContent || ''),
+              new OptionView(
+                target.textContent || '',
+                lastSentence.correctSolution,
+              ),
             );
           } else if (detail === this.optionsField.getElement()) {
             lastSentence.removeChildComponent(target);
 
             this.optionsField.addChildrenComponents(
               'end',
-              new OptionView(target.textContent || ''),
+              new OptionView(
+                target.textContent || '',
+                lastSentence.correctSolution,
+              ),
             );
           }
         }
       }
     });
+
+    this.element.addEventListener(CustomEventNames.OptionsDefaultStyle, () => {
+      const lastSentence = this.getLastSentence();
+      lastSentence.children.forEach((comp) => {
+        comp.removeClass(optionClasses.wrong);
+        comp.removeClass(optionClasses.correct);
+      });
+    });
+  }
+
+  private getLastSentence(): SentenceView {
+    return this.solutionField.children[this.solutionField.children.length - 1];
   }
 }

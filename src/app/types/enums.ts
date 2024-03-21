@@ -23,4 +23,5 @@ export const enum CustomEventNames {
   DropToOptions = 'drop-to-options',
   DropToSolution = 'drop-to-solution',
   DropOption = 'drop-option',
+  OptionsDefaultStyle = 'options-default-style',
 }

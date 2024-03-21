@@ -1,11 +1,13 @@
 @use './../../../../../../../styles/abstract/variables' as *;
 
 .field {
+  padding: 16px;
   width: 100%;
-  border: 1px solid $color-border-pale;
+  height: $option-height + 32px;
 
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 3px;
+
+  border: 1px solid $color-border-pale;
 }

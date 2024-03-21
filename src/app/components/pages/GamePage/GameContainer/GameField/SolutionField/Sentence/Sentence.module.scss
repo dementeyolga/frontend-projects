@@ -1,14 +1,10 @@
 @use './../../../../../../../../styles/abstract/variables' as *;
 
 .sentence {
-  padding: 10px;
-  min-height: 20px;
+  height: $option-height;
   min-width: 100%;
 
   align-self: stretch;
 
   display: flex;
-
-  border: 1px solid $color-border-pale;
-  border-radius: $small-border-radius;
 }
