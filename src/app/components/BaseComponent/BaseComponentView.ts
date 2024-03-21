@@ -58,7 +58,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     });
   }
 
-  async removeChildrenComponents() {
+  async removeChildrenComponents(): Promise<void> {
     this.children.length = 0;
 
     const currentEl = this.getElement();

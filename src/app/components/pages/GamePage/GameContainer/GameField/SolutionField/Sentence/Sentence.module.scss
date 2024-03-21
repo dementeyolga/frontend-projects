@@ -7,4 +7,11 @@
   align-self: stretch;
 
   display: flex;
+
+  background-color: $color-accent-light;
+  border-radius: $small-border-radius;
+
+  &.completed {
+    background-color: transparent;
+  }
 }

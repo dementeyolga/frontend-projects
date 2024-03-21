@@ -12,14 +12,10 @@ class Router {
   }
 
   async init(): Promise<void> {
-    const currentPath = Router.getCurrentPath();
-
-    await this.showRoute(currentPath);
+    await this.showCurrentHashRoute();
 
     window.addEventListener('hashchange', async () => {
-      const path = Router.getCurrentPath();
-
-      await this.showRoute(path);
+      await this.showCurrentHashRoute();
     });
 
     document.addEventListener('click', async (event: Event) => {
@@ -32,6 +28,11 @@ class Router {
         await this.showRoute(path);
       }
     });
+  }
+
+  private async showCurrentHashRoute() {
+    const currentPath = Router.getCurrentPath();
+    await this.showRoute(currentPath);
   }
 
   private static getCurrentPath(): string {

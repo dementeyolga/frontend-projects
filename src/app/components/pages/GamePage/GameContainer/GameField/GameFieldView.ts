@@ -1,7 +1,3 @@
-import { CustomEventNames } from '../../../../../types/enums';
-import { Round } from '../../../../../types/types';
-import shuffleStringArray from '../../../../../utils/shuffleArray';
-import { div } from '../../../../../utils/tagViews';
 import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
 import AutoCompleteButtonView from './AutoCompleteButton/AutoCompleteButtonView';
 import CheckContinueButton from './CheckContinueButton/CheckContinueButtonView';
@@ -9,6 +5,10 @@ import OptionView from './OptionsField/Option/OptionView';
 import OptionsFieldView from './OptionsField/OptionsFieldView';
 import SentenceView from './SolutionField/Sentence/SentenceView';
 import SolutionFieldView from './SolutionField/SolutionFieldView';
+import { div } from '../../../../../utils/tagViews';
+import shuffleStringArray from '../../../../../utils/shuffleArray';
+import { Round } from '../../../../../types/types';
+import { CustomEventNames } from '../../../../../types/enums';
 import classes from './GameField.module.scss';
 import sentenceClasses from './SolutionField/Sentence/Sentence.module.scss';
 import optionClasses from './OptionsField/Option/Option.module.scss';
@@ -40,6 +40,7 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
       shuffledOptions,
       round.words[0].textExample,
     );
+
     this.solutionField.optionsField = this.optionsField;
 
     this.checkContinueButton = new CheckContinueButton(round.words);
@@ -60,7 +61,17 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
   }
 
   initListeners(): void {
-    this.element.addEventListener(CustomEventNames.MoveOption, (ev) => {
+    this.initMoveOptionListener();
+    this.initCheckSolutionListener();
+    this.initNextRoundListener();
+    this.initEnableCheckButtonListener();
+    this.initAutoCompleteListener();
+    this.initDropOptionListener();
+    this.initOptionsDefaultStyleListener();
+  }
+
+  private initMoveOptionListener(): void {
+    this.element.addEventListener(CustomEventNames.MoveOption, async (ev) => {
       if (ev instanceof CustomEvent) {
         const { target, detail } = ev;
 
@@ -70,11 +81,7 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
           detail.source instanceof SentenceView &&
           target instanceof HTMLDivElement
         ) {
-          if (!this.checkContinueButton.getElement().disabled) {
-            this.checkContinueButton.getElement().disabled = true;
-          }
-
-          this.optionsField.addChildrenComponents(
+          await this.optionsField.addChildrenComponents(
             'end',
             new OptionView(
               target.textContent || '',
@@ -85,7 +92,7 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
           detail.source instanceof OptionsFieldView &&
           target instanceof HTMLDivElement
         ) {
-          lastSentence.addChildrenComponents(
+          await lastSentence.addChildrenComponents(
             'end',
             new OptionView(
               target.textContent || '',
@@ -93,9 +100,17 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
             ),
           );
         }
+
+        if (this.optionsField.children.length) {
+          this.checkContinueButton.getElement().disabled = true;
+        } else {
+          this.checkContinueButton.getElement().disabled = false;
+        }
       }
     });
+  }
 
+  private initCheckSolutionListener(): void {
     this.element.addEventListener(CustomEventNames.CheckSolution, () => {
       const lastSentence = this.getLastSentence();
 
@@ -105,7 +120,9 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
         this.checkContinueButton.transformToContinue();
       }
     });
+  }
 
+  private initNextRoundListener(): void {
     this.element.addEventListener(CustomEventNames.NextRound, (ev) => {
       if (ev instanceof CustomEvent) {
         const lastSentence = this.getLastSentence();
@@ -128,11 +145,15 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
         );
       }
     });
+  }
 
+  private initEnableCheckButtonListener(): void {
     this.element.addEventListener(CustomEventNames.EnableCheckButton, () => {
       this.checkContinueButton.getElement().disabled = false;
     });
+  }
 
+  private initAutoCompleteListener(): void {
     this.element.addEventListener(CustomEventNames.AutoComplete, async () => {
       const lastSentence = this.getLastSentence();
       const options = [...this.optionsField.children];
@@ -142,7 +163,9 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
       lastSentence.getElement().style.pointerEvents = 'none';
       this.checkContinueButton.transformToContinue();
     });
+  }
 
+  private initDropOptionListener(): void {
     this.element.addEventListener(CustomEventNames.DropOption, (ev) => {
       if (ev instanceof CustomEvent) {
         const { target, detail } = ev;
@@ -174,7 +197,9 @@ export default class GameFieldView extends BaseComponentView<HTMLDivElement> {
         }
       }
     });
+  }
 
+  private initOptionsDefaultStyleListener(): void {
     this.element.addEventListener(CustomEventNames.OptionsDefaultStyle, () => {
       const lastSentence = this.getLastSentence();
       lastSentence.children.forEach((comp) => {

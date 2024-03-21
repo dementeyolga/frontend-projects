@@ -13,6 +13,7 @@ export const enum LocalStorageValues {
 }
 
 export const enum CustomEventNames {
+  FormInput = 'form-input',
   CheckSolution = 'check-solution',
   MoveOption = 'move-option',
   EnableCheckButton = 'enable-check-button',

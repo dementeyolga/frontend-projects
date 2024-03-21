@@ -6,7 +6,11 @@ import LoginFormErrorMessageView from './LoginFormErrorMessage/LoginFormErrorMes
 import { div } from '../../../../utils/tagViews';
 import { EventCallbacks } from '../../../../types/types';
 import classes from './LoginForm.module.scss';
-import { FormFields, LocalStorageValues } from '../../../../types/enums';
+import {
+  CustomEventNames,
+  FormFields,
+  LocalStorageValues,
+} from '../../../../types/enums';
 
 type StringObject = {
   [key: string]: string;
@@ -35,23 +39,14 @@ const loginFormEventCallbacks: EventCallbacks<HTMLFormElement> = {
       }
     }
   },
-  change(ev: Event) {
-    if (ev.currentTarget instanceof HTMLFormElement) {
-      if (ev.currentTarget.checkValidity()) {
-        const submitButton = ev.currentTarget.querySelector(
-          'button[type="submit"]',
-        );
-
-        if (submitButton instanceof HTMLButtonElement) {
-          submitButton.disabled = false;
-        }
-      }
-    }
-  },
 };
 
 export default class LoginFormView extends BaseComponentView<HTMLFormElement> {
+  private loginButton: LoginFormButtonView;
+
   constructor() {
+    const loginButton = new LoginFormButtonView('#', true);
+
     super(
       { tagName: 'form', className: classes.form, novalidate: true },
       loginFormEventCallbacks,
@@ -81,8 +76,12 @@ export default class LoginFormView extends BaseComponentView<HTMLFormElement> {
         ),
         new LoginFormErrorMessageView(),
       ),
-      new LoginFormButtonView('#', true),
+      loginButton,
     );
+
+    this.loginButton = loginButton;
+
+    this.initListeners();
   }
 
   protected override setParameters(params: Partial<HTMLFormElement>): void {
@@ -92,5 +91,15 @@ export default class LoginFormView extends BaseComponentView<HTMLFormElement> {
     if (novalidate) {
       this.element.noValidate = novalidate;
     }
+  }
+
+  private initListeners() {
+    this.element.addEventListener(CustomEventNames.FormInput, () => {
+      if (this.element.checkValidity()) {
+        this.loginButton.getElement().disabled = false;
+      } else {
+        this.loginButton.getElement().disabled = true;
+      }
+    });
   }
 }

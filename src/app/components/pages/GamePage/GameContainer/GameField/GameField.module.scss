@@ -4,13 +4,12 @@
   padding: 20px;
 
   width: 100%;
+  max-width: 1300px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-
-  flex-grow: 1;
 
   @extend %light-background;
   border-radius: 16px;

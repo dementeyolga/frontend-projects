@@ -30,12 +30,7 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
       this.shiftX = event.clientX - this.element.getBoundingClientRect().left;
       this.shiftY = event.clientY - this.element.getBoundingClientRect().top;
 
-      this.clone = this.element.cloneNode(true) as HTMLElement;
-      this.clone.classList.add(classes.clone);
-      this.clone.style.position = 'absolute';
-      this.clone.style.zIndex = '1000';
-      document.body.append(this.clone);
-
+      this.createElementClone();
       this.moveCloneAt(event.pageX, event.pageY);
 
       const initialDroppable = this.getDroppableUnderClone(event);
@@ -55,19 +50,37 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
     });
   }
 
-  private moveCloneAt(pageX: number, pageY: number): void {
-    if (
-      pageX <= 0 ||
-      pageY <= 0 ||
-      pageX >= document.documentElement.clientWidth ||
-      pageY >= document.documentElement.clientHeight
-    ) {
-      return;
-    }
+  private createElementClone(): void {
+    this.clone = this.element.cloneNode(true) as HTMLElement;
+    this.clone.classList.add(classes.clone);
+    this.clone.style.position = 'absolute';
+    this.clone.style.zIndex = '1000';
+    document.body.append(this.clone);
+  }
 
-    if (this.clone instanceof HTMLElement && this.shiftX && this.shiftY) {
-      this.clone.style.left = `${pageX - this.shiftX}px`;
-      this.clone.style.top = `${pageY - this.shiftY}px`;
+  private moveCloneAt(pageX: number, pageY: number): void {
+    if (this.clone) {
+      const elSizes = this.clone.getBoundingClientRect();
+
+      if (
+        pageX <= 0 + (this.shiftX ?? 0) ||
+        pageY <= 0 + (this.shiftY ?? 0) ||
+        pageX >=
+          document.documentElement.clientWidth -
+            elSizes.width +
+            (this.shiftX ?? 0) ||
+        pageY >=
+          document.documentElement.clientHeight -
+            elSizes.height +
+            (this.shiftY ?? 0)
+      ) {
+        return;
+      }
+
+      if (this.clone instanceof HTMLElement && this.shiftX && this.shiftY) {
+        this.clone.style.left = `${pageX - this.shiftX}px`;
+        this.clone.style.top = `${pageY - this.shiftY}px`;
+      }
     }
   }
 
@@ -127,41 +140,53 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
       }
 
       if (initialDroppable === droppableBelow && droppableBelow) {
-        this.element.dispatchEvent(
-          new CustomEvent(CustomEventNames.OptionsDefaultStyle, {
-            bubbles: true,
-          }),
-        );
-
-        if (optionBelow) {
-          const coords = optionBelow.getBoundingClientRect();
-
-          if (coords.right - ev.clientX < ev.clientX - coords.left) {
-            optionBelow.after(this.element);
-          } else {
-            optionBelow.before(this.element);
-          }
-        } else {
-          const coords = droppableBelow.getBoundingClientRect();
-
-          if (coords.right - ev.clientX < ev.clientX - coords.left) {
-            droppableBelow.append(this.element);
-          } else {
-            droppableBelow.prepend(this.element);
-          }
-        }
+        this.dropToTheSameDroppaple(ev, droppableBelow, optionBelow);
 
         return;
       }
 
       if (droppableBelow) {
-        this.element.dispatchEvent(
-          new CustomEvent(CustomEventNames.DropOption, {
-            bubbles: true,
-            detail: droppableBelow,
-          }),
-        );
+        this.dropToNewDroppable(droppableBelow);
       }
     }
+  }
+
+  private dropToTheSameDroppaple(
+    ev: MouseEvent,
+    droppableBelow: HTMLElement,
+    optionBelow: HTMLElement | null,
+  ): void {
+    this.element.dispatchEvent(
+      new CustomEvent(CustomEventNames.OptionsDefaultStyle, {
+        bubbles: true,
+      }),
+    );
+
+    if (optionBelow) {
+      const coords = optionBelow.getBoundingClientRect();
+
+      if (coords.right - ev.clientX < ev.clientX - coords.left) {
+        optionBelow.after(this.element);
+      } else {
+        optionBelow.before(this.element);
+      }
+    } else {
+      const coords = droppableBelow.getBoundingClientRect();
+
+      if (coords.right - ev.clientX < ev.clientX - coords.left) {
+        droppableBelow.append(this.element);
+      } else {
+        droppableBelow.prepend(this.element);
+      }
+    }
+  }
+
+  private dropToNewDroppable(droppableBelow: HTMLElement): void {
+    this.element.dispatchEvent(
+      new CustomEvent(CustomEventNames.DropOption, {
+        bubbles: true,
+        detail: droppableBelow,
+      }),
+    );
   }
 }

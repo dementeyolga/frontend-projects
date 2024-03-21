@@ -1,5 +1,6 @@
-import { EventCallbacks } from '../../../../../types/types';
 import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
+import { EventCallbacks } from '../../../../../types/types';
+import { CustomEventNames } from '../../../../../types/enums';
 import classes from './LoginFormInput.module.scss';
 import errorClasses from '../LoginFormErrorMessage/LoginFormErrorMessage.module.scss';
 
@@ -21,6 +22,10 @@ const validationCallbacks: EventCallbacks<HTMLInputElement> = {
           errorMessage.classList.add(errorClasses.active);
         }
       }
+
+      ev.currentTarget.dispatchEvent(
+        new CustomEvent(CustomEventNames.FormInput, { bubbles: true }),
+      );
     }
   },
 };

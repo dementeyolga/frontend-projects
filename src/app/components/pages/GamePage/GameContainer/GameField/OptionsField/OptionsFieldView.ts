@@ -32,8 +32,6 @@ export default class OptionsFieldView extends BaseComponentView<HTMLDivElement> 
     this.element.addEventListener('click', async (event) => {
       const { target } = event;
 
-      console.log('target', target);
-
       if (
         target instanceof HTMLDivElement &&
         target.classList.contains(optionClasses.option)

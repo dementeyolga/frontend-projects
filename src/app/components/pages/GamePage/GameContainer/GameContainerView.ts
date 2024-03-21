@@ -1,3 +1,4 @@
+import { CustomEventNames } from '../../../../types/enums';
 import BaseComponentView from '../../../BaseComponent/BaseComponentView';
 import classes from './GameContainer.module.scss';
 import GameFieldView from './GameField/GameFieldView';
@@ -32,8 +33,12 @@ export default class GameContainerView extends BaseComponentView<HTMLDivElement>
     this.initListeners();
   }
 
-  private initListeners() {
-    this.element.addEventListener('next-level', () => {
+  private initListeners(): void {
+    this.initNextLevelListener();
+  }
+
+  private initNextLevelListener(): void {
+    this.element.addEventListener(CustomEventNames.NextLevel, () => {
       if (this.currentLevel < levels.length) {
         this.removeChildrenComponents();
         this.currentLevel += 1;
