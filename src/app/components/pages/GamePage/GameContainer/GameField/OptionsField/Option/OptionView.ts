@@ -54,6 +54,7 @@ export default class OptionView extends BaseComponentView<HTMLDivElement> {
     this.clone = this.element.cloneNode(true) as HTMLElement;
     this.clone.classList.add(classes.clone);
     this.clone.style.position = 'absolute';
+    this.clone.style.width = `${this.element.offsetWidth}px`;
     this.clone.style.zIndex = '1000';
     document.body.append(this.clone);
   }
