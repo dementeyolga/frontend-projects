@@ -9,3 +9,8 @@ export type Car = {
 };
 
 export type Cars = Car[];
+
+export type EngineParameters = {
+  velocity: number;
+  distance: number;
+};
