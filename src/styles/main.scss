@@ -1,0 +1,10 @@
+@use './base/fonts';
+@use './base/headings';
+
+* {
+  font-family: Rubik, Arial, Helvetica, sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}

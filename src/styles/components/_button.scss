@@ -1,0 +1,45 @@
+@use './../abstract/variables' as *;
+
+.button {
+  padding: 0 8px;
+  height: 30px;
+  width: fit-content;
+
+  color: $color-neutral;
+  font-weight: 500;
+  background-color: $color-accent;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+
+  outline: none;
+  border: none;
+  border-radius: $small-border-radius;
+
+  transition: 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $color-accent;
+  }
+
+  &.primary {
+    color: $color-accent;
+    background-color: $color-neutral;
+
+    &:hover {
+      color: $color-neutral;
+    }
+  }
+
+  &.disabled,
+  &:disabled {
+    color: #5a5a5a;
+    font-weight: 400;
+    background-color: #b6b6b6;
+
+    &:hover {
+      cursor: default;
+      background-color: #b6b6b6;
+      pointer-events: none;
+    }
+  }
+}
