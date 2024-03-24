@@ -20,4 +20,9 @@ export const enum ClientErrorResponses {
   BadRequest = 400,
   Forbidden = 403,
   NotFound = 404,
+  TooManyRequests = 429,
+}
+
+export const enum ServerErrorResponses {
+  InternalError = 500,
 }

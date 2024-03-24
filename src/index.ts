@@ -18,7 +18,7 @@ router.init();
 async function test() {
   console.log(await getCars());
 
-  console.log(await getCar(10));
+  console.log(await getCar(1));
   console.log(await createCar({ name: 'ford', color: 'red', id: 6 }));
   console.log(await getCars());
   // !! проверка на повторение id

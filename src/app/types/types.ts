@@ -14,3 +14,7 @@ export type EngineParameters = {
   velocity: number;
   distance: number;
 };
+
+export type EngineDriveStatus = {
+  success: true;
+};
