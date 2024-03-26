@@ -1,5 +1,4 @@
 import BaseComponentView from '../components/BaseComponent/BaseComponentView';
-import { EventCallbacks } from '../types/types';
 
 export const h1 = (className: string, textContent: string) =>
   new BaseComponentView<HTMLHeadingElement>({
@@ -15,20 +14,28 @@ export const h2 = (className: string, textContent: string) =>
     textContent,
   });
 
-export const div = (
-  className: string,
-  eventCallbacks?: EventCallbacks<HTMLElement>,
-  ...children: BaseComponentView[]
-) =>
+export const div = (className: string, ...children: BaseComponentView[]) =>
   new BaseComponentView<HTMLDivElement>(
     { tagName: 'div', className },
-    eventCallbacks,
     ...children,
   );
 
-export const p = (className: string, textContent: string) =>
+export const main = (className: string, ...children: BaseComponentView[]) =>
+  new BaseComponentView<HTMLElement>(
+    { tagName: 'main', className },
+    ...children,
+  );
+
+export const p = (textContent: string, className?: string) =>
   new BaseComponentView<HTMLParagraphElement>({
     tagName: 'p',
     className,
     textContent,
+  });
+
+export const svg = (innerHTML: string, className?: string) =>
+  new BaseComponentView<HTMLParagraphElement>({
+    tagName: 'svg',
+    className,
+    innerHTML,
   });

@@ -1,4 +1,3 @@
-import { EventCallbacks } from '../../../types/types';
 import BaseComponentView from '../../BaseComponent/BaseComponentView';
 import classes from './Button.module.scss';
 
@@ -9,18 +8,14 @@ export default class ButtonView extends BaseComponentView<HTMLButtonElement> {
     textContent: string,
     link?: string,
     disabled?: boolean,
-    buttonCallbacks?: EventCallbacks<HTMLButtonElement>,
   ) {
-    super(
-      {
-        tagName: 'button',
-        type,
-        textContent,
-        className: `${className} ${classes.button}`,
-        disabled,
-      },
-      buttonCallbacks,
-    );
+    super({
+      tagName: 'button',
+      type,
+      textContent,
+      className: `${className} ${classes.button}`,
+      disabled,
+    });
 
     if (link) {
       this.element.dataset.navigate = link;

@@ -26,3 +26,8 @@ export const enum ClientErrorResponses {
 export const enum ServerErrorResponses {
   InternalError = 500,
 }
+
+export const enum CusomEvents {
+  CreateCar = 'create-car',
+  UpdateCar = 'update-car',
+}

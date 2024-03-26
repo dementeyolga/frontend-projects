@@ -1,10 +1,9 @@
 @use './../../../../styles/layout/padding' as *;
-@use './../../../../styles/base/background' as *;
 
 .header {
   @extend %wrapper-padding;
-  @extend %light-background;
 
   display: flex;
   justify-content: flex-end;
+  column-gap: 16px;
 }

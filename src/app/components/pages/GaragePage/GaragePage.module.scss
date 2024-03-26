@@ -1,6 +1,14 @@
-.page {
+@use './../../../../styles/abstract/variables' as *;
+@use './../../../../styles/layout/page' as *;
+@use './../../../../styles/layout/padding' as *;
+
+.main {
+  @extend .page;
+  @extend %wrapper-padding;
+}
+
+.carForm {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  row-gap: 10px;
 }

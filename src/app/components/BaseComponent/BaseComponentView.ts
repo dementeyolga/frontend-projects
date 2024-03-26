@@ -1,25 +1,15 @@
-import { EventCallbacks } from '../../types/types';
-
 export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
   children: BaseComponentView[] = [];
 
   protected readonly element: T;
 
-  constructor(
-    params: Partial<T>,
-    eventCallbacks?: EventCallbacks<T>,
-    ...children: BaseComponentView[]
-  ) {
+  constructor(params: Partial<T>, ...children: BaseComponentView[]) {
     const element = document.createElement(params.tagName || 'div') as T;
     this.element = element;
     this.setParameters(params);
 
     if (children.length) {
       this.addChildrenComponents('end', ...children);
-    }
-
-    if (eventCallbacks) {
-      this.setEventCallbacks(eventCallbacks);
     }
   }
 
@@ -32,10 +22,14 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
   }
 
   protected setParameters(params: Partial<T>) {
-    const { textContent, className } = params;
+    const { textContent, className, innerHTML } = params;
 
     if (textContent) {
       this.element.textContent = textContent;
+    }
+
+    if (innerHTML) {
+      this.element.innerHTML = innerHTML;
     }
 
     if (className) {
@@ -78,25 +72,6 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  protected setEventCallbacks(validationCallbacks: EventCallbacks<T>): void {
-    Object.keys(validationCallbacks).forEach((key) => {
-      this.element.addEventListener(
-        key as keyof EventCallbacks<T>,
-        validationCallbacks[
-          key as keyof EventCallbacks<T>
-        ] as EventListenerOrEventListenerObject,
-      );
-    });
-  }
-
-  protected addChild(element: HTMLElement, position?: 'begin' | 'end'): void {
-    if (position === 'begin') {
-      this.element.prepend(element);
-    } else {
-      this.element.append(element);
-    }
-  }
-
   setClassName(className: string): void {
     this.element.className = className;
   }
@@ -107,5 +82,13 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
 
   removeClass(className: string): void {
     this.element.classList.remove(className);
+  }
+
+  protected addChild(element: HTMLElement, position?: 'begin' | 'end'): void {
+    if (position === 'begin') {
+      this.element.prepend(element);
+    } else {
+      this.element.append(element);
+    }
   }
 }

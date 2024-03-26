@@ -1,0 +1,15 @@
+@use './../../../../styles/abstract/variables' as *;
+
+.input {
+  padding: 3px 8px;
+  height: 30px;
+  position: relative;
+
+  display: flex;
+
+  box-shadow: 0 2px 2px #0000001a;
+  border-radius: 6px;
+  outline: none;
+  border: 1px solid $color-neutral;
+  background-color: $color-neutral;
+}

@@ -1,0 +1,10 @@
+@use './../../../../../styles/abstract/variables' as *;
+
+.form {
+  display: flex;
+  gap: 6px;
+}
+
+.button {
+  background-color: $color-accent-2;
+}
