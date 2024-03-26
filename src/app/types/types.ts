@@ -8,6 +8,8 @@ export type Car = {
   id: number;
 };
 
+export type EmptyCar = Record<string, never>;
+
 export type Cars = Car[];
 
 export type EngineParameters = {
@@ -17,4 +19,10 @@ export type EngineParameters = {
 
 export type EngineDriveStatus = {
   success: true;
+};
+
+export type Winner = {
+  id: number;
+  wins: number;
+  time: number;
 };
