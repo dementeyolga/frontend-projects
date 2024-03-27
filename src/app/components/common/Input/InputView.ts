@@ -9,6 +9,7 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
     type: InputTypes,
     name?: string,
     required?: boolean,
+    disabled?: boolean,
     minLength?: number,
     pattern?: string,
   ) {
@@ -18,6 +19,7 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
       type,
       name,
       required,
+      disabled,
       minLength,
       pattern,
     });
@@ -33,10 +35,18 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
     return this.element.value;
   }
 
+  setInputValue(value: string): void {
+    this.element.value = value;
+  }
+
+  focus(): void {
+    this.element.focus();
+  }
+
   protected override setParameters(params: Partial<HTMLInputElement>): void {
     super.setParameters(params);
 
-    const { type, name, required, minLength, pattern } = params;
+    const { type, name, required, disabled, minLength, pattern } = params;
     if (type) {
       this.element.type = type;
     }
@@ -47,6 +57,10 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
 
     if (required) {
       this.element.required = required;
+    }
+
+    if (disabled) {
+      this.element.disabled = disabled;
     }
 
     if (minLength) {

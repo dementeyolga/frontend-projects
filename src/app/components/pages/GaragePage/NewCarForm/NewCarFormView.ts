@@ -1,6 +1,6 @@
-import { CusomEvents } from '../../../../types/enums';
+import { CustomEvents } from '../../../../types/enums';
+import { getCars } from '../../../../utils/asyncRaceApi';
 import CarFormView from '../CarForm/CarFormView';
-// import classes from './NewCarForm.module.scss';
 
 export default class NewCarFormView extends CarFormView {
   constructor() {
@@ -10,13 +10,21 @@ export default class NewCarFormView extends CarFormView {
   protected override initListeners(): void {
     super.initListeners();
 
-    this.element.addEventListener('submit', () => {
-      const car = this.inputs.map((input) => ({
-        [input.getInputType()]: input.getInputValue(),
-      }));
+    this.element.addEventListener('submit', async () => {
+      const car = this.getCarObjectFromInputs();
+
+      const cars = await getCars();
+      let id = 1;
+
+      if (cars) {
+        const lastCarId = cars[cars.length - 1].id;
+        id = lastCarId + 1;
+      }
+
+      car.id = id;
 
       this.element.dispatchEvent(
-        new CustomEvent(CusomEvents.CreateCar, {
+        new CustomEvent(CustomEvents.CreateCar, {
           bubbles: true,
           detail: { car },
         }),

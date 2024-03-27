@@ -12,4 +12,9 @@
   outline: none;
   border: 1px solid $color-neutral;
   background-color: $color-neutral;
+
+  &:disabled {
+    background-color: $color-disabled;
+    border-color: $color-disabled;
+  }
 }

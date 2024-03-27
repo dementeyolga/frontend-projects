@@ -3,6 +3,8 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
 
   protected readonly element: T;
 
+  protected id?: number;
+
   constructor(params: Partial<T>, ...children: BaseComponentView[]) {
     const element = document.createElement(params.tagName || 'div') as T;
     this.element = element;
@@ -59,17 +61,47 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     currentEl.innerHTML = '';
   }
 
-  removeChildComponent(element: HTMLElement): void {
-    const component = this.children.find(
-      (comp) => comp.getElement() === element,
-    );
+  removeChildComponent(param: HTMLElement | number): void {
+    let component;
+
+    if (typeof param === 'number') {
+      component = this.findChildComponentById(param);
+    } else {
+      component = this.findChildComponentByElement(param);
+    }
 
     if (component) {
       const index = this.children.indexOf(component);
       this.children.splice(index, 1);
 
-      element.remove();
+      component.getElement().remove();
     }
+  }
+
+  destroy() {
+    this.element.remove();
+  }
+
+  findChildComponentByElement(
+    element: HTMLElement,
+  ): BaseComponentView | undefined {
+    const component = this.children.find(
+      (comp) => comp.getElement() === element,
+    );
+
+    return component;
+  }
+
+  findChildComponentById(id: number): BaseComponentView | undefined {
+    const component = this.children.find((comp) => {
+      if (comp.id) {
+        return comp.id === id;
+      }
+
+      return false;
+    });
+
+    return component;
   }
 
   setClassName(className: string): void {

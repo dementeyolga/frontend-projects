@@ -27,7 +27,11 @@ export const enum ServerErrorResponses {
   InternalError = 500,
 }
 
-export const enum CusomEvents {
+export const enum CustomEvents {
   CreateCar = 'create-car',
   UpdateCar = 'update-car',
+  DeleteCar = 'delete-car',
+  TriggerDeleteCar = 'trigger-delete-car',
+  TriggerUpdateCarInfo = 'trigger-update-car-info',
+  FocusUpdateCarInput = 'focus-update-car-input',
 }

@@ -37,17 +37,26 @@ export async function getCar(id: number): Promise<Car | EmptyCar | null> {
   }
 }
 
-export async function createCar(car: Car): Promise<void> {
+export async function createCar(car: Car): Promise<Car | null> {
   try {
-    await fetch('http://localhost:3000/garage', {
+    const resp = await fetch('http://localhost:3000/garage', {
       method: HTTPMethods.POST,
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(car),
     });
+
+    const { status } = resp;
+
+    if (status === SuccesfulResponses.Created) {
+      return await resp.json();
+    }
+
+    return null;
   } catch (err) {
     console.error(`An error occured ${err}`);
+    return null;
   }
 }
 
@@ -61,12 +70,10 @@ export async function deleteCar(id: number): Promise<void> {
   }
 }
 
-export async function updateCar(
-  id: number,
-  name: string,
-  color: string,
-): Promise<Car | null> {
+export async function updateCar(car: Car): Promise<Car | null> {
   try {
+    const { id, name, color } = car;
+
     const resp = await fetch(`http://localhost:3000/garage/${id}`, {
       method: HTTPMethods.PUT,
       headers: {
@@ -75,9 +82,13 @@ export async function updateCar(
       body: JSON.stringify({ name, color }),
     });
 
-    const data = await resp.json();
+    const { status } = resp;
 
-    return data;
+    if (status === SuccesfulResponses.OK) {
+      return await resp.json();
+    }
+
+    return null;
   } catch (err) {
     console.error(`An error occured ${err}`);
     return null;
@@ -213,7 +224,7 @@ export async function getWinner(id: number): Promise<Car | EmptyCar | null> {
   }
 }
 
-export async function createWinner(winner: Winner): Promise<void> {
+export async function createWinner(winner: Winner): Promise<Winner | null> {
   try {
     const resp = await fetch('http://localhost:3000/winners', {
       method: HTTPMethods.POST,
@@ -227,11 +238,18 @@ export async function createWinner(winner: Winner): Promise<void> {
 
     if (status === SuccesfulResponses.Created) {
       console.log('Winner successfully created');
-    } else if (status === ServerErrorResponses.InternalError) {
+
+      return await resp.json();
+    }
+
+    if (status === ServerErrorResponses.InternalError) {
       console.error('Error: Insert failed, duplicate id');
     }
+
+    return null;
   } catch (err) {
     console.error(`An error occured ${err}`);
+    return null;
   }
 }
 
@@ -259,9 +277,13 @@ export async function updateWinner(
       body: JSON.stringify({ wins, time }),
     });
 
-    const data = await resp.json();
+    const { status } = resp;
 
-    return data;
+    if (status === SuccesfulResponses.OK) {
+      return await resp.json();
+    }
+
+    return null;
   } catch (err) {
     console.error(`An error occured ${err}`);
     return null;

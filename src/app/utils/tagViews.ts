@@ -34,7 +34,7 @@ export const p = (textContent: string, className?: string) =>
   });
 
 export const svg = (innerHTML: string, className?: string) =>
-  new BaseComponentView<HTMLParagraphElement>({
+  new BaseComponentView<HTMLElement & SVGElement>({
     tagName: 'svg',
     className,
     innerHTML,
