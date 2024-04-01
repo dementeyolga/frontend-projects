@@ -19,6 +19,10 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     return this.element;
   }
 
+  getElementWidth(): number {
+    return this.element.offsetWidth;
+  }
+
   setTextContent(text: string): void {
     this.element.textContent = text;
   }

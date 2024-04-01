@@ -15,10 +15,8 @@
 }
 
 .svg {
-  width: 140px;
-  height: 70px;
-
-  z-index: 10;
+  width: 14%;
+  height: auto;
 
   * {
     max-width: 100%;
@@ -27,9 +25,9 @@
 }
 
 .carName {
-  margin-bottom: 6px;
+  margin: 0;
 
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: $color-neutral;
   font-weight: 500;
 }

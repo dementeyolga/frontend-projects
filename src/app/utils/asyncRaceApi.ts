@@ -179,6 +179,10 @@ export async function setCarEngineToDriveStatus(
       console.error(
         `Car has been stopped suddenly. It's engine was broken down.`,
       );
+
+      return {
+        success: false,
+      };
     } else if (status === SuccesfulResponses.OK) {
       const data = await resp.json();
 
@@ -311,3 +315,5 @@ export async function updateWinner(
     return null;
   }
 }
+
+export const ACCELERATION_COEFFICIENT = 10;

@@ -14,11 +14,17 @@ import {
   updateCar,
 } from '../../../utils/asyncRaceApi';
 import PaginationView from './Pagination/PaginationView';
+import RaceButtonView from './RaceButton/RaceButtonView';
+import StopRaceButtonView from './StopRaceButton/StopRaceButtonView';
 
 export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
   private carsList: CarsListView;
 
   private updateCarFormView: UpdateCarFormView;
+
+  private raceButton: RaceButtonView;
+
+  private stopRaceButton: StopRaceButtonView;
 
   private createCarFormView: NewCarFormView;
 
@@ -44,6 +50,8 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     );
 
     this.updateCarFormView = new UpdateCarFormView();
+    this.raceButton = new RaceButtonView();
+    this.stopRaceButton = new StopRaceButtonView();
     this.createCarFormView = new NewCarFormView();
 
     this.carQuantityComp = p('', classes.carQuantity);
@@ -52,7 +60,12 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     const mainBlock = main(
       classes.main,
       h1('h1', 'Garage'),
-      div(classes.carForm, this.createCarFormView, this.updateCarFormView),
+      div(
+        classes.carForm,
+        this.createCarFormView,
+        this.updateCarFormView,
+        div(classes.buttons, this.raceButton, this.stopRaceButton),
+      ),
       this.carQuantityComp,
       this.pageInfoComp,
     );

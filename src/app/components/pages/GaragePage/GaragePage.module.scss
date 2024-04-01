@@ -13,6 +13,11 @@
   row-gap: 10px;
 }
 
+.buttons {
+  display: flex;
+  gap: 6px;
+}
+
 .carQuantity {
   margin-top: 30px;
   font-size: 1.6rem;
