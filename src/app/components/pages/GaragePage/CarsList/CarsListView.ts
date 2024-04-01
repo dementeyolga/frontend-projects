@@ -1,4 +1,4 @@
-import { getCars } from '../../../../utils/asyncRaceApi';
+import { getCars, LIMIT_PER_PAGE } from '../../../../utils/asyncRaceApi';
 import BaseComponentView from '../../../BaseComponent/BaseComponentView';
 import CarInfoView from './CarInfo/CarInfoView';
 import classes from './CarsList.module.scss';
@@ -6,15 +6,15 @@ import classes from './CarsList.module.scss';
 export default class CarsListView extends BaseComponentView<HTMLDivElement> {
   declare children: CarInfoView[];
 
-  constructor() {
+  constructor(page: number) {
     super({ tagName: 'div', className: classes.list });
 
-    this.updateChildren();
+    this.updateChildren(page, LIMIT_PER_PAGE);
   }
 
-  async updateChildren() {
+  async updateChildren(page: number, limit: number) {
     this.removeChildrenComponents();
-    const cars = await getCars();
+    const cars = await getCars(page, limit);
 
     const childrenComponents: CarInfoView[] = [];
     if (cars) {

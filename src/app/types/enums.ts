@@ -34,4 +34,7 @@ export const enum CustomEvents {
   TriggerDeleteCar = 'trigger-delete-car',
   TriggerUpdateCarInfo = 'trigger-update-car-info',
   FocusUpdateCarInput = 'focus-update-car-input',
+  NextPage = 'next-page',
+  PrevPage = 'prev=page',
+  UpdatePaginationState = 'update-pagination-state',
 }

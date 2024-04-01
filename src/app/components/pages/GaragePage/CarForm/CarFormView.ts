@@ -33,6 +33,16 @@ export default class CarFormView extends BaseComponentView<HTMLFormElement> {
     this.initListeners();
   }
 
+  resetInputs(): void {
+    this.children.forEach((comp) => {
+      const element = comp.getElement();
+
+      if (element instanceof HTMLInputElement) {
+        element.value = '';
+      }
+    });
+  }
+
   disableForm(): void {
     this.children.forEach((comp) => {
       const element = comp.getElement();

@@ -1,6 +1,7 @@
 @use './../../../../../../styles/abstract/variables' as *;
 
 .info {
+  position: relative;
   width: 100%;
 
   display: flex;
@@ -14,8 +15,10 @@
 }
 
 .svg {
-  width: 200px;
-  height: 100px;
+  width: 140px;
+  height: 70px;
+
+  z-index: 10;
 
   * {
     max-width: 100%;
@@ -24,5 +27,34 @@
 }
 
 .carName {
+  margin-bottom: 6px;
+
+  font-size: 1.4rem;
   color: $color-neutral;
+  font-weight: 500;
+}
+
+.road {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  background-image: url('./road.jpg');
+  background-repeat: repeat-x;
+  background-size: contain;
+
+  z-index: 1;
+}
+
+.finish {
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  right: 100px;
+  width: 60px;
+  height: auto;
+  transform: rotate(5deg);
+
+  z-index: 5;
 }

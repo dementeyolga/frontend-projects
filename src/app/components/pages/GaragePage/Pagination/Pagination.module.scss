@@ -1,0 +1,12 @@
+@use './../../../../../styles/abstract/variables' as *;
+
+.pagination {
+  margin-top: 30px;
+
+  display: flex;
+  gap: 6px;
+}
+
+.button {
+  background-color: $color-accent-4;
+}

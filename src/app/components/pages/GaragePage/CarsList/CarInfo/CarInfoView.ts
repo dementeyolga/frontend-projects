@@ -2,10 +2,12 @@ import { CustomEvents } from '../../../../../types/enums';
 import { Car } from '../../../../../types/types';
 import { div, p, svg } from '../../../../../utils/tagViews';
 import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
+import ImageView from '../../../../common/Image/ImageView';
 import classes from './CarInfo.module.scss';
 import DeleteCarButtonView from './DeleteCarButton/DeleteCarButtonView';
 import SelectCarButtonView from './SelectCarButton/SelectCarButtonView';
 import carSvg from './car.svg';
+import finishPic from './finish.webp';
 
 export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
   id: number;
@@ -38,6 +40,8 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
         new DeleteCarButtonView(),
       ),
       carSvgComp,
+      div(classes.road),
+      new ImageView(finishPic, 'finish', classes.finish),
     );
 
     this.id = id;

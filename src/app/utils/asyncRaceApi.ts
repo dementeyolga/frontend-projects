@@ -13,12 +13,34 @@ import {
   Winner,
 } from '../types/types';
 
-export async function getCars(): Promise<Cars | null> {
-  try {
-    const resp = await fetch('http://localhost:3000/garage/');
-    const data = await resp.json();
+export const LIMIT_PER_PAGE = 7;
 
-    return data;
+export async function getCars(
+  page?: number,
+  limit?: number,
+): Promise<Cars | null> {
+  try {
+    let url = 'http://localhost:3000/garage/';
+
+    if (arguments.length) {
+      url += '?';
+
+      const params: string[] = [];
+
+      if (page) {
+        params.push(`_page=${page}`);
+      }
+
+      if (limit) {
+        params.push(`_limit=${limit}`);
+      }
+
+      url += params.join('&');
+    }
+
+    const resp = await fetch(url);
+
+    return await resp.json();
   } catch (err) {
     console.error(`An error occured`);
     return null;
