@@ -8,11 +8,17 @@ import CarsListView from './CarsList/CarsListView';
 import { CustomEvents } from '../../../types/enums';
 import { createCar, deleteCar, updateCar } from '../../../utils/asyncRaceApi';
 import CarInfoView from './CarsList/CarInfo/CarInfoView';
+import RaceButtonView from './RaceButton/RaceButtonView';
+import StopRaceButtonView from './StopRaceButton/StopRaceButtonView';
 
 export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
   private carsList: CarsListView;
 
   private updateCarFormView: UpdateCarFormView;
+
+  private raceButton: RaceButtonView;
+
+  private stopRaceButton: StopRaceButtonView;
 
   constructor() {
     super(
@@ -24,11 +30,18 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     );
 
     this.updateCarFormView = new UpdateCarFormView();
+    this.raceButton = new RaceButtonView();
+    this.stopRaceButton = new StopRaceButtonView();
 
     const mainBlock = main(
       classes.main,
       h1('h1', 'Garage'),
-      div(classes.carForm, new NewCarFormView(), this.updateCarFormView),
+      div(
+        classes.carForm,
+        new NewCarFormView(),
+        this.updateCarFormView,
+        div(classes.buttons, this.raceButton, this.stopRaceButton),
+      ),
     );
 
     this.carsList = new CarsListView();

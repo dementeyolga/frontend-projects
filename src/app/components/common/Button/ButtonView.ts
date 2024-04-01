@@ -34,4 +34,12 @@ export default class ButtonView extends BaseComponentView<HTMLButtonElement> {
       this.element.disabled = disabled;
     }
   }
+
+  disable(): void {
+    this.element.disabled = true;
+  }
+
+  enable(): void {
+    this.element.disabled = false;
+  }
 }

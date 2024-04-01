@@ -34,4 +34,8 @@ export const enum CustomEvents {
   TriggerDeleteCar = 'trigger-delete-car',
   TriggerUpdateCarInfo = 'trigger-update-car-info',
   FocusUpdateCarInput = 'focus-update-car-input',
+  StartCar = 'start-car',
+  StopCar = 'stop-car',
+  StartRace = 'start-race',
+  StopRace = 'stop-race',
 }

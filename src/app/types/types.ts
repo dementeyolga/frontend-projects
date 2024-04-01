@@ -33,7 +33,7 @@ export type EngineParameters = {
 };
 
 export type EngineDriveStatus = {
-  success: true;
+  success: boolean;
 };
 
 export type Winner = {

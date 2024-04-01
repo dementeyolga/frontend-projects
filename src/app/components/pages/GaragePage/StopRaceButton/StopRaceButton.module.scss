@@ -1,0 +1,9 @@
+@use './../../../../../styles/abstract/variables' as *;
+@use './../../../../../styles/components/button';
+
+.button {
+  @extend .secondary;
+
+  color: $color-accent-3;
+  border-color: $color-accent-3;
+}
