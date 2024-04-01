@@ -1,0 +1,1 @@
+import{B as e}from"./index-O9cDETt7.js";import{H as a,h as s}from"./HeaderView-CGELgH2Q.js";class i extends e{constructor(){super({tagName:"div",className:"page"},new a,s("h1","Winners"))}}export{i as default};
