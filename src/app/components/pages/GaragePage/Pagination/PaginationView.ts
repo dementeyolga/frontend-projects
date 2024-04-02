@@ -25,6 +25,22 @@ export default class PaginationView extends BaseComponentView<HTMLDivElement> {
     this.initListeners();
   }
 
+  setButtonStates(page: number, totalPages: number): void {
+    if (totalPages === 0 || totalPages === 1) {
+      this.prevButton.disable();
+      this.nextButton.disable();
+    } else if (page === 1) {
+      this.prevButton.disable();
+      this.nextButton.enable();
+    } else if (page === totalPages) {
+      this.prevButton.enable();
+      this.nextButton.disable();
+    } else {
+      this.prevButton.enable();
+      this.nextButton.enable();
+    }
+  }
+
   private initListeners(): void {
     this.nextButton.getElement().addEventListener('click', () => {
       this.element.dispatchEvent(
@@ -36,14 +52,6 @@ export default class PaginationView extends BaseComponentView<HTMLDivElement> {
       this.element.dispatchEvent(
         new CustomEvent(CustomEvents.PrevPage, { bubbles: true }),
       );
-    });
-
-    this.element.addEventListener(CustomEvents.UpdatePaginationState, (ev) => {
-      if (ev instanceof CustomEvent) {
-        // const { detail } = ev;
-        // const { page, totalPages } = detail;
-        // TODO implement button states
-      }
     });
   }
 }

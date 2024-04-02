@@ -38,7 +38,11 @@ export default class CarFormView extends BaseComponentView<HTMLFormElement> {
       const element = comp.getElement();
 
       if (element instanceof HTMLInputElement) {
-        element.value = '';
+        if (element.type === 'color') {
+          element.value = '#000000';
+        } else {
+          element.value = '';
+        }
       }
     });
   }
@@ -55,7 +59,11 @@ export default class CarFormView extends BaseComponentView<HTMLFormElement> {
       }
 
       if (element instanceof HTMLInputElement) {
-        element.value = '';
+        if (element.type === 'color') {
+          element.value = '#000000';
+        } else {
+          element.value = '';
+        }
       }
     });
   }

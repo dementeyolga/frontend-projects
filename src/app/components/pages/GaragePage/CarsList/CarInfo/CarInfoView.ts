@@ -40,7 +40,7 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
     const { id, name, color } = carParams;
 
     const carSvgComp = svg(
-      `<svg width="100%" height="auto" 
+      `<svg width="100%" height="100%" 
       viewBox="0 0 100 45"><use href="${carSvg}#car"></use></svg>
       `,
       classes.svg,

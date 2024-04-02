@@ -72,6 +72,7 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
 
     this.carsList = new CarsListView(1);
     this.pagination = new PaginationView();
+
     mainBlock.addChildrenComponents('end', this.carsList, this.pagination);
     this.addChildrenComponents('end', mainBlock);
 
@@ -87,6 +88,8 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.totalPages = pages;
 
     this.pageInfoComp.setTextContent(`Page #${this.currentPage} / ${pages}`);
+
+    this.pagination.setButtonStates(this.currentPage, this.totalPages);
   }
 
   private async updateCarQuantity(): Promise<void> {
@@ -195,12 +198,7 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.element.addEventListener(CustomEvents.NextPage, () => {
       this.currentPage += 1;
       this.carsList.updateChildren(this.currentPage, LIMIT_PER_PAGE);
-
-      this.pagination.getElement().dispatchEvent(
-        new CustomEvent(CustomEvents.UpdatePaginationState, {
-          detail: { page: this.currentPage, totalPages: this.totalPages },
-        }),
-      );
+      this.updatePagesInfo();
     });
   }
 
@@ -208,6 +206,7 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.element.addEventListener(CustomEvents.PrevPage, () => {
       this.currentPage -= 1;
       this.carsList.updateChildren(this.currentPage, LIMIT_PER_PAGE);
+      this.updatePagesInfo();
     });
   }
 }
