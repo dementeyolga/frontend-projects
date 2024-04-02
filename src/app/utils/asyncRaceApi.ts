@@ -11,16 +11,19 @@ import {
   EngineDriveStatus,
   EngineParameters,
   Winner,
+  Winners,
 } from '../types/types';
 
-export const LIMIT_PER_PAGE = 7;
+export const LIMIT_PER_PAGE = 6;
+
+const BASE_API = `http://127.0.0.1:3000`;
 
 export async function getCars(
   page?: number,
   limit?: number,
 ): Promise<Cars | null> {
   try {
-    let url = 'http://localhost:3000/garage/';
+    let url = `${BASE_API}/garage/`;
 
     if (arguments.length) {
       url += '?';
@@ -49,7 +52,7 @@ export async function getCars(
 
 export async function getCar(id: number): Promise<Car | EmptyCar | null> {
   try {
-    const resp = await fetch(`http://localhost:3000/garage/${id}`);
+    const resp = await fetch(`${BASE_API}/garage/${id}`);
     const data = await resp.json();
 
     return data;
@@ -61,7 +64,7 @@ export async function getCar(id: number): Promise<Car | EmptyCar | null> {
 
 export async function createCar(car: Car): Promise<Car | null> {
   try {
-    const resp = await fetch('http://localhost:3000/garage', {
+    const resp = await fetch(`${BASE_API}/garage`, {
       method: HTTPMethods.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +87,7 @@ export async function createCar(car: Car): Promise<Car | null> {
 
 export async function deleteCar(id: number): Promise<void> {
   try {
-    await fetch(`http://localhost:3000/garage/${id}`, {
+    await fetch(`${BASE_API}/garage/${id}`, {
       method: HTTPMethods.DELETE,
     });
   } catch (err) {
@@ -96,7 +99,7 @@ export async function updateCar(car: Car): Promise<Car | null> {
   try {
     const { id, name, color } = car;
 
-    const resp = await fetch(`http://localhost:3000/garage/${id}`, {
+    const resp = await fetch(`${BASE_API}/garage/${id}`, {
       method: HTTPMethods.PUT,
       headers: {
         'Content-Type': 'application/json',
@@ -123,7 +126,7 @@ export async function setCarEngineStatus(
 ): Promise<EngineParameters | null> {
   try {
     const resp = await fetch(
-      `http://localhost:3000/engine?id=${id}&status=${engineStatus}`,
+      `${BASE_API}/engine?id=${id}&status=${engineStatus}`,
       {
         method: HTTPMethods.PATCH,
       },
@@ -152,16 +155,19 @@ export async function setCarEngineStatus(
 
 export async function setCarEngineToDriveStatus(
   id: number,
-): Promise<EngineDriveStatus | null> {
+): Promise<EngineDriveStatus> {
   try {
-    const resp = await fetch(
-      `http://localhost:3000/engine?id=${id}&status=drive`,
-      {
-        method: HTTPMethods.PATCH,
-      },
-    );
+    const resp = await fetch(`${BASE_API}/engine?id=${id}&status=drive`, {
+      method: HTTPMethods.PATCH,
+    });
 
     const { status } = resp;
+
+    if (status === SuccesfulResponses.OK) {
+      const data = await resp.json();
+
+      return data;
+    }
 
     if (status === ClientErrorResponses.BadRequest) {
       console.error(
@@ -179,20 +185,17 @@ export async function setCarEngineToDriveStatus(
       console.error(
         `Car has been stopped suddenly. It's engine was broken down.`,
       );
-
-      return {
-        success: false,
-      };
-    } else if (status === SuccesfulResponses.OK) {
-      const data = await resp.json();
-
-      return data;
     }
 
-    return null;
+    return {
+      success: false,
+    };
   } catch (err) {
     console.error(`An error occured ${err}`);
-    return null;
+
+    return {
+      success: false,
+    };
   }
 }
 
@@ -201,9 +204,9 @@ export async function getWinners(
   limit?: number,
   sort?: 'id' | 'wins' | 'time',
   order?: 'ASC' | 'DESC',
-): Promise<Cars | null> {
+): Promise<Winners | null> {
   try {
-    let url = 'http://localhost:3000/winners';
+    let url = `${BASE_API}/winners`;
 
     if (arguments.length) {
       url += '?';
@@ -238,9 +241,9 @@ export async function getWinners(
   }
 }
 
-export async function getWinner(id: number): Promise<Car | EmptyCar | null> {
+export async function getWinner(id: number): Promise<Winner | EmptyCar | null> {
   try {
-    const resp = await fetch(`http://localhost:3000/winners/${id}`);
+    const resp = await fetch(`${BASE_API}/winners/${id}`);
     const data = await resp.json();
 
     return data;
@@ -252,7 +255,7 @@ export async function getWinner(id: number): Promise<Car | EmptyCar | null> {
 
 export async function createWinner(winner: Winner): Promise<Winner | null> {
   try {
-    const resp = await fetch('http://localhost:3000/winners', {
+    const resp = await fetch(`${BASE_API}/winners`, {
       method: HTTPMethods.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -281,7 +284,7 @@ export async function createWinner(winner: Winner): Promise<Winner | null> {
 
 export async function deleteWinner(id: number): Promise<void> {
   try {
-    await fetch(`http://localhost:3000/winners/${id}`, {
+    await fetch(`${BASE_API}/winners/${id}`, {
       method: HTTPMethods.DELETE,
     });
   } catch (err) {
@@ -295,7 +298,7 @@ export async function updateWinner(
   time: number,
 ): Promise<Winner | EmptyCar | null> {
   try {
-    const resp = await fetch(`http://localhost:3000/garage/${id}`, {
+    const resp = await fetch(`${BASE_API}/winners/${id}`, {
       method: HTTPMethods.PUT,
       headers: {
         'Content-Type': 'application/json',
@@ -315,5 +318,3 @@ export async function updateWinner(
     return null;
   }
 }
-
-export const ACCELERATION_COEFFICIENT = 10;

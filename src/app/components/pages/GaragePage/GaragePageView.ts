@@ -8,14 +8,19 @@ import CarsListView from './CarsList/CarsListView';
 import { CustomEvents } from '../../../types/enums';
 import {
   createCar,
+  createWinner,
   deleteCar,
   getCars,
+  getWinner,
+  getWinners,
   LIMIT_PER_PAGE,
   updateCar,
+  updateWinner,
 } from '../../../utils/asyncRaceApi';
 import PaginationView from './Pagination/PaginationView';
 import RaceButtonView from './RaceButton/RaceButtonView';
 import StopRaceButtonView from './StopRaceButton/StopRaceButtonView';
+import { Car } from '../../../types/types';
 
 export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
   private carsList: CarsListView;
@@ -29,8 +34,6 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
   private createCarFormView: NewCarFormView;
 
   private carQuantityComp: BaseComponentView<HTMLParagraphElement>;
-
-  // private totalCarsQuantity: number = 0;
 
   private currentPage: number = 1;
 
@@ -95,7 +98,6 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
   private async updateCarQuantity(): Promise<void> {
     const quantity = await GaragePageView.getTotalCarsQuantity();
 
-    // this.totalCarsQuantity = quantity;
     this.carQuantityComp.setTextContent(
       `Total cars in the Garage: ${quantity}`,
     );
@@ -122,6 +124,8 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.initFocusUpdateCarInputListener();
     this.initUpdateCarListener();
     this.initDeleteCarListener();
+    this.initStartRaceListener();
+    this.initStopRaceListener();
     this.initNextPageListener();
     this.initPrevPageListener();
   }
@@ -165,7 +169,9 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.element.addEventListener(CustomEvents.UpdateCar, async (ev) => {
       if (ev instanceof CustomEvent) {
         const { car } = ev.detail;
-        const updatedCarInfo = await updateCar(car);
+        const typedCar = car as Car;
+
+        const updatedCarInfo = await updateCar(typedCar);
 
         if (updatedCarInfo) {
           const carComp = this.carsList.findChildComponentById(car.id);
@@ -189,8 +195,67 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
         this.carsList.removeChildComponent(car.id);
       }
 
+      this.carsList.updateChildren(this.currentPage, LIMIT_PER_PAGE);
+
       this.updateCarQuantity();
       this.updatePagesInfo();
+    });
+  }
+
+  private initStartRaceListener(): void {
+    this.element.addEventListener(CustomEvents.StartRace, async () => {
+      try {
+        this.raceButton.disable();
+
+        const startPromises = this.carsList.children.map((child) =>
+          child.startCar(),
+        );
+
+        const enginePromises = await Promise.allSettled(startPromises);
+
+        this.stopRaceButton.enable();
+
+        const drivePromises = enginePromises.map((promise, id) => {
+          if (promise.status === 'fulfilled') {
+            if (promise.value) {
+              return this.carsList.children[id].driveCar(promise.value);
+            }
+          }
+
+          return Promise.reject();
+        });
+
+        const { car: winner, engineParams } = await Promise.any(drivePromises);
+        const { id: newWinnerId } = winner;
+        const raceTime =
+          Math.round(engineParams.distance / engineParams.velocity / 10) / 100;
+
+        const existingWinner = await getWinner(newWinnerId);
+        console.log('winner', winner, 'existing winner', existingWinner);
+
+        if (existingWinner && existingWinner.id) {
+          const { id, wins, time } = existingWinner;
+          const newWins = wins + 1;
+
+          console.log(newWins);
+
+          await updateWinner(id, newWins, time > raceTime ? raceTime : time);
+          console.log(await getWinners());
+        } else {
+          await createWinner({ id: newWinnerId, time: raceTime, wins: 1 });
+        }
+      } catch {
+        console.error('Error occured at the race');
+      }
+    });
+  }
+
+  private initStopRaceListener(): void {
+    this.element.addEventListener(CustomEvents.StopRace, async () => {
+      this.stopRaceButton.disable();
+      const stopPromises = this.carsList.children.map((car) => car.stopCar());
+      await Promise.allSettled(stopPromises);
+      this.raceButton.enable();
     });
   }
 

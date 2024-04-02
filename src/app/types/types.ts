@@ -41,3 +41,5 @@ export type Winner = {
   wins: number;
   time: number;
 };
+
+export type Winners = Winner[];

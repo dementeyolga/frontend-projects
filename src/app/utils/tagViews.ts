@@ -33,6 +33,25 @@ export const p = (textContent: string, className?: string) =>
     textContent,
   });
 
+export const table = (className: string, ...children: BaseComponentView[]) =>
+  new BaseComponentView<HTMLTableElement>(
+    { tagName: 'table', className },
+    ...children,
+  );
+
+export const tr = (className: string, ...children: BaseComponentView[]) =>
+  new BaseComponentView<HTMLTableRowElement>(
+    { tagName: 'tr', className },
+    ...children,
+  );
+
+export const td = (textContent: string, className?: string) =>
+  new BaseComponentView<HTMLTableCellElement>({
+    tagName: 'td',
+    className,
+    textContent,
+  });
+
 export const svg = (innerHTML: string, className?: string) =>
   new BaseComponentView<HTMLElement & SVGElement>({
     tagName: 'svg',

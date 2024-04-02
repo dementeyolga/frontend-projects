@@ -1,0 +1,14 @@
+@use './../../../../styles/abstract/variables' as *;
+
+.table {
+  display: flex;
+}
+
+.row {
+  color: $color-neutral;
+
+  td {
+    padding: 10px;
+    text-align: center;
+  }
+}

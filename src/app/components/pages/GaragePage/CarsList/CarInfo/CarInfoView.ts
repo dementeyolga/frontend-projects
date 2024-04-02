@@ -1,7 +1,6 @@
 import { CustomEvents } from '../../../../../types/enums';
-import { Car } from '../../../../../types/types';
+import { Car, EngineParameters } from '../../../../../types/types';
 import {
-  ACCELERATION_COEFFICIENT,
   setCarEngineStatus,
   setCarEngineToDriveStatus,
 } from '../../../../../utils/asyncRaceApi';
@@ -102,44 +101,64 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
     this.setCarName(name);
   }
 
-  async startCar(): Promise<void> {
-    const engineParams = await setCarEngineStatus(this.id, 'started');
-
-    if (engineParams) {
-      console.log(
-        `car ${[engineParams.distance, engineParams.velocity]} started successfully`,
-      );
-
-      this.startButton.disable();
-      this.stopButton.enable();
-
-      this.translateXShift =
-        ((this.getElementWidth() * engineParams.velocity) /
-          engineParams.distance) *
-        ACCELERATION_COEFFICIENT;
-
-      this.animationRequestID = requestAnimationFrame(this.moveCar.bind(this));
-
-      const driveStatus = await setCarEngineToDriveStatus(this.id);
-
-      if (driveStatus && !driveStatus.success) {
-        cancelAnimationFrame(this.animationRequestID);
-      }
-    }
+  async startCar(): Promise<EngineParameters | null> {
+    return setCarEngineStatus(this.id, 'started');
   }
 
-  async moveCar(): Promise<void> {
+  async driveCar(
+    engineParams: EngineParameters,
+  ): Promise<{ car: Car; engineParams: EngineParameters }> {
+    console.log(
+      `car ${[engineParams.distance, engineParams.velocity]} started successfully`,
+    );
+
+    this.startButton.disable();
+    this.stopButton.enable();
+
+    const framesCount =
+      (engineParams.distance / engineParams.velocity / 1000) * 60;
+
+    this.translateXShift =
+      (this.getElementWidth() - this.carSvgComp.getElementWidth()) /
+      framesCount;
+
+    this.animationRequestID = requestAnimationFrame(
+      this.animateCarMovement.bind(this),
+    );
+
+    const before = Date.now();
+
+    const driveStatus = await setCarEngineToDriveStatus(this.id);
+
+    cancelAnimationFrame(this.animationRequestID);
+
+    if (!driveStatus.success) throw Error('car got broken');
+
+    console.log(
+      this.getCarInfo(),
+      'drive status returned',
+      driveStatus,
+      'actual ride time: ',
+      Date.now() - before,
+      'counted time: ',
+      engineParams.distance / engineParams.velocity,
+    );
+
+    const carInfo = this.getCarInfo();
+
+    return {
+      car: carInfo,
+      engineParams,
+    };
+  }
+
+  async animateCarMovement(): Promise<void> {
     const currentTranslateX = getTranslateX(this.carSvgComp.getElement());
     this.carSvgComp.getElement().style.transform = `translateX(${currentTranslateX + this.translateXShift}px)`;
 
-    if (
-      currentTranslateX >=
-      this.getElementWidth() - this.carSvgComp.getElementWidth()
-    ) {
-      return;
-    }
-
-    this.animationRequestID = requestAnimationFrame(this.moveCar.bind(this));
+    this.animationRequestID = requestAnimationFrame(
+      this.animateCarMovement.bind(this),
+    );
   }
 
   async stopCar(): Promise<void> {
@@ -184,14 +203,18 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
   }
 
   private initTriggerStartCarListener(): void {
-    this.element.addEventListener(CustomEvents.StartCar, () => {
-      this.startCar();
+    this.element.addEventListener(CustomEvents.StartCar, async () => {
+      const engineParams = await this.startCar();
+
+      if (engineParams) {
+        this.driveCar(engineParams);
+      }
     });
   }
 
   private initTriggerStopCarListener(): void {
-    this.element.addEventListener(CustomEvents.StopCar, () => {
-      this.stopCar();
+    this.element.addEventListener(CustomEvents.StopCar, async () => {
+      await this.stopCar();
     });
   }
 }
