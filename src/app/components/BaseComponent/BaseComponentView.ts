@@ -65,10 +65,12 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     currentEl.innerHTML = '';
   }
 
-  removeChildComponent(param: HTMLElement | number): void {
+  removeChildComponent(param: BaseComponentView | HTMLElement | number): void {
     let component;
 
-    if (typeof param === 'number') {
+    if (param instanceof BaseComponentView) {
+      component = param;
+    } else if (typeof param === 'number') {
       component = this.findChildComponentById(param);
     } else {
       component = this.findChildComponentByElement(param);
@@ -78,7 +80,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
       const index = this.children.indexOf(component);
       this.children.splice(index, 1);
 
-      component.getElement().remove();
+      component.destroy();
     }
   }
 

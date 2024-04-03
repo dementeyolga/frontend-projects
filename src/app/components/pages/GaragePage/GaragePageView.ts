@@ -12,7 +12,6 @@ import {
   deleteCar,
   getCars,
   getWinner,
-  getWinners,
   LIMIT_PER_PAGE,
   updateCar,
   updateWinner,
@@ -21,6 +20,7 @@ import PaginationView from './Pagination/PaginationView';
 import RaceButtonView from './RaceButton/RaceButtonView';
 import StopRaceButtonView from './StopRaceButton/StopRaceButtonView';
 import { Car } from '../../../types/types';
+import WinModalView from './WinModal/WinModalView';
 
 export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
   private carsList: CarsListView;
@@ -42,6 +42,8 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
   private pagination: PaginationView;
 
   private totalPages?: number;
+
+  private winModal?: WinModalView;
 
   constructor() {
     super(
@@ -125,6 +127,7 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.initUpdateCarListener();
     this.initDeleteCarListener();
     this.initStartRaceListener();
+    this.initRemoveWinModalListener();
     this.initStopRaceListener();
     this.initNextPageListener();
     this.initPrevPageListener();
@@ -237,15 +240,33 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
           const { id, wins, time } = existingWinner;
           const newWins = wins + 1;
 
-          console.log(newWins);
-
           await updateWinner(id, newWins, time > raceTime ? raceTime : time);
-          console.log(await getWinners());
         } else {
           await createWinner({ id: newWinnerId, time: raceTime, wins: 1 });
         }
+
+        this.winModal = new WinModalView(winner, raceTime);
+
+        this.addChildrenComponents('end', this.winModal);
+
+        setTimeout(() => {
+          if (this.winModal) {
+            this.removeChildComponent(this.winModal);
+            delete this.winModal;
+          }
+        }, 3000);
       } catch {
         console.error('Error occured at the race');
+      }
+    });
+  }
+
+  private initRemoveWinModalListener(): void {
+    this.element.addEventListener(CustomEvents.RemoveWinModal, () => {
+      if (this.winModal) {
+        this.removeChildComponent(this.winModal);
+
+        delete this.winModal;
       }
     });
   }

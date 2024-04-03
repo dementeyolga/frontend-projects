@@ -41,4 +41,5 @@ export const enum CustomEvents {
   NextPage = 'next-page',
   PrevPage = 'prev=page',
   UpdatePaginationState = 'update-pagination-state',
+  RemoveWinModal = 'remove-win-modal',
 }

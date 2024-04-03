@@ -118,8 +118,11 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
     const framesCount =
       (engineParams.distance / engineParams.velocity / 1000) * 60;
 
+    const elWidth = this.getElementWidth();
     this.translateXShift =
-      (this.getElementWidth() - this.carSvgComp.getElementWidth()) /
+      (elWidth -
+        this.carSvgComp.getElementWidth() -
+        this.getElementWidth() * 0.01) /
       framesCount;
 
     this.animationRequestID = requestAnimationFrame(
