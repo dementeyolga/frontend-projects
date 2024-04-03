@@ -10,6 +10,7 @@ import {
   createCar,
   createWinner,
   deleteCar,
+  deleteWinner,
   getCars,
   getWinner,
   LIMIT_PER_PAGE,
@@ -137,11 +138,9 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.element.addEventListener(CustomEvents.CreateCar, async (ev) => {
       if (ev instanceof CustomEvent) {
         const { car } = ev.detail;
-        const newCar = await createCar(car);
-        console.log('new car', newCar);
+        await createCar(car);
 
         this.carsList.updateChildren(this.currentPage, LIMIT_PER_PAGE);
-
         this.createCarFormView.resetInputs();
 
         this.updateCarQuantity();
@@ -193,9 +192,13 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.element.addEventListener(CustomEvents.DeleteCar, async (ev) => {
       if (ev instanceof CustomEvent) {
         const { car } = ev.detail;
-        await deleteCar(car.id);
+        const { id } = car;
+
+        await deleteCar(id);
 
         this.carsList.removeChildComponent(car.id);
+
+        deleteWinner(id);
       }
 
       this.carsList.updateChildren(this.currentPage, LIMIT_PER_PAGE);
@@ -209,6 +212,7 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
     this.element.addEventListener(CustomEvents.StartRace, async () => {
       try {
         this.raceButton.disable();
+        this.createCarFormView.disableForm();
 
         const startPromises = this.carsList.children.map((child) =>
           child.startCar(),
@@ -234,7 +238,6 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
           Math.round(engineParams.distance / engineParams.velocity / 10) / 100;
 
         const existingWinner = await getWinner(newWinnerId);
-        console.log('winner', winner, 'existing winner', existingWinner);
 
         if (existingWinner && existingWinner.id) {
           const { id, wins, time } = existingWinner;
@@ -274,9 +277,12 @@ export default class GaragePageView extends BaseComponentView<HTMLDivElement> {
   private initStopRaceListener(): void {
     this.element.addEventListener(CustomEvents.StopRace, async () => {
       this.stopRaceButton.disable();
+
       const stopPromises = this.carsList.children.map((car) => car.stopCar());
       await Promise.allSettled(stopPromises);
+
       this.raceButton.enable();
+      this.createCarFormView.enableForm();
     });
   }
 

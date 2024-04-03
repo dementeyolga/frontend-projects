@@ -31,6 +31,10 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
 
   private animationRequestID?: number;
 
+  private selectButton: SelectCarButtonView;
+
+  private deleteButton: DeleteCarButtonView;
+
   private startButton: StartButtonView;
 
   private stopButton: StopButtonView;
@@ -47,21 +51,17 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
 
     const nameComp = p(name || 'No Name', classes.carName);
 
-    super(
-      { tagName: 'div', className: classes.info },
-      nameComp,
-      div(
-        classes.buttons,
-        new SelectCarButtonView(),
-        new DeleteCarButtonView(),
-      ),
-    );
+    super({ tagName: 'div', className: classes.info }, nameComp);
+
+    this.selectButton = new SelectCarButtonView();
+    this.deleteButton = new DeleteCarButtonView();
 
     this.startButton = new StartButtonView();
     this.stopButton = new StopButtonView();
 
     this.addChildrenComponents(
       'end',
+      div(classes.buttons, this.selectButton, this.deleteButton),
       div(classes.buttons, this.startButton, this.stopButton),
       carSvgComp,
       div(classes.road),
@@ -101,20 +101,28 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
     this.setCarName(name);
   }
 
+  disableChangeCarButtons(): void {
+    this.selectButton.disable();
+    this.deleteButton.disable();
+  }
+
+  enableChangeCarButtons(): void {
+    this.selectButton.enable();
+    this.deleteButton.enable();
+  }
+
   async startCar(): Promise<EngineParameters | null> {
+    this.disableChangeCarButtons();
+
+    this.startButton.disable();
+    this.stopButton.enable();
+
     return setCarEngineStatus(this.id, 'started');
   }
 
   async driveCar(
     engineParams: EngineParameters,
   ): Promise<{ car: Car; engineParams: EngineParameters }> {
-    console.log(
-      `car ${[engineParams.distance, engineParams.velocity]} started successfully`,
-    );
-
-    this.startButton.disable();
-    this.stopButton.enable();
-
     const framesCount =
       (engineParams.distance / engineParams.velocity / 1000) * 60;
 
@@ -128,24 +136,11 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
     this.animationRequestID = requestAnimationFrame(
       this.animateCarMovement.bind(this),
     );
-
-    const before = Date.now();
-
     const driveStatus = await setCarEngineToDriveStatus(this.id);
 
     cancelAnimationFrame(this.animationRequestID);
 
     if (!driveStatus.success) throw Error('car got broken');
-
-    console.log(
-      this.getCarInfo(),
-      'drive status returned',
-      driveStatus,
-      'actual ride time: ',
-      Date.now() - before,
-      'counted time: ',
-      engineParams.distance / engineParams.velocity,
-    );
 
     const carInfo = this.getCarInfo();
 
@@ -174,6 +169,8 @@ export default class CarInfoView extends BaseComponentView<HTMLDivElement> {
 
     this.carSvgComp.getElement().style.transform = 'translateX(0)';
     this.startButton.enable();
+
+    this.enableChangeCarButtons();
   }
 
   private initListeners(): void {

@@ -16,7 +16,7 @@ export default class NewCarFormView extends CarFormView {
       const cars = await getCars();
       let id = 1;
 
-      if (cars) {
+      if (cars && cars.length) {
         const lastCarId = cars[cars.length - 1].id;
         id = lastCarId + 1;
       }
