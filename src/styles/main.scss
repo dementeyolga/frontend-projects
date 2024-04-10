@@ -1,0 +1,12 @@
+@use './base/fonts';
+@use './base/headings';
+@use './layout/page';
+
+* {
+  font-family: NunitoSans, Arial, Helvetica, sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}

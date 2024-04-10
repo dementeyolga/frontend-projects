@@ -1,0 +1,9 @@
+@use './../../../../styles/layout/padding' as *;
+
+.header {
+  @extend %wrapper-padding;
+
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 16px;
+}

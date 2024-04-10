@@ -1,0 +1,13 @@
+@use './../../../styles/abstract/variables' as *;
+@import 'node_modules/modern-normalize/modern-normalize.css';
+
+.app {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  background-color: $color-background;
+}
