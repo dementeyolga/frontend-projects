@@ -28,18 +28,22 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
   }
 
   protected setParameters(params: Partial<T>) {
-    const { textContent, className, innerHTML } = params;
+    const { textContent, className, id, innerHTML } = params;
 
     if (textContent) {
       this.element.textContent = textContent;
     }
 
-    if (innerHTML) {
-      this.element.innerHTML = innerHTML;
-    }
-
     if (className) {
       this.setClassName(className);
+    }
+
+    if (id) {
+      this.element.id = id;
+    }
+
+    if (innerHTML) {
+      this.element.innerHTML = innerHTML;
     }
   }
 

@@ -1,30 +1,32 @@
 import BaseComponentView from '../../BaseComponent/BaseComponentView';
 import { InputTypes } from '../../../types/types';
 import classes from './Input.module.scss';
+import { CustomEvents, Events } from '../../../types/enums';
+
+type InputParams = {
+  type: InputTypes;
+  id?: string;
+  name?: string;
+  required?: boolean;
+  disabled?: boolean;
+  minLength?: number;
+  pattern?: string;
+};
 
 export default class InputView extends BaseComponentView<HTMLInputElement> {
   private readonly type: InputTypes;
 
-  constructor(
-    type: InputTypes,
-    name?: string,
-    required?: boolean,
-    disabled?: boolean,
-    minLength?: number,
-    pattern?: string,
-  ) {
+  constructor(params: InputParams) {
+    const { type } = params;
+
     super({
       tagName: 'input',
       className: classes.input,
-      type,
-      name,
-      required,
-      disabled,
-      minLength,
-      pattern,
+      ...params,
     });
 
     this.type = type;
+    this.initListeners();
   }
 
   getInputType(): InputTypes {
@@ -47,6 +49,7 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
     super.setParameters(params);
 
     const { type, name, required, disabled, minLength, pattern } = params;
+
     if (type) {
       this.element.type = type;
     }
@@ -70,5 +73,13 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
     if (pattern) {
       this.element.pattern = pattern;
     }
+  }
+
+  private initListeners(): void {
+    this.element.addEventListener(Events.Input, () => {
+      this.element.dispatchEvent(
+        new CustomEvent(CustomEvents.FormInput, { bubbles: true }),
+      );
+    });
   }
 }

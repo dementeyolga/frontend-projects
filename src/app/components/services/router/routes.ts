@@ -1,4 +1,4 @@
-// import { Path } from '../../../types/enums';
+import { Pathes } from '../../../types/enums';
 import BaseComponentView from '../../BaseComponent/BaseComponentView';
 
 export type Route = {
@@ -7,19 +7,19 @@ export type Route = {
 };
 
 export const appRoutes: Route[] = [
-  // {
-  //   path: Path.Garage,
-  //   callback: async () => {
-  //     try {
-  //       const { default: View } = await import(
-  //         '../../pages/GaragePage/GaragePageView'
-  //       );
-  //       return new View();
-  //     } catch {
-  //       throw new Error('Module not found.');
-  //     }
-  //   },
-  // },
+  {
+    path: Pathes.Main,
+    callback: async () => {
+      try {
+        const { default: View } = await import(
+          '../../pages/LoginPage/LoginPageView'
+        );
+        return new View();
+      } catch {
+        throw new Error('Module not found.');
+      }
+    },
+  },
   // {
   //   path: Path.Winners,
   //   callback: async () => {

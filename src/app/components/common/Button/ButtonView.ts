@@ -1,20 +1,19 @@
 import BaseComponentView from '../../BaseComponent/BaseComponentView';
 import classes from './Button.module.scss';
 
+type ButtomParams = {
+  type: 'submit' | 'button';
+  textContent: string;
+  link?: string;
+  disabled?: boolean;
+};
+
 export default class ButtonView extends BaseComponentView<HTMLButtonElement> {
-  constructor(
-    className: string,
-    type: 'submit' | 'button',
-    textContent: string,
-    link?: string,
-    disabled?: boolean,
-  ) {
+  constructor(params: ButtomParams, link?: string) {
     super({
       tagName: 'button',
-      type,
-      textContent,
-      className: `${className} ${classes.button}`,
-      disabled,
+      className: classes.button,
+      ...params,
     });
 
     if (link) {

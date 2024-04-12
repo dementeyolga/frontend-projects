@@ -1,3 +1,7 @@
+export const enum Pathes {
+  Main = '',
+}
+
 export const enum RequestTypes {
   UserLogin = 'USER_LOGIN',
   UserLogout = 'USER_LOGOUT',
@@ -14,7 +18,13 @@ export const enum RequestTypes {
   Error = 'ERROR',
 }
 
-export const enum CustomEvents {}
+export const enum Events {
+  Input = 'input',
+}
+
+export const enum CustomEvents {
+  FormInput = 'form-input',
+}
 
 export const enum SocketEvents {
   Open = 'open',
