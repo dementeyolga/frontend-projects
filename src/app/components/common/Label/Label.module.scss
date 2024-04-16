@@ -1,0 +1,12 @@
+.label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+}
+
+.errorMsg {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #ff4444;
+}

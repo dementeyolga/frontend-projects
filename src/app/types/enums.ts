@@ -20,6 +20,7 @@ export const enum RequestTypes {
 
 export const enum Events {
   Input = 'input',
+  Submit = 'submit',
 }
 
 export const enum CustomEvents {

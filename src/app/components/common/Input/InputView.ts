@@ -16,7 +16,9 @@ type InputParams = {
 export default class InputView extends BaseComponentView<HTMLInputElement> {
   private readonly type: InputTypes;
 
-  constructor(params: InputParams) {
+  patternMessage: string;
+
+  constructor(params: InputParams, patternMessage?: string) {
     const { type } = params;
 
     super({
@@ -26,23 +28,48 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
     });
 
     this.type = type;
+
+    this.patternMessage =
+      patternMessage ||
+      `${this.getName() || 'Value'} doesn't match the pattern: ${params.pattern}`;
+
     this.initListeners();
   }
 
-  getInputType(): InputTypes {
+  getType(): InputTypes {
     return this.type;
   }
 
-  getInputValue(): string {
+  getValue(): string {
     return this.element.value;
   }
 
-  setInputValue(value: string): void {
+  setValue(value: string): void {
     this.element.value = value;
+  }
+
+  getName(): string {
+    return this.element.name;
+  }
+
+  getMinLength(): number {
+    return this.element.minLength;
   }
 
   focus(): void {
     this.element.focus();
+  }
+
+  checkTooShort(): boolean {
+    return this.element.validity.tooShort;
+  }
+
+  checkPatternMismatch(): boolean {
+    return this.element.validity.patternMismatch;
+  }
+
+  checkValid(): boolean {
+    return this.element.validity.valid;
   }
 
   protected override setParameters(params: Partial<HTMLInputElement>): void {

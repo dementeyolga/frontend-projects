@@ -1,10 +1,23 @@
 import { SocketEvents } from '../../../types/enums';
 
-export default class WebSocketService {
+class WebSocketService {
   private socket: WebSocket;
 
+  private url: string;
+
   constructor(url: string) {
+    this.url = url;
     this.socket = new WebSocket(`ws://${url}`);
+    this.initSocketListeners();
+  }
+
+  private openSocketConnection(url: string): void {
+    try {
+      this.socket = new WebSocket(`ws://${url}`);
+    } catch (e) {
+      console.log(e);
+    }
+
     this.initSocketListeners();
   }
 
@@ -14,14 +27,26 @@ export default class WebSocketService {
 
   private initOpenListener(): void {
     this.socket.addEventListener(SocketEvents.Open, () => {
-      this.initCloseListener();
+      console.log('socket has opened');
+
       this.initMessageListener();
+      this.initErrorListener();
+      this.initCloseListener();
     });
   }
 
   private initCloseListener(): void {
     this.socket.addEventListener(SocketEvents.Close, () => {
+      console.log('socket has closed');
+
+      this.openSocketConnection(this.url);
       this.initOpenListener();
+    });
+  }
+
+  private initErrorListener(): void {
+    this.socket.addEventListener(SocketEvents.Error, (ev) => {
+      console.log('WebSocket error: ', ev);
     });
   }
 
@@ -30,4 +55,11 @@ export default class WebSocketService {
       console.log(e.data);
     });
   }
+
+  send(msg: string): void {
+    this.socket.send(msg);
+  }
 }
+
+const webSocketService = new WebSocketService('127.0.0.1:4000');
+export default webSocketService;
