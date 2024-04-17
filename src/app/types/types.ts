@@ -133,17 +133,32 @@ export type EditMessageResponse = WSRequest<
 
 export type ServerErrorRequest = WSRequest<RequestTypes.Error, string>;
 
+export type ResponseTypes =
+  | LoginResponse
+  | LogoutResponse
+  | ExternalLoginResponse
+  | ExternalLogoutResponse
+  | ActiveUsersResponse
+  | InactiveUsersResponse
+  | SendMessageResponse
+  | MessageHistoryResponse
+  | MessageReadResponse
+  | DeleteMessageResponse
+  | EditMessageResponse;
+
 // Payloads
-type UserStatus = {
+export type UserStatus = {
   login: string;
   isLogined: boolean;
 };
 
+export type UserCredentials = {
+  login: string;
+  password: string;
+};
+
 export type UserCredentialsPayload = {
-  user: {
-    login: string;
-    password: string;
-  };
+  user: UserCredentials;
 };
 
 export type LoginStatusPayload = {
@@ -154,12 +169,12 @@ export type UsersPayload = {
   users: UserStatus[];
 };
 
-export type Message = {
+type Message = {
   to: string;
   text: string;
 };
 
-export type MessageStatus = {
+type MessageStatus = {
   isDelivered: boolean;
   isReaded: boolean;
   isEdited: boolean;
@@ -220,3 +235,15 @@ export type MessageEditResponsePayload = {
     status: Pick<MessageStatus, 'isEdited'>;
   };
 };
+
+export type Payloads =
+  | UserCredentialsPayload
+  | LoginStatusPayload
+  | UsersPayload
+  | MessageHistoryResponsePayload
+  | MessageDeletePayload
+  | MessageIDPayload
+  | MessageEditRequestPayload
+  | MessageDeliveredPayload
+  | MessageReadPayload
+  | MessageEditResponsePayload;

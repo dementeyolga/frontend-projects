@@ -7,39 +7,35 @@ import ButtonView from '../../../common/Button/ButtonView';
 import webSocketService from '../../../services/WebSocketService/WebSocketService';
 
 export default class FormView extends BaseComponentView<HTMLFormElement> {
+  private readonly loginInput: InputView;
+
+  private readonly passwordInput: InputView;
+
   private readonly loginButton: ButtonView;
 
   constructor() {
-    super(
-      { tagName: 'form', className: classes.form, novalidate: true },
+    super({ tagName: 'form', className: classes.form, novalidate: true });
 
-      new LabelView(
-        'Login',
-        new InputView(
-          {
-            type: 'text',
-            name: 'login',
-            required: true,
-            pattern: '[a-z\\-_]{3,}',
-            minLength: 3,
-          },
-          `Login must start with uppercase letter and contain only English letters or '-'`,
-        ),
-      ),
+    this.loginInput = new InputView(
+      {
+        type: 'text',
+        name: 'login',
+        required: true,
+        pattern: '[a-z\\-_]{3,}',
+        minLength: 3,
+      },
+      `Login must start with uppercase letter and contain only English letters or '-'`,
+    );
 
-      new LabelView(
-        'Password',
-        new InputView(
-          {
-            type: 'password',
-            name: 'password',
-            required: true,
-            pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$',
-            minLength: 8,
-          },
-          'Password should be minimum 8 characters and contain at least 1 uppercase letter and 1 lowercase letter',
-        ),
-      ),
+    this.passwordInput = new InputView(
+      {
+        type: 'password',
+        name: 'password',
+        required: true,
+        pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$',
+        minLength: 8,
+      },
+      'Password should be minimum 8 characters and contain at least 1 uppercase letter and 1 lowercase letter',
     );
 
     this.loginButton = new ButtonView({
@@ -48,7 +44,12 @@ export default class FormView extends BaseComponentView<HTMLFormElement> {
       disabled: true,
     });
 
-    this.addChildrenComponents('end', this.loginButton);
+    this.addChildrenComponents(
+      'end',
+      new LabelView('Login', this.loginInput),
+      new LabelView('Password', this.passwordInput),
+      this.loginButton,
+    );
 
     this.initListeners();
   }
@@ -70,7 +71,11 @@ export default class FormView extends BaseComponentView<HTMLFormElement> {
   private initSubmitListener(): void {
     this.element.addEventListener(Events.Submit, (e) => {
       e.preventDefault();
-      webSocketService.send('some form');
+
+      const login = this.loginInput.getValue();
+      const password = this.passwordInput.getValue();
+
+      webSocketService.sendLoginRequest(login, password);
     });
   }
 

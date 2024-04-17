@@ -1,5 +1,10 @@
 export const enum Pathes {
-  Main = '',
+  Login = '',
+  Chat = 'chat',
+}
+
+export const enum StorageKeys {
+  User = 'funChatAppAuthenticatedUser',
 }
 
 export const enum RequestTypes {
@@ -21,6 +26,7 @@ export const enum RequestTypes {
 export const enum Events {
   Input = 'input',
   Submit = 'submit',
+  Click = 'click',
 }
 
 export const enum CustomEvents {

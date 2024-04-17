@@ -1,9 +1,28 @@
-import { SocketEvents } from '../../../types/enums';
+import {
+  Pathes,
+  RequestTypes,
+  SocketEvents,
+  StorageKeys,
+} from '../../../types/enums';
+import {
+  isLoginRequest,
+  isLoginResponse,
+  isLogoutResponse,
+} from '../../../types/typeGuards';
+import {
+  LoginRequest,
+  LogoutRequest,
+  Payloads,
+  WSRequest,
+} from '../../../types/types';
+import state from '../state/state';
 
 class WebSocketService {
   private socket: WebSocket;
 
   private url: string;
+
+  requests: WSRequest<RequestTypes, Payloads>[] = [];
 
   constructor(url: string) {
     this.url = url;
@@ -12,12 +31,7 @@ class WebSocketService {
   }
 
   private openSocketConnection(url: string): void {
-    try {
-      this.socket = new WebSocket(`ws://${url}`);
-    } catch (e) {
-      console.log(e);
-    }
-
+    this.socket = new WebSocket(`ws://${url}`);
     this.initSocketListeners();
   }
 
@@ -52,12 +66,74 @@ class WebSocketService {
 
   private initMessageListener(): void {
     this.socket.addEventListener(SocketEvents.Message, (e) => {
-      console.log(e.data);
+      const message = JSON.parse(e.data);
+
+      if (isLoginResponse(message)) {
+        console.log('user logined: ', message);
+
+        const request = this.requests.find(
+          (req) => req.id === message.id && req.type === RequestTypes.UserLogin,
+        );
+
+        if (request && isLoginRequest(request)) {
+          console.log('relevant login request: ', request);
+
+          sessionStorage.setItem(
+            StorageKeys.User,
+            JSON.stringify(request.payload.user),
+          );
+
+          state.currentUser = request.payload.user;
+        }
+
+        window.location.hash = Pathes.Chat;
+      }
+
+      if (isLogoutResponse(message)) {
+        sessionStorage.removeItem(StorageKeys.User);
+        state.currentUser = null;
+        window.location.hash = Pathes.Login;
+      }
     });
   }
 
-  send(msg: string): void {
+  send(data: object): void {
+    const msg = JSON.stringify(data);
     this.socket.send(msg);
+  }
+
+  sendLoginRequest(login: string, password: string): void {
+    const data: LoginRequest = {
+      id: String(this.requests.length + 1), // ? performance.now()
+      type: RequestTypes.UserLogin,
+      payload: {
+        user: {
+          login,
+          password,
+        },
+      },
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
+  }
+
+  sendLogoutRequest(login: string, password: string): void {
+    const data: LogoutRequest = {
+      id: String(this.requests.length + 1),
+      type: RequestTypes.UserLogout,
+      payload: {
+        user: {
+          login,
+          password,
+        },
+      },
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
   }
 }
 
