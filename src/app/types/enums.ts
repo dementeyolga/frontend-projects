@@ -8,6 +8,7 @@ export const enum SessionStorageKeys {
 }
 
 export const enum StateKeys {
+  Login = 'login',
   CurrentUser = 'currentUser',
   ActiveUsers = 'activeUsers',
   InactiveUsers = 'inactiveUsers',
