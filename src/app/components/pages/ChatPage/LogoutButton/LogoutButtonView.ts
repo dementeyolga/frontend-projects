@@ -1,9 +1,15 @@
-import { Events } from '../../../../types/enums';
+import { Events, StateKeys } from '../../../../types/enums';
+import { isUserCredentials } from '../../../../types/typeGuards';
 import ButtonView from '../../../common/Button/ButtonView';
-import state from '../../../services/state/state';
-import webSocketService from '../../../services/WebSocketService/WebSocketService';
+import StateManagementService from '../../../services/StateManagementService/StateManagementService';
+import WebSocketService from '../../../services/WebSocketService/WebSocketService';
 
 export default class LogoutButtonView extends ButtonView {
+  private readonly state: StateManagementService =
+    StateManagementService.getInstance();
+
+  private readonly socket: WebSocketService = WebSocketService.getInstance();
+
   constructor() {
     super({ type: 'button', textContent: 'Logout' });
 
@@ -12,11 +18,10 @@ export default class LogoutButtonView extends ButtonView {
 
   private initListeners(): void {
     this.element.addEventListener(Events.Click, () => {
-      if (state.currentUser) {
-        webSocketService.sendLogoutRequest(
-          state.currentUser.login,
-          state.currentUser.password,
-        );
+      const user = this.state.getValue(StateKeys.CurrentUser);
+
+      if (isUserCredentials(user)) {
+        this.socket.sendLogoutRequest(user.login, user.password);
       }
     });
   }

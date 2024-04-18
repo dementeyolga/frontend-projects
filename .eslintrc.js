@@ -33,6 +33,12 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-empty-function': [
+      'error',
+      {
+        allow: ['private-constructors'],
+      },
+    ],
   },
   noInlineConfig: true,
 };

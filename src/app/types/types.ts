@@ -56,17 +56,17 @@ export type ExternalLogoutResponse = WSRequest<
   LoginStatusPayload
 >;
 
-export type ActiveUsersRequest = WSRequest<RequestTypes.UserActive, null>;
+export type ActiveUsersRequest = WSRequest<RequestTypes.UsersActive, null>;
 
 export type ActiveUsersResponse = WSRequest<
-  RequestTypes.UserActive,
+  RequestTypes.UsersActive,
   UsersPayload
 >;
 
-export type InactiveUsersRequest = WSRequest<RequestTypes.UserInactive, null>;
+export type InactiveUsersRequest = WSRequest<RequestTypes.UsersInactive, null>;
 
 export type InactiveUsersResponse = WSRequest<
-  RequestTypes.UserInactive,
+  RequestTypes.UsersInactive,
   UsersPayload
 >;
 
@@ -246,4 +246,5 @@ export type Payloads =
   | MessageEditRequestPayload
   | MessageDeliveredPayload
   | MessageReadPayload
-  | MessageEditResponsePayload;
+  | MessageEditResponsePayload
+  | null;

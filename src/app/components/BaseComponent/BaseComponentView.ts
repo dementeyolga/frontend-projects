@@ -52,7 +52,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     ...children: typeof this.children
   ): void {
     children.forEach(async (component) => {
-      await this.addChild(component.getElement(), position);
+      this.addChild(component.getElement(), position);
 
       if (position === 'end') {
         this.children.push(component);

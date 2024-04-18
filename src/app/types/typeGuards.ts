@@ -1,13 +1,14 @@
 import { RequestTypes } from './enums';
 import type {
-  // ActiveUsersResponse,
+  ActiveUsersResponse,
   LoginRequest,
   LoginResponse,
   LoginStatusPayload,
   LogoutResponse,
   Payloads,
+  UserCredentials,
   UserCredentialsPayload,
-  // UsersPayload,
+  UsersPayload,
   UserStatus,
   WSRequest,
 } from './types';
@@ -16,6 +17,17 @@ function isUserStatus(user: object): user is UserStatus {
   if (
     typeof (user as UserStatus).login === 'string' &&
     typeof (user as UserStatus).isLogined === 'boolean'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isUserCredentials(user: unknown): user is UserCredentials {
+  if (
+    typeof (user as UserCredentials).login === 'string' &&
+    typeof (user as UserCredentials).password === 'string'
   ) {
     return true;
   }
@@ -41,8 +53,7 @@ function isUserCredentialsPayload(
 ): payload is UserCredentialsPayload {
   if (
     (payload as UserCredentialsPayload).user &&
-    typeof (payload as UserCredentialsPayload).user.login === 'string' &&
-    typeof (payload as UserCredentialsPayload).user.password === 'string'
+    isUserCredentials((payload as UserCredentialsPayload).user)
   ) {
     return true;
   }
@@ -94,29 +105,36 @@ function isLogoutResponse(
   return false;
 }
 
-// function isUsersPayload(
-//   payload: Payloads,
-// ): payload is UsersPayload {
-//   if (
-//     (payload as UsersPayload).users
-//   ) {
-//     if((payload as UsersPayload).users.length && isLoginStatusPayload((payload as UsersPayload).users[0])
-//     return true;
-//   }
+function isUsersPayload(payload: Payloads): payload is UsersPayload {
+  if ((payload as UsersPayload).users) {
+    if (!(payload as UsersPayload).users.length) {
+      return true;
+    }
 
-//   return false;
-// }
+    if ((payload as UsersPayload).users.every(isUserStatus)) {
+      return true;
+    }
+  }
 
-// function isActiveUsersResponse(
-//   message: WSRequest<RequestTypes, Payloads>,
-// ): message is ActiveUsersResponse {
-//   if (message.type === RequestTypes.UserLogout && message.payload) {
-//     const { payload } = message;
+  return false;
+}
 
-//     if (isLoginStatusPayload(payload)) return true;
-//   }
+function isActiveUsersResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is ActiveUsersResponse {
+  if (message.type === RequestTypes.UsersActive && message.payload) {
+    const { payload } = message;
 
-//   return false;
-// }
+    if (isUsersPayload(payload)) return true;
+  }
 
-export { isLoginRequest, isLoginResponse, isLogoutResponse };
+  return false;
+}
+
+export {
+  isUserCredentials,
+  isLoginRequest,
+  isLoginResponse,
+  isLogoutResponse,
+  isActiveUsersResponse,
+};

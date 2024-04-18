@@ -3,8 +3,14 @@ export const enum Pathes {
   Chat = 'chat',
 }
 
-export const enum StorageKeys {
+export const enum SessionStorageKeys {
   User = 'funChatAppAuthenticatedUser',
+}
+
+export const enum StateKeys {
+  CurrentUser = 'currentUser',
+  ActiveUsers = 'activeUsers',
+  InactiveUsers = 'inactiveUsers',
 }
 
 export const enum RequestTypes {
@@ -12,8 +18,8 @@ export const enum RequestTypes {
   UserLogout = 'USER_LOGOUT',
   UserExternalLogin = 'USER_EXTERNAL_LOGIN',
   UserExternalLogout = 'USER_EXTERNAL_LOGOUT',
-  UserActive = 'USER_ACTIVE',
-  UserInactive = 'USER_INACTIVE',
+  UsersActive = 'USER_ACTIVE',
+  UsersInactive = 'USER_INACTIVE',
   SendMessage = 'MSG_SEND',
   MessageHistory = 'MSG_FROM_USER',
   MessageDelivered = 'MSG_DELIVER',

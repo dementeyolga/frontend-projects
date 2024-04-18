@@ -1,33 +1,47 @@
 import {
   Pathes,
   RequestTypes,
+  SessionStorageKeys,
   SocketEvents,
-  StorageKeys,
+  StateKeys,
 } from '../../../types/enums';
 import {
+  isActiveUsersResponse,
   isLoginRequest,
   isLoginResponse,
   isLogoutResponse,
 } from '../../../types/typeGuards';
 import {
+  ActiveUsersRequest,
+  InactiveUsersRequest,
   LoginRequest,
   LogoutRequest,
   Payloads,
   WSRequest,
 } from '../../../types/types';
-import state from '../state/state';
+import StateManagementService from '../StateManagementService/StateManagementService';
 
-class WebSocketService {
+export default class WebSocketService {
+  private static readonly instance = new WebSocketService('127.0.0.1:4000');
+
   private socket: WebSocket;
 
   private url: string;
 
-  requests: WSRequest<RequestTypes, Payloads>[] = [];
+  private state: StateManagementService;
 
-  constructor(url: string) {
+  private requests: WSRequest<RequestTypes, Payloads>[] = [];
+
+  private constructor(url: string) {
     this.url = url;
     this.socket = new WebSocket(`ws://${url}`);
     this.initSocketListeners();
+
+    this.state = StateManagementService.getInstance();
+  }
+
+  static getInstance(): WebSocketService {
+    return this.instance;
   }
 
   private openSocketConnection(url: string): void {
@@ -79,32 +93,36 @@ class WebSocketService {
           console.log('relevant login request: ', request);
 
           sessionStorage.setItem(
-            StorageKeys.User,
+            SessionStorageKeys.User,
             JSON.stringify(request.payload.user),
           );
 
-          state.currentUser = request.payload.user;
+          this.state.setValue(StateKeys.CurrentUser, request.payload.user);
         }
 
         window.location.hash = Pathes.Chat;
       }
 
       if (isLogoutResponse(message)) {
-        sessionStorage.removeItem(StorageKeys.User);
-        state.currentUser = null;
+        sessionStorage.removeItem(SessionStorageKeys.User);
+        this.state.setValue(StateKeys.CurrentUser, null);
         window.location.hash = Pathes.Login;
+      }
+
+      if (isActiveUsersResponse(message)) {
+        console.log('active users response', message);
       }
     });
   }
 
-  send(data: object): void {
+  private send(data: object): void {
     const msg = JSON.stringify(data);
     this.socket.send(msg);
   }
 
   sendLoginRequest(login: string, password: string): void {
     const data: LoginRequest = {
-      id: String(this.requests.length + 1), // ? performance.now()
+      id: String(this.requests.length + 1),
       type: RequestTypes.UserLogin,
       payload: {
         user: {
@@ -135,7 +153,28 @@ class WebSocketService {
 
     this.send(data);
   }
-}
 
-const webSocketService = new WebSocketService('127.0.0.1:4000');
-export default webSocketService;
+  sendActiveUsersRequest(): void {
+    const data: ActiveUsersRequest = {
+      id: String(this.requests.length + 1),
+      type: RequestTypes.UsersActive,
+      payload: null,
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
+  }
+
+  sendInActiveUsersRequest(): void {
+    const data: InactiveUsersRequest = {
+      id: String(this.requests.length + 1),
+      type: RequestTypes.UsersInactive,
+      payload: null,
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
+  }
+}

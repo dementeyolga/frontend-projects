@@ -4,7 +4,7 @@ import classes from './Form.module.scss';
 import LabelView from '../../../common/Label/LabelView';
 import InputView from '../../../common/Input/InputView';
 import ButtonView from '../../../common/Button/ButtonView';
-import webSocketService from '../../../services/WebSocketService/WebSocketService';
+import WebSocketService from '../../../services/WebSocketService/WebSocketService';
 
 export default class FormView extends BaseComponentView<HTMLFormElement> {
   private readonly loginInput: InputView;
@@ -12,6 +12,8 @@ export default class FormView extends BaseComponentView<HTMLFormElement> {
   private readonly passwordInput: InputView;
 
   private readonly loginButton: ButtonView;
+
+  private readonly socket: WebSocketService = WebSocketService.getInstance();
 
   constructor() {
     super({ tagName: 'form', className: classes.form, novalidate: true });
@@ -75,7 +77,7 @@ export default class FormView extends BaseComponentView<HTMLFormElement> {
       const login = this.loginInput.getValue();
       const password = this.passwordInput.getValue();
 
-      webSocketService.sendLoginRequest(login, password);
+      this.socket.sendLoginRequest(login, password);
     });
   }
 
