@@ -131,7 +131,7 @@ export type EditMessageResponse = WSRequest<
   MessageEditResponsePayload
 >;
 
-export type ServerErrorRequest = WSRequest<RequestTypes.Error, string>;
+export type ErrorResponse = WSRequest<RequestTypes.Error, ErrorPayload>;
 
 export type ResponseTypes =
   | LoginResponse
@@ -236,6 +236,10 @@ export type MessageEditResponsePayload = {
   };
 };
 
+export type ErrorPayload = {
+  error: string;
+};
+
 export type Payloads =
   | UserCredentialsPayload
   | LoginStatusPayload
@@ -247,4 +251,5 @@ export type Payloads =
   | MessageDeliveredPayload
   | MessageReadPayload
   | MessageEditResponsePayload
+  | ErrorPayload
   | null;

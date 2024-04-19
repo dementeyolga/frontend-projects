@@ -8,4 +8,4 @@ app.render(document.body);
 const router = new Router(appRoutes, app);
 router.init();
 
-export default router;
+export default app;

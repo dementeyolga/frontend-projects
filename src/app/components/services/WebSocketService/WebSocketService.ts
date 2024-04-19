@@ -7,6 +7,7 @@ import {
 } from '../../../types/enums';
 import {
   isActiveUsersResponse,
+  isErrorResponse,
   isLoginRequest,
   isLoginResponse,
   isLogoutResponse,
@@ -26,18 +27,13 @@ export default class WebSocketService {
 
   private socket: WebSocket;
 
-  private url: string;
-
-  private state: StateManagementService;
+  private state: StateManagementService = StateManagementService.getInstance();
 
   private requests: WSRequest<RequestTypes, Payloads>[] = [];
 
-  private constructor(url: string) {
-    this.url = url;
+  private constructor(private url: string) {
     this.socket = new WebSocket(`ws://${url}`);
     this.initSocketListeners();
-
-    this.state = StateManagementService.getInstance();
   }
 
   static getInstance(): WebSocketService {
@@ -60,6 +56,8 @@ export default class WebSocketService {
       this.initMessageListener();
       this.initErrorListener();
       this.initCloseListener();
+
+      this.state.setValue(StateKeys.OpenSocket, 'open');
     });
   }
 
@@ -98,9 +96,12 @@ export default class WebSocketService {
           );
 
           this.state.setValue(StateKeys.CurrentUser, request.payload.user);
+
+          window.location.hash = Pathes.Login;
         }
 
-        window.location.hash = Pathes.Chat;
+        // if ()
+        // window.location.hash = Pathes.Chat;
       }
 
       if (isLogoutResponse(message)) {
@@ -111,6 +112,10 @@ export default class WebSocketService {
 
       if (isActiveUsersResponse(message)) {
         console.log('active users response', message);
+      }
+
+      if (isErrorResponse(message)) {
+        console.log('error', message.payload);
       }
     });
   }

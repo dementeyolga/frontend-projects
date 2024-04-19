@@ -1,4 +1,18 @@
+@use './../../../../../styles/abstract/variables' as *;
+
 .list {
   display: flex;
   flex-direction: column;
+}
+
+.user {
+  position: relative;
+
+  &::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: $color-disabled;
+  }
 }

@@ -1,6 +1,8 @@
 import { RequestTypes } from './enums';
 import type {
   ActiveUsersResponse,
+  ErrorPayload,
+  ErrorResponse,
   LoginRequest,
   LoginResponse,
   LoginStatusPayload,
@@ -31,6 +33,12 @@ function isUserCredentials(user: unknown): user is UserCredentials {
   ) {
     return true;
   }
+
+  return false;
+}
+
+function isUsersList(users: unknown): users is UserStatus[] {
+  if (Array.isArray(users) && users.every(isUserStatus)) return true;
 
   return false;
 }
@@ -131,10 +139,36 @@ function isActiveUsersResponse(
   return false;
 }
 
+function isErrorPayload(payload: object): payload is ErrorPayload {
+  if (payload && typeof (payload as ErrorPayload).error === 'string')
+    return true;
+
+  return false;
+}
+
+function isErrorResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is ErrorResponse {
+  if (
+    message.type === RequestTypes.Error &&
+    message.payload &&
+    isErrorPayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+// function isLoginErrorText
+
 export {
   isUserCredentials,
+  isUsersList,
   isLoginRequest,
   isLoginResponse,
   isLogoutResponse,
   isActiveUsersResponse,
+  isErrorPayload,
+  isErrorResponse,
 };

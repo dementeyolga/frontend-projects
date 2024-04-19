@@ -12,6 +12,8 @@ export default class StateManagementService {
 
   private observedValues = new Map<StateKeys, ObservedValuesTypes>();
 
+  // private observedEvents = new Set<StateTriggers>();
+
   private notifyCallbacks = new Map<StateKeys, Set<NotifyCallback>>();
 
   private constructor() {}
@@ -33,6 +35,10 @@ export default class StateManagementService {
     this.notify(key, value);
   }
 
+  triggerEvent(key: StateKeys): void {
+    this.notify(key);
+  }
+
   subscribe(key: StateKeys, callback: NotifyCallback): void {
     let callbacks = this.notifyCallbacks.get(key);
 
@@ -52,7 +58,7 @@ export default class StateManagementService {
     }
   }
 
-  private notify(key: StateKeys, value: ObservedValuesTypes): void {
+  private notify(key: StateKeys, value?: ObservedValuesTypes): void {
     const callbacks = this.notifyCallbacks.get(key);
 
     if (callbacks) {

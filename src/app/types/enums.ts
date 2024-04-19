@@ -8,6 +8,8 @@ export const enum SessionStorageKeys {
 }
 
 export const enum StateKeys {
+  OpenSocket = 'openSocket',
+  Login = 'login',
   CurrentUser = 'currentUser',
   ActiveUsers = 'activeUsers',
   InactiveUsers = 'inactiveUsers',

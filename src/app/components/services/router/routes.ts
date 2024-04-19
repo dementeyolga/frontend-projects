@@ -3,7 +3,7 @@ import BaseComponentView from '../../BaseComponent/BaseComponentView';
 
 export type Route = {
   path: string;
-  callback: () => Promise<BaseComponentView>;
+  callback: () => Promise<BaseComponentView | null>;
 };
 
 export const appRoutes: Route[] = [
@@ -15,8 +15,10 @@ export const appRoutes: Route[] = [
           '../../pages/LoginPage/LoginPageView'
         );
         return new View();
-      } catch {
-        throw new Error('Module not found.');
+      } catch (e) {
+        console.log(e);
+
+        return null;
       }
     },
   },
@@ -28,8 +30,10 @@ export const appRoutes: Route[] = [
           '../../pages/ChatPage/ChatPageView'
         );
         return new View();
-      } catch {
-        throw new Error('Module not found.');
+      } catch (e) {
+        console.log(e);
+
+        return null;
       }
     },
   },

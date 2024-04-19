@@ -1,14 +1,22 @@
+import { StateKeys } from '../../../types/enums';
 import AppPresenter from '../../App/AppPresenter';
+import StateManagementService from '../StateManagementService/StateManagementService';
 import { Route } from './routes';
 
 class Router {
   private readonly routes: Route[];
 
-  private app: AppPresenter;
+  private readonly app: AppPresenter;
+
+  private readonly state: StateManagementService =
+    StateManagementService.getInstance();
 
   constructor(routes: Route[], app: AppPresenter) {
     this.routes = routes;
     this.app = app;
+
+    this.showCurrentHashRoute = this.showCurrentHashRoute.bind(this);
+    this.state.subscribe(StateKeys.Login, this.showCurrentHashRoute);
   }
 
   async init(): Promise<void> {
@@ -30,7 +38,7 @@ class Router {
     });
   }
 
-  private async showCurrentHashRoute() {
+  async showCurrentHashRoute() {
     const currentPath = Router.getCurrentPath();
     await this.showRoute(currentPath);
   }
@@ -40,7 +48,10 @@ class Router {
 
     if (route) {
       const routeView = await route.callback();
-      this.app.setContent(routeView);
+
+      if (routeView) {
+        this.app.setContent(routeView);
+      }
     }
   }
 
