@@ -1,7 +1,10 @@
 @use './../../../../styles/layout/page' as *;
+@use './../../../../styles/layout/padding' as *;
 
 .page {
   @extend .page;
+
+  min-height: 100vh;
 }
 
 .appName {
@@ -11,5 +14,11 @@
 }
 
 .main {
+  @extend %wrapper-padding;
+  width: 100%;
+
+  flex: 1;
+
   display: flex;
+  justify-content: space-between;
 }

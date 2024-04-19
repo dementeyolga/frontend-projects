@@ -9,7 +9,12 @@ import type {
   LoginResponse,
   LoginStatusPayload,
   LogoutResponse,
+  Message,
+  MessageData,
+  MessageStatus,
   Payloads,
+  SendMessageResponse,
+  SendMessageResponsePayload,
   UserCredentials,
   UserCredentialsPayload,
   UsersPayload,
@@ -205,6 +210,74 @@ function isExternalLogoutResponse(
   return false;
 }
 
+function isMessage(message: unknown): message is Message {
+  if (
+    message instanceof Object &&
+    typeof (message as Message).text === 'string' &&
+    typeof (message as Message).to === 'string'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageStatus(status: unknown): status is MessageStatus {
+  if (
+    status instanceof Object &&
+    typeof (status as MessageStatus).isDelivered === 'boolean' &&
+    typeof (status as MessageStatus).isEdited === 'boolean' &&
+    typeof (status as MessageStatus).isReaded === 'boolean'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageData(message: unknown): message is MessageData {
+  console.log(message);
+
+  if (
+    isMessage(message) &&
+    typeof (message as MessageData).from === 'string' &&
+    typeof (message as MessageData).datetime === 'number' &&
+    typeof (message as MessageData).id === 'string' &&
+    isMessageStatus((message as MessageData).status)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isSendMessageResponsePayload(
+  payload: unknown,
+): payload is SendMessageResponsePayload {
+  if (
+    payload instanceof Object &&
+    (payload as SendMessageResponsePayload).message &&
+    isMessageData((payload as SendMessageResponsePayload).message)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isSendMessageResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is SendMessageResponse {
+  if (
+    message.type === RequestTypes.SendMessage &&
+    isSendMessageResponsePayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 export {
   isUserCredentials,
   isUsersList,
@@ -217,4 +290,9 @@ export {
   isErrorResponse,
   isExternalLoginResponse,
   isExternalLogoutResponse,
+  isMessage,
+  isMessageData,
+  isMessageStatus,
+  isSendMessageResponsePayload,
+  isSendMessageResponse,
 };

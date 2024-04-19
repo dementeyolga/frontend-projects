@@ -46,6 +46,24 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
   }
 
   private initEventListeners(): void {
+    this.initClickListener();
+    this.initSearchInputListener();
+  }
+
+  private initClickListener(): void {
+    this.element.addEventListener('click', ({ target }) => {
+      if (target instanceof HTMLParagraphElement) {
+        target.dispatchEvent(
+          new CustomEvent(CustomEvents.OpenChat, {
+            bubbles: true,
+            detail: target.textContent,
+          }),
+        );
+      }
+    });
+  }
+
+  private initSearchInputListener(): void {
     this.element.addEventListener(CustomEvents.FormInput, (ev) => {
       if (ev instanceof CustomEvent) {
         const text = ev.detail;

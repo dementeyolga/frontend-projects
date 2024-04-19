@@ -3,17 +3,24 @@
 .list {
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
 }
 
 .user {
   position: relative;
   margin: 0;
+  padding: 5px 5px 5px 18px;
+  transition: 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $color-background-cover;
+    box-shadow: 0 2px 2px #0000001a;
+  }
 
   &::before {
     content: '';
     position: absolute;
-    left: -15px;
+    left: 5px;
     top: 50%;
     transform: translateY(-50%);
 

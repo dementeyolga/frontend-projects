@@ -13,6 +13,7 @@ import {
   isLoginRequest,
   isLoginResponse,
   isLogoutResponse,
+  isSendMessageResponse,
 } from '../../../types/typeGuards';
 import {
   ActiveUsersRequest,
@@ -20,6 +21,7 @@ import {
   LoginRequest,
   LogoutRequest,
   Payloads,
+  SendMessageRequest,
   WSRequest,
 } from '../../../types/types';
 import StateManagementService from '../StateManagementService/StateManagementService';
@@ -134,6 +136,12 @@ export default class WebSocketService {
           message.payload.user.login,
         );
       }
+
+      console.log(isSendMessageResponse(message));
+
+      if (isSendMessageResponse(message)) {
+        console.log('message successfully sent', message);
+      }
     });
   }
 
@@ -193,6 +201,23 @@ export default class WebSocketService {
       id: String(this.requests.length + 1),
       type: RequestTypes.UsersInactive,
       payload: null,
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
+  }
+
+  sendChatMessage(to: string, text: string): void {
+    const data: SendMessageRequest = {
+      id: String(this.requests.length + 1),
+      type: RequestTypes.SendMessage,
+      payload: {
+        message: {
+          to,
+          text,
+        },
+      },
     };
 
     this.requests.push(data);

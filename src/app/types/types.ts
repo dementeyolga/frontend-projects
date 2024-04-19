@@ -72,16 +72,12 @@ export type InactiveUsersResponse = WSRequest<
 
 export type SendMessageRequest = WSRequest<
   RequestTypes.SendMessage,
-  {
-    message: Message;
-  }
+  SendMessageRequestPayload
 >;
 
 export type SendMessageResponse = WSRequest<
   RequestTypes.SendMessage,
-  {
-    message: MessageData;
-  }
+  SendMessageResponsePayload
 >;
 
 export type MessageHistoryRequest = WSRequest<
@@ -169,12 +165,12 @@ export type UsersPayload = {
   users: UserStatus[];
 };
 
-type Message = {
+export type Message = {
   to: string;
   text: string;
 };
 
-type MessageStatus = {
+export type MessageStatus = {
   isDelivered: boolean;
   isReaded: boolean;
   isEdited: boolean;
@@ -185,6 +181,14 @@ export type MessageData = Message & {
   from: string;
   datetime: number;
   status: MessageStatus;
+};
+
+export type SendMessageRequestPayload = {
+  message: Message;
+};
+
+export type SendMessageResponsePayload = {
+  message: MessageData;
 };
 
 export type MessageHistoryResponsePayload = {
@@ -244,6 +248,8 @@ export type Payloads =
   | UserCredentialsPayload
   | LoginStatusPayload
   | UsersPayload
+  | SendMessageRequestPayload
+  | SendMessageResponsePayload
   | MessageHistoryResponsePayload
   | MessageDeletePayload
   | MessageIDPayload

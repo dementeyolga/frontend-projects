@@ -41,6 +41,9 @@ export const enum Events {
 
 export const enum CustomEvents {
   FormInput = 'form-input',
+  TextAreaInput = 'textarea-input',
+  OpenChat = 'open-chat',
+  SendChatMessage = 'send-chat-message',
 }
 
 export const enum SocketEvents {
