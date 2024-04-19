@@ -1,5 +1,6 @@
 import { StateKeys } from '../../../types/enums';
 import AppPresenter from '../../App/AppPresenter';
+import ChatPageView from '../../pages/ChatPage/ChatPageView';
 import StateManagementService from '../StateManagementService/StateManagementService';
 import { Route } from './routes';
 
@@ -15,8 +16,8 @@ class Router {
     this.routes = routes;
     this.app = app;
 
-    this.showCurrentHashRoute = this.showCurrentHashRoute.bind(this);
-    this.state.subscribe(StateKeys.Login, this.showCurrentHashRoute);
+    this.showMainPage = this.showMainPage.bind(this);
+    this.state.subscribe(StateKeys.Login, this.showMainPage);
   }
 
   async init(): Promise<void> {
@@ -62,6 +63,10 @@ class Router {
     }
 
     return currentPath;
+  }
+
+  private showMainPage(): void {
+    this.app.setContent(new ChatPageView());
   }
 }
 
