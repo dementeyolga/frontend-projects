@@ -1,6 +1,6 @@
 import { StateKeys } from '../../../types/enums';
+import { isUserCredentials } from '../../../types/typeGuards';
 import AppPresenter from '../../App/AppPresenter';
-import ChatPageView from '../../pages/ChatPage/ChatPageView';
 import StateManagementService from '../StateManagementService/StateManagementService';
 import { Route } from './routes';
 
@@ -16,13 +16,11 @@ class Router {
     this.routes = routes;
     this.app = app;
 
-    this.showMainPage = this.showMainPage.bind(this);
-    this.state.subscribe(StateKeys.Login, this.showMainPage);
+    this.state.subscribe(StateKeys.CurrentUser, this.showRelevantPage);
+    // this.showCurrentHashRoute();
   }
 
   async init(): Promise<void> {
-    await this.showCurrentHashRoute();
-
     window.addEventListener('hashchange', async () => {
       await this.showCurrentHashRoute();
     });
@@ -65,9 +63,25 @@ class Router {
     return currentPath;
   }
 
-  private showMainPage(): void {
-    this.app.setContent(new ChatPageView());
-  }
+  private showRelevantPage = async (): Promise<void> => {
+    const user = this.state.getValue(StateKeys.CurrentUser);
+
+    if (isUserCredentials(user)) {
+      console.log('moving to chat page');
+
+      const { default: ChatPageView } = await import(
+        '../../pages/ChatPage/ChatPageView'
+      );
+
+      this.app.setContent(new ChatPageView());
+    } else {
+      const { default: LoginPageView } = await import(
+        '../../pages/LoginPage/LoginPageView'
+      );
+
+      this.app.setContent(new LoginPageView());
+    }
+  };
 }
 
 export default Router;

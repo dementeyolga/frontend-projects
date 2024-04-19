@@ -13,6 +13,8 @@ export const enum StateKeys {
   CurrentUser = 'currentUser',
   ActiveUsers = 'activeUsers',
   InactiveUsers = 'inactiveUsers',
+  ExternalLogin = 'externalLogin',
+  ExternalLogout = 'externalLogout',
 }
 
 export const enum RequestTypes {

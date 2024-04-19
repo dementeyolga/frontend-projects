@@ -1,5 +1,4 @@
 import {
-  Pathes,
   RequestTypes,
   SessionStorageKeys,
   SocketEvents,
@@ -8,6 +7,9 @@ import {
 import {
   isActiveUsersResponse,
   isErrorResponse,
+  isExternalLoginResponse,
+  isExternalLogoutResponse,
+  isInActiveUsersResponse,
   isLoginRequest,
   isLoginResponse,
   isLogoutResponse,
@@ -90,32 +92,47 @@ export default class WebSocketService {
         if (request && isLoginRequest(request)) {
           console.log('relevant login request: ', request);
 
-          sessionStorage.setItem(
-            SessionStorageKeys.User,
-            JSON.stringify(request.payload.user),
-          );
+          const { user } = request.payload;
 
-          this.state.setValue(StateKeys.CurrentUser, request.payload.user);
+          sessionStorage.setItem(SessionStorageKeys.User, JSON.stringify(user));
 
-          window.location.hash = Pathes.Login;
+          this.state.setValue(StateKeys.CurrentUser, user);
         }
-
-        // if ()
-        // window.location.hash = Pathes.Chat;
       }
 
       if (isLogoutResponse(message)) {
         sessionStorage.removeItem(SessionStorageKeys.User);
         this.state.setValue(StateKeys.CurrentUser, null);
-        window.location.hash = Pathes.Login;
       }
 
       if (isActiveUsersResponse(message)) {
         console.log('active users response', message);
+        this.state.setValue(StateKeys.ActiveUsers, message.payload.users);
+      }
+
+      if (isInActiveUsersResponse(message)) {
+        console.log('inactive users response', message);
+        this.state.setValue(StateKeys.InactiveUsers, message.payload.users);
       }
 
       if (isErrorResponse(message)) {
         console.log('error', message.payload);
+      }
+
+      if (isExternalLoginResponse(message)) {
+        console.log('user logged in', message.payload.user);
+        this.state.setValue(
+          StateKeys.ExternalLogin,
+          message.payload.user.login,
+        );
+      }
+
+      if (isExternalLogoutResponse(message)) {
+        console.log('user logged out', message.payload.user);
+        this.state.setValue(
+          StateKeys.ExternalLogout,
+          message.payload.user.login,
+        );
       }
     });
   }

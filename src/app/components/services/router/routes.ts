@@ -16,25 +16,25 @@ export const appRoutes: Route[] = [
         );
         return new View();
       } catch (e) {
-        console.log(e);
+        console.log('Error loading module', e);
 
         return null;
       }
     },
   },
-  {
-    path: Pathes.Chat,
-    callback: async () => {
-      try {
-        const { default: View } = await import(
-          '../../pages/ChatPage/ChatPageView'
-        );
-        return new View();
-      } catch (e) {
-        console.log(e);
+  // {
+  //   path: Pathes.Chat,
+  //   callback: async () => {
+  //     try {
+  //       const { default: View } = await import(
+  //         '../../pages/ChatPage/ChatPageView'
+  //       );
+  //       return new View();
+  //     } catch (e) {
+  //       console.log('Error loading module', e);
 
-        return null;
-      }
-    },
-  },
+  //       return null;
+  //     }
+  //   },
+  // },
 ];

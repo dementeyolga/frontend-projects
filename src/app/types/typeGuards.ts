@@ -3,6 +3,8 @@ import type {
   ActiveUsersResponse,
   ErrorPayload,
   ErrorResponse,
+  ExternalLoginResponse,
+  InactiveUsersResponse,
   LoginRequest,
   LoginResponse,
   LoginStatusPayload,
@@ -15,8 +17,9 @@ import type {
   WSRequest,
 } from './types';
 
-function isUserStatus(user: object): user is UserStatus {
+function isUserStatus(user: unknown): user is UserStatus {
   if (
+    user instanceof Object &&
     typeof (user as UserStatus).login === 'string' &&
     typeof (user as UserStatus).isLogined === 'boolean'
   ) {
@@ -28,6 +31,7 @@ function isUserStatus(user: object): user is UserStatus {
 
 function isUserCredentials(user: unknown): user is UserCredentials {
   if (
+    user instanceof Object &&
     typeof (user as UserCredentials).login === 'string' &&
     typeof (user as UserCredentials).password === 'string'
   ) {
@@ -38,7 +42,8 @@ function isUserCredentials(user: unknown): user is UserCredentials {
 }
 
 function isUsersList(users: unknown): users is UserStatus[] {
-  if (Array.isArray(users) && users.every(isUserStatus)) return true;
+  if (Array.isArray(users) && (users.length === 0 || users.every(isUserStatus)))
+    return true;
 
   return false;
 }
@@ -139,6 +144,20 @@ function isActiveUsersResponse(
   return false;
 }
 
+function isInActiveUsersResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is InactiveUsersResponse {
+  if (
+    message.type === RequestTypes.UsersInactive &&
+    message.payload &&
+    isUsersPayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 function isErrorPayload(payload: object): payload is ErrorPayload {
   if (payload && typeof (payload as ErrorPayload).error === 'string')
     return true;
@@ -160,7 +179,31 @@ function isErrorResponse(
   return false;
 }
 
-// function isLoginErrorText
+function isExternalLoginResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is ExternalLoginResponse {
+  if (
+    message.type === RequestTypes.UserExternalLogin &&
+    isLoginStatusPayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isExternalLogoutResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is ExternalLoginResponse {
+  if (
+    message.type === RequestTypes.UserExternalLogout &&
+    isLoginStatusPayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
 
 export {
   isUserCredentials,
@@ -169,6 +212,9 @@ export {
   isLoginResponse,
   isLogoutResponse,
   isActiveUsersResponse,
+  isInActiveUsersResponse,
   isErrorPayload,
   isErrorResponse,
+  isExternalLoginResponse,
+  isExternalLogoutResponse,
 };

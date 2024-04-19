@@ -27,6 +27,10 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     this.element.textContent = text;
   }
 
+  getTextContent(): string | null {
+    return this.element.textContent;
+  }
+
   protected setParameters(params: Partial<T>) {
     const { textContent, className, id, innerHTML } = params;
 
@@ -69,15 +73,19 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     currentEl.innerHTML = '';
   }
 
-  removeChildComponent(param: BaseComponentView | HTMLElement | number): void {
+  removeChildComponent(
+    param: BaseComponentView | HTMLElement | number | string,
+  ): void {
     let component;
 
     if (param instanceof BaseComponentView) {
       component = param;
     } else if (typeof param === 'number') {
       component = this.findChildComponentById(param);
-    } else {
+    } else if (param instanceof HTMLElement) {
       component = this.findChildComponentByElement(param);
+    } else if (typeof param === 'string') {
+      component = this.findChildComponentByTextContent(param);
     }
 
     if (component) {
@@ -106,6 +114,18 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     const component = this.children.find((comp) => {
       if (comp.id) {
         return comp.id === id;
+      }
+
+      return false;
+    });
+
+    return component;
+  }
+
+  findChildComponentByTextContent(text: string): BaseComponentView | undefined {
+    const component = this.children.find((comp) => {
+      if (comp.getTextContent()) {
+        return comp.getTextContent() === text;
       }
 
       return false;

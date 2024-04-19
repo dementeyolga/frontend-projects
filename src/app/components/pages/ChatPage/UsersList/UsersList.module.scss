@@ -3,16 +3,39 @@
 .list {
   display: flex;
   flex-direction: column;
+  row-gap: 5px;
 }
 
 .user {
   position: relative;
+  margin: 0;
 
-  &::after {
+  &::before {
     content: '';
-    width: 10px;
-    height: 10px;
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: block;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background-color: $color-disabled;
   }
+
+  &.online {
+    &::before {
+      background-color: $color-active;
+    }
+  }
+
+  &.offline {
+    &::before {
+      background-color: $color-disabled;
+    }
+  }
+}
+
+.hidden {
+  display: none;
 }

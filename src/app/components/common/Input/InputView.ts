@@ -105,7 +105,10 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
   private initListeners(): void {
     this.element.addEventListener(Events.Input, () => {
       this.element.dispatchEvent(
-        new CustomEvent(CustomEvents.FormInput, { bubbles: true }),
+        new CustomEvent<string>(CustomEvents.FormInput, {
+          bubbles: true,
+          detail: this.getValue(),
+        }),
       );
     });
   }

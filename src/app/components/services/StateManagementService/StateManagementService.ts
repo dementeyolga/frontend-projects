@@ -1,7 +1,12 @@
 import { StateKeys } from '../../../types/enums';
-import { UserCredentials } from '../../../types/types';
+import { UserCredentials, UserStatus } from '../../../types/types';
 
-type ObservedValuesTypes = string | UserCredentials | null | undefined;
+type ObservedValuesTypes =
+  | string
+  | UserCredentials
+  | UserStatus[]
+  | null
+  | undefined;
 
 type NotifyCallback = {
   (value: ObservedValuesTypes): void;
@@ -36,6 +41,8 @@ export default class StateManagementService {
   }
 
   triggerEvent(key: StateKeys): void {
+    console.log(`event ${key} triggered`);
+
     this.notify(key);
   }
 
@@ -60,6 +67,8 @@ export default class StateManagementService {
 
   private notify(key: StateKeys, value?: ObservedValuesTypes): void {
     const callbacks = this.notifyCallbacks.get(key);
+
+    console.log(`notifying about ${key} event`, callbacks);
 
     if (callbacks) {
       callbacks.forEach((cb) => cb(value));
