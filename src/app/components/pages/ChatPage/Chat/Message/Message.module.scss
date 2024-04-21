@@ -1,0 +1,21 @@
+@use './../../../../../../styles/abstract/variables' as *;
+
+.message {
+  padding: 10px 16px;
+  width: fit-content;
+  max-width: 60%;
+
+  box-shadow: 0 2px 2px #0000001a;
+  border-radius: 6px;
+  background-color: $color-neutral;
+
+  display: flex;
+
+  &.outgoing {
+    align-self: flex-end;
+  }
+
+  &.incoming {
+    align-self: flex-start;
+  }
+}

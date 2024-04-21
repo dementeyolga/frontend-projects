@@ -137,10 +137,9 @@ export default class WebSocketService {
         );
       }
 
-      console.log(isSendMessageResponse(message));
-
       if (isSendMessageResponse(message)) {
         console.log('message successfully sent', message);
+        this.state.setValue(StateKeys.MessageSent, message.payload.message);
       }
     });
   }

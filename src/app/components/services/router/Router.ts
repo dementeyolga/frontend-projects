@@ -17,7 +17,6 @@ class Router {
     this.app = app;
 
     this.state.subscribe(StateKeys.CurrentUser, this.showRelevantPage);
-    // this.showCurrentHashRoute();
   }
 
   async init(): Promise<void> {

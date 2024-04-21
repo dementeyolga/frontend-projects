@@ -1,10 +1,11 @@
 import { StateKeys } from '../../../types/enums';
-import { UserCredentials, UserStatus } from '../../../types/types';
+import { MessageData, UserCredentials, UserStatus } from '../../../types/types';
 
 type ObservedValuesTypes =
   | string
   | UserCredentials
   | UserStatus[]
+  | MessageData
   | null
   | undefined;
 
@@ -16,8 +17,6 @@ export default class StateManagementService {
   private static readonly instance = new StateManagementService();
 
   private observedValues = new Map<StateKeys, ObservedValuesTypes>();
-
-  // private observedEvents = new Set<StateTriggers>();
 
   private notifyCallbacks = new Map<StateKeys, Set<NotifyCallback>>();
 

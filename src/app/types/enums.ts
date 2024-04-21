@@ -15,6 +15,7 @@ export const enum StateKeys {
   InactiveUsers = 'inactiveUsers',
   ExternalLogin = 'externalLogin',
   ExternalLogout = 'externalLogout',
+  MessageSent = 'messageSent',
 }
 
 export const enum RequestTypes {
