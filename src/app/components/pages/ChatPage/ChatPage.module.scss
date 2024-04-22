@@ -5,6 +5,10 @@
   @extend .page;
 
   min-height: 100vh;
+  max-height: 100vh;
+
+  display: grid;
+  grid-template-rows: 20% auto 20%;
 }
 
 .appName {
@@ -21,4 +25,5 @@
 
   display: flex;
   justify-content: space-between;
+  column-gap: 5%;
 }

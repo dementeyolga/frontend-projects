@@ -16,6 +16,8 @@ export const enum StateKeys {
   ExternalLogin = 'externalLogin',
   ExternalLogout = 'externalLogout',
   MessageSent = 'messageSent',
+  MessageReceived = 'messageReceived',
+  MessageHistory = 'messageHistory',
 }
 
 export const enum RequestTypes {

@@ -30,8 +30,12 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
     this.initListeners();
   }
 
-  enable() {
+  enable(): void {
     this.messageTextArea.enable();
+  }
+
+  clear(): void {
+    this.messageTextArea.setValue('');
   }
 
   protected override setParameters(params: Partial<HTMLFormElement>): void {

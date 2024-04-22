@@ -1,5 +1,5 @@
 import { CustomEvents, StateKeys } from '../../../../types/enums';
-import { isUsersList } from '../../../../types/typeGuards';
+import { isUserCredentials, isUsersList } from '../../../../types/typeGuards';
 import { div, p } from '../../../../utils/tagViews';
 import BaseComponentView from '../../../BaseComponent/BaseComponentView';
 import InputView from '../../../common/Input/InputView';
@@ -91,11 +91,19 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
 
   private updateActiveUsersList = (): void => {
     const users = this.state.getValue(StateKeys.ActiveUsers);
+    const currentUser = this.state.getValue(StateKeys.CurrentUser);
+    const currentUserLogin = isUserCredentials(currentUser)
+      ? currentUser.login
+      : null;
 
     if (isUsersList(users)) {
-      const children = users.map((user) =>
-        p(user.login, `${classes.user} ${classes.online}`),
-      );
+      const children = users.reduce((acc, curr) => {
+        if (curr.login !== currentUserLogin) {
+          acc.push(p(curr.login, `${classes.user} ${classes.online}`));
+        }
+
+        return acc;
+      }, [] as BaseComponentView<HTMLParagraphElement>[]);
 
       this.activeUsersContainer.removeChildrenComponents();
       this.activeUsersContainer.addChildrenComponents('end', ...children);

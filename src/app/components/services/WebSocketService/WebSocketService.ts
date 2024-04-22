@@ -13,6 +13,7 @@ import {
   isLoginRequest,
   isLoginResponse,
   isLogoutResponse,
+  isMessageHistoryResponse,
   isSendMessageResponse,
 } from '../../../types/typeGuards';
 import {
@@ -20,6 +21,7 @@ import {
   InactiveUsersRequest,
   LoginRequest,
   LogoutRequest,
+  MessageHistoryRequest,
   Payloads,
   SendMessageRequest,
   WSRequest,
@@ -138,8 +140,21 @@ export default class WebSocketService {
       }
 
       if (isSendMessageResponse(message)) {
-        console.log('message successfully sent', message);
-        this.state.setValue(StateKeys.MessageSent, message.payload.message);
+        if (message.id === null) {
+          console.log('message received', message);
+          this.state.setValue(
+            StateKeys.MessageReceived,
+            message.payload.message,
+          );
+        } else {
+          console.log('message successfully sent', message);
+          this.state.setValue(StateKeys.MessageSent, message.payload.message);
+        }
+      }
+
+      if (isMessageHistoryResponse(message)) {
+        console.log('message history received', message);
+        this.state.setValue(StateKeys.MessageHistory, message.payload.messages);
       }
     });
   }
@@ -215,6 +230,22 @@ export default class WebSocketService {
         message: {
           to,
           text,
+        },
+      },
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
+  }
+
+  sendMessageHistoryRequest(login: string): void {
+    const data: MessageHistoryRequest = {
+      id: String(this.requests.length + 1),
+      type: RequestTypes.MessageHistory,
+      payload: {
+        user: {
+          login,
         },
       },
     };

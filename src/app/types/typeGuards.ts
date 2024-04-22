@@ -11,6 +11,8 @@ import type {
   LogoutResponse,
   Message,
   MessageData,
+  MessageHistoryResponse,
+  MessageHistoryResponsePayload,
   MessageStatus,
   Payloads,
   SendMessageResponse,
@@ -236,8 +238,6 @@ function isMessageStatus(status: unknown): status is MessageStatus {
 }
 
 function isMessageData(message: unknown): message is MessageData {
-  console.log(message);
-
   if (
     isMessage(message) &&
     typeof (message as MessageData).from === 'string' &&
@@ -278,6 +278,41 @@ function isSendMessageResponse(
   return false;
 }
 
+function isMessagesList(messages: unknown): messages is MessageData[] {
+  if (
+    Array.isArray(messages) &&
+    (messages.length === 0 || messages.every(isMessageData))
+  )
+    return true;
+
+  return false;
+}
+
+function isMessageHistoryResponsePayload(
+  payload: unknown,
+): payload is MessageHistoryResponsePayload {
+  const { messages } = payload as MessageHistoryResponsePayload;
+
+  if (payload instanceof Object && messages && isMessagesList(messages)) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageHistoryResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is MessageHistoryResponse {
+  if (
+    message instanceof Object &&
+    isMessageHistoryResponsePayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 export {
   isUserCredentials,
   isUsersList,
@@ -295,4 +330,6 @@ export {
   isMessageStatus,
   isSendMessageResponsePayload,
   isSendMessageResponse,
+  isMessageHistoryResponse,
+  isMessagesList,
 };

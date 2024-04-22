@@ -6,6 +6,7 @@ type ObservedValuesTypes =
   | UserCredentials
   | UserStatus[]
   | MessageData
+  | MessageData[]
   | null
   | undefined;
 
@@ -46,6 +47,8 @@ export default class StateManagementService {
   }
 
   subscribe(key: StateKeys, callback: NotifyCallback): void {
+    console.log(`SUBSCIBED TO EVENT ${key}`);
+
     let callbacks = this.notifyCallbacks.get(key);
 
     if (!callbacks) {

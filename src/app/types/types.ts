@@ -82,9 +82,7 @@ export type SendMessageResponse = WSRequest<
 
 export type MessageHistoryRequest = WSRequest<
   RequestTypes.MessageHistory,
-  {
-    user: { login: string };
-  }
+  MessageHistoryRequestPayload
 >;
 
 export type MessageHistoryResponse = WSRequest<
@@ -191,6 +189,10 @@ export type SendMessageResponsePayload = {
   message: MessageData;
 };
 
+export type MessageHistoryRequestPayload = {
+  user: { login: string };
+};
+
 export type MessageHistoryResponsePayload = {
   messages: MessageData[];
 };
@@ -250,6 +252,7 @@ export type Payloads =
   | UsersPayload
   | SendMessageRequestPayload
   | SendMessageResponsePayload
+  | MessageHistoryRequestPayload
   | MessageHistoryResponsePayload
   | MessageDeletePayload
   | MessageIDPayload

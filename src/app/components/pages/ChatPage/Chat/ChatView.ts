@@ -1,6 +1,6 @@
 import { CustomEvents, StateKeys } from '../../../../types/enums';
-import { isMessageData, isUserCredentials } from '../../../../types/typeGuards';
-import { div } from '../../../../utils/tagViews';
+import { isMessageData, isMessagesList } from '../../../../types/typeGuards';
+import { div, p } from '../../../../utils/tagViews';
 import BaseComponentView from '../../../BaseComponent/BaseComponentView';
 import StateManagementService from '../../../services/StateManagementService/StateManagementService';
 import WebSocketService from '../../../services/WebSocketService/WebSocketService';
@@ -34,17 +34,22 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
 
     if (username) {
       this.username = username;
+      this.addChildrenComponents('begin', p(username));
 
       // TODO request chat history
       // ? Also need to subscribe to receiving message history response
       // ? (compare nickname of the received history)
 
+      this.state.subscribe(StateKeys.MessageSent, this.showSentMessage);
+      this.state.subscribe(StateKeys.MessageReceived, this.showReceivedMessage);
+      this.state.subscribe(StateKeys.MessageHistory, this.showMessageHistory);
+
       this.messageForm.enable();
+
+      this.socket.sendMessageHistoryRequest(username);
     }
 
     this.initListeners();
-
-    this.state.subscribe(StateKeys.MessageSent, this.showSentMessage);
   }
 
   initListeners(): void {
@@ -63,19 +68,56 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
     const message = this.state.getValue(StateKeys.MessageSent);
 
     if (isMessageData(message)) {
-      const { from, to } = message;
+      const { to } = message;
 
-      const currentUser = this.state.getValue(StateKeys.CurrentUser);
-
-      if (
-        isUserCredentials(currentUser) &&
-        from === currentUser.login &&
-        to === this.username
-      ) {
+      if (to === this.username) {
         this.messageHistory.addChildrenComponents(
           'end',
           new MessageView(message, messageClasses.outgoing),
         );
+      }
+    }
+
+    this.messageForm.clear();
+  };
+
+  private showReceivedMessage = (): void => {
+    const message = this.state.getValue(StateKeys.MessageReceived);
+    console.log('adding received message', isMessageData(message));
+
+    if (isMessageData(message)) {
+      const { from } = message;
+
+      if (from === this.username) {
+        this.messageHistory.addChildrenComponents(
+          'end',
+          new MessageView(message, messageClasses.incoming),
+        );
+      }
+    }
+  };
+
+  private showMessageHistory = (): void => {
+    const history = this.state.getValue(StateKeys.MessageHistory);
+
+    if (isMessagesList(history)) {
+      if (
+        history.length &&
+        (history[0].from === this.username || history[0].to === this.username)
+      ) {
+        history.forEach((msg) => {
+          if (msg.from === this.username) {
+            this.messageHistory.addChildrenComponents(
+              'end',
+              new MessageView(msg, messageClasses.incoming),
+            );
+          } else {
+            this.messageHistory.addChildrenComponents(
+              'end',
+              new MessageView(msg, messageClasses.outgoing),
+            );
+          }
+        });
       }
     }
   };
