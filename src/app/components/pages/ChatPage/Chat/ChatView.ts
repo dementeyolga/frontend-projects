@@ -34,7 +34,7 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
 
     if (username) {
       this.username = username;
-      this.addChildrenComponents('begin', p(username));
+      this.addChildrenComponents('begin', p(username, classes.chatHeader));
 
       // TODO request chat history
       // ? Also need to subscribe to receiving message history response
@@ -47,6 +47,11 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
       this.messageForm.enable();
 
       this.socket.sendMessageHistoryRequest(username);
+    } else {
+      this.messageHistory.addChildrenComponents(
+        'end',
+        p('Select a chat to start messaging.', classes.disclaimer),
+      );
     }
 
     this.initListeners();

@@ -8,6 +8,7 @@ import StateManagementService from '../../services/StateManagementService/StateM
 import { isUserCredentials } from '../../../types/typeGuards';
 import { CustomEvents, StateKeys } from '../../../types/enums';
 import ChatView from './Chat/ChatView';
+import FooterView from '../../common/Footer/FooterView';
 
 export default class ChatPageView extends BaseComponentView {
   private readonly state: StateManagementService =
@@ -38,6 +39,7 @@ export default class ChatPageView extends BaseComponentView {
       'end',
       new HeaderView(...headerChilden),
       this.main,
+      new FooterView(),
     );
 
     this.initListeners();

@@ -3,7 +3,8 @@
 .textarea {
   resize: none;
   padding: 3px 8px;
-  height: 30px;
+  max-height: 230px;
+  height: auto;
   position: relative;
 
   flex-grow: 1;
