@@ -13,7 +13,9 @@ import {
   isLoginRequest,
   isLoginResponse,
   isLogoutResponse,
+  isMessageDeliveredResponse,
   isMessageHistoryResponse,
+  isMessageReadResponse,
   isSendMessageResponse,
 } from '../../../types/typeGuards';
 import {
@@ -22,6 +24,7 @@ import {
   LoginRequest,
   LogoutRequest,
   MessageHistoryRequest,
+  MessageReadRequest,
   Payloads,
   SendMessageRequest,
   WSRequest,
@@ -156,6 +159,18 @@ export default class WebSocketService {
         console.log('message history received', message);
         this.state.setValue(StateKeys.MessageHistory, message.payload.messages);
       }
+
+      if (isMessageDeliveredResponse(message)) {
+        console.log('message status changed to DELIVERED', message);
+
+        this.state.setValue(StateKeys.MessageDelivered, message.payload);
+      }
+
+      if (isMessageReadResponse(message)) {
+        console.log('message was READ', message);
+
+        this.state.setValue(StateKeys.MessageRead, message.payload);
+      }
     });
   }
 
@@ -246,6 +261,22 @@ export default class WebSocketService {
       payload: {
         user: {
           login,
+        },
+      },
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
+  }
+
+  sendReadMessageRequest(id: string) {
+    const data: MessageReadRequest = {
+      id: String(this.requests.length + 1),
+      type: RequestTypes.MessageRead,
+      payload: {
+        message: {
+          id,
         },
       },
     };

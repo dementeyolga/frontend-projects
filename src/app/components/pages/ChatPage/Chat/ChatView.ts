@@ -8,13 +8,14 @@ import classes from './Chat.module.scss';
 import MessageView from './Message/MessageVIew';
 import MessageFormView from './MessageForm/MessageFormView';
 import messageClasses from './Message/Message.module.scss';
+import MessageHistoryView from './MessageHistory/MessageHistoryView';
 
 export default class ChatView extends BaseComponentView<HTMLDivElement> {
   private readonly socket = WebSocketService.getInstance();
 
   private readonly state = StateManagementService.getInstance();
 
-  private readonly messageHistory: BaseComponentView<HTMLDivElement>;
+  private readonly messageHistory: MessageHistoryView;
 
   private readonly messageForm: MessageFormView;
 
@@ -23,7 +24,7 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
   constructor(username?: string) {
     super({ tagName: 'div', className: classes.chat });
 
-    this.messageHistory = div(classes.messageHistory);
+    this.messageHistory = new MessageHistoryView();
     this.messageForm = new MessageFormView();
 
     this.addChildrenComponents(
@@ -35,10 +36,6 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
     if (username) {
       this.username = username;
       this.addChildrenComponents('begin', p(username, classes.chatHeader));
-
-      // TODO request chat history
-      // ? Also need to subscribe to receiving message history response
-      // ? (compare nickname of the received history)
 
       this.state.subscribe(StateKeys.MessageSent, this.showSentMessage);
       this.state.subscribe(StateKeys.MessageReceived, this.showReceivedMessage);
@@ -57,6 +54,14 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
     this.initListeners();
   }
 
+  override destroy(): void {
+    super.destroy();
+
+    this.state.unsubscribe(StateKeys.MessageSent, this.showSentMessage);
+    this.state.unsubscribe(StateKeys.MessageReceived, this.showReceivedMessage);
+    this.state.unsubscribe(StateKeys.MessageHistory, this.showMessageHistory);
+  }
+
   initListeners(): void {
     this.element.addEventListener(CustomEvents.SendChatMessage, (ev) => {
       if (ev instanceof CustomEvent) {
@@ -65,6 +70,8 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
         if (this.username && typeof text === 'string') {
           this.socket.sendChatMessage(this.username, text);
         }
+
+        this.messageHistory.readMessages();
       }
     });
   }
@@ -76,6 +83,8 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
       const { to } = message;
 
       if (to === this.username) {
+        this.messageHistory.removePlugText();
+
         this.messageHistory.addChildrenComponents(
           'end',
           new MessageView(message, messageClasses.outgoing),
@@ -94,6 +103,8 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
       const { from } = message;
 
       if (from === this.username) {
+        this.messageHistory.removePlugText();
+
         this.messageHistory.addChildrenComponents(
           'end',
           new MessageView(message, messageClasses.incoming),
@@ -123,6 +134,8 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
             );
           }
         });
+      } else {
+        this.messageHistory.setPlugText(this.username);
       }
     }
   };

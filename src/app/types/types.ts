@@ -90,7 +90,7 @@ export type MessageHistoryResponse = WSRequest<
   MessageHistoryResponsePayload
 >;
 
-export type MessageDeliveredRequest = WSRequest<
+export type MessageDeliveredResponse = WSRequest<
   RequestTypes.MessageDelivered,
   MessageDeliveredPayload
 >;
@@ -136,6 +136,7 @@ export type ResponseTypes =
   | InactiveUsersResponse
   | SendMessageResponse
   | MessageHistoryResponse
+  | MessageDeliveredResponse
   | MessageReadResponse
   | DeleteMessageResponse
   | EditMessageResponse;

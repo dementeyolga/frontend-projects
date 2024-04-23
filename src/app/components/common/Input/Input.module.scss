@@ -7,7 +7,7 @@
 
   display: flex;
 
-  box-shadow: 0 2px 2px #0000001a;
+  box-shadow: $bottom-box-shadow;
   border-radius: 6px;
   outline: none;
   border: 1px solid $color-neutral;

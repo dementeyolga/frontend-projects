@@ -2,15 +2,12 @@ import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
 import { CustomEvents, Events } from '../../../../../types/enums';
 import classes from './MessageForm.module.scss';
 import ButtonView from '../../../../common/Button/ButtonView';
-// import WebSocketService from '../../../../services/WebSocketService/WebSocketService';
 import TextAreaView from '../../../../common/TextArea/TextAreaView';
 
 export default class MessageFormView extends BaseComponentView<HTMLFormElement> {
   private readonly messageTextArea: TextAreaView;
 
   private readonly sendButton: ButtonView;
-
-  // private readonly socket: WebSocketService = WebSocketService.getInstance();
 
   constructor() {
     super({ tagName: 'form', className: classes.form, novalidate: true });

@@ -3,7 +3,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
 
   protected readonly element: T;
 
-  protected id?: number;
+  readonly id?: number | string;
 
   constructor(params: Partial<T>, ...children: BaseComponentView[]) {
     const element = document.createElement(params.tagName || 'div') as T;

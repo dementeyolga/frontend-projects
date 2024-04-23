@@ -18,6 +18,8 @@ export const enum StateKeys {
   MessageSent = 'messageSent',
   MessageReceived = 'messageReceived',
   MessageHistory = 'messageHistory',
+  MessageDelivered = 'messageDelivered',
+  MessageRead = 'messageRead',
 }
 
 export const enum RequestTypes {
@@ -40,6 +42,7 @@ export const enum Events {
   Input = 'input',
   Submit = 'submit',
   Click = 'click',
+  Scroll = 'scroll',
 }
 
 export const enum CustomEvents {

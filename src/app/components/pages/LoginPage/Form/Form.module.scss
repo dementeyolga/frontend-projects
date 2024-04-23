@@ -1,9 +1,16 @@
+@use './../../../../../styles/abstract/variables' as *;
+
 .form {
   width: 90%;
-  max-width: 300px;
+  max-width: 350px;
+  padding: 30px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
+
+  background-color: $color-background-cover-transparent;
+  box-shadow: $bottom-box-shadow;
+  border-radius: $medium-border-radius;
 }

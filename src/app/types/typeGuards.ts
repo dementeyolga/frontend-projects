@@ -11,8 +11,12 @@ import type {
   LogoutResponse,
   Message,
   MessageData,
+  MessageDeliveredPayload,
+  MessageDeliveredResponse,
   MessageHistoryResponse,
   MessageHistoryResponsePayload,
+  MessageReadPayload,
+  MessageReadResponse,
   MessageStatus,
   Payloads,
   SendMessageResponse,
@@ -269,6 +273,7 @@ function isSendMessageResponse(
   message: WSRequest<RequestTypes, Payloads>,
 ): message is SendMessageResponse {
   if (
+    message instanceof Object &&
     message.type === RequestTypes.SendMessage &&
     isSendMessageResponsePayload(message.payload)
   ) {
@@ -305,7 +310,69 @@ function isMessageHistoryResponse(
 ): message is MessageHistoryResponse {
   if (
     message instanceof Object &&
+    message.type === RequestTypes.MessageHistory &&
     isMessageHistoryResponsePayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageDeliveredPayload(
+  payload: unknown,
+): payload is MessageDeliveredPayload {
+  if (
+    payload instanceof Object &&
+    (payload as MessageDeliveredPayload).message &&
+    (payload as MessageDeliveredPayload).message.id &&
+    typeof (payload as MessageDeliveredPayload).message.id === 'string' &&
+    (payload as MessageDeliveredPayload).message.status &&
+    typeof (payload as MessageDeliveredPayload).message.status.isDelivered ===
+      'boolean'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageDeliveredResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is MessageDeliveredResponse {
+  if (
+    message instanceof Object &&
+    message.type === RequestTypes.MessageDelivered &&
+    isMessageDeliveredPayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageReadPayload(payload: unknown): payload is MessageReadPayload {
+  if (
+    payload instanceof Object &&
+    (payload as MessageReadPayload).message &&
+    (payload as MessageReadPayload).message.id &&
+    typeof (payload as MessageReadPayload).message.id === 'string' &&
+    (payload as MessageReadPayload).message.status &&
+    typeof (payload as MessageReadPayload).message.status.isReaded === 'boolean'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageReadResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is MessageReadResponse {
+  if (
+    message instanceof Object &&
+    message.type === RequestTypes.MessageRead &&
+    isMessageReadPayload(message.payload)
   ) {
     return true;
   }
@@ -331,5 +398,9 @@ export {
   isSendMessageResponsePayload,
   isSendMessageResponse,
   isMessageHistoryResponse,
+  isMessageDeliveredResponse,
+  isMessageDeliveredPayload,
   isMessagesList,
+  isMessageReadPayload,
+  isMessageReadResponse,
 };

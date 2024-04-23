@@ -1,7 +1,9 @@
 @use './../../../../styles/layout/page' as *;
+@use './../../../../styles/layout/padding' as *;
 
 .page {
-  @extend .page;
+  @extend .page, %inner-padding;
 
   justify-content: center;
+  align-items: center;
 }
