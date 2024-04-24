@@ -1,21 +1,20 @@
-@use './../../../../styles/abstract/variables' as *;
-@use './../../../../styles/layout/page' as *;
 @use './../../../../styles/layout/padding' as *;
+@use './../../../../styles/layout/page' as *;
+@use './../../../../styles/abstract/variables' as *;
 
 .page {
-  @extend .page, %inner-padding;
+  @extend .page, %wrapper-padding;
+  padding-top: 40px;
+  padding-bottom: 40px;
 
-  justify-content: center;
   align-items: center;
-  gap: 30px;
+
+  row-gap: 30px;
 }
 
-.formWrapper {
-  width: 90%;
-  max-width: 350px;
-}
+.mainPageButton {
+  width: fit-content;
 
-.aboutButton {
   background-color: transparent;
   border: none;
   font-weight: 600;
@@ -27,4 +26,8 @@
     cursor: pointer;
     border-color: $color-font-accent;
   }
+}
+
+.content {
+  max-width: 700px;
 }

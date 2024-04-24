@@ -1,6 +1,7 @@
 import { div, p } from '../../../utils/tagViews';
 import BaseComponentView from '../../BaseComponent/BaseComponentView';
 import AnchorView from '../Anchor/AnchorView';
+import ButtonView from '../Button/ButtonView';
 import ImageView from '../Image/ImageView';
 import classes from './Footer.module.scss';
 import githubLogo from './github-logo.png';
@@ -22,6 +23,14 @@ export default class FooterView extends BaseComponentView<HTMLElement> {
         ),
       ),
       p('2024'),
+      new ButtonView(
+        {
+          type: 'button',
+          textContent: 'About the app',
+          className: classes.aboutButton,
+        },
+        'about',
+      ),
       new AnchorView(
         'https://github.com/dementeyolga',
         div(

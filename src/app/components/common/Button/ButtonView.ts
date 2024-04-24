@@ -6,6 +6,7 @@ type ButtomParams = {
   textContent: string;
   link?: string;
   disabled?: boolean;
+  className?: string;
 };
 
 export default class ButtonView extends BaseComponentView<HTMLButtonElement> {

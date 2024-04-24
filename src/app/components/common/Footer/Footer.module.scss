@@ -19,3 +19,17 @@
 .logo {
   width: 30px;
 }
+
+.aboutButton {
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
+
+  border-bottom: 2px solid transparent;
+  transition: 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    border-color: $color-font-accent;
+  }
+}

@@ -1,6 +1,6 @@
 export const enum Pathes {
   Login = '',
-  Chat = 'chat',
+  About = 'about',
 }
 
 export const enum SessionStorageKeys {

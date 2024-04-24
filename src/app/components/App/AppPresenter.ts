@@ -1,7 +1,6 @@
 import { SessionStorageKeys, StateKeys } from '../../types/enums';
 import { isUserCredentials } from '../../types/typeGuards';
 import BaseComponentView from '../BaseComponent/BaseComponentView';
-import LoginPageView from '../pages/LoginPage/LoginPageView';
 import StateManagementService from '../services/StateManagementService/StateManagementService';
 import WebSocketService from '../services/WebSocketService/WebSocketService';
 import AppView from './AppView';
@@ -13,7 +12,6 @@ export default class AppPresenter {
     StateManagementService.getInstance();
 
   constructor(private readonly view: AppView) {
-    this.sendAutoLoginRequest = this.sendAutoLoginRequest.bind(this);
     this.state.subscribe(StateKeys.OpenSocket, this.sendAutoLoginRequest);
   }
 
@@ -28,7 +26,7 @@ export default class AppPresenter {
     this.view.addChildrenComponents('end', view);
   }
 
-  sendAutoLoginRequest(): void {
+  sendAutoLoginRequest = (): void => {
     const userStr = sessionStorage.getItem(SessionStorageKeys.User);
 
     if (userStr) {
@@ -38,11 +36,7 @@ export default class AppPresenter {
         console.log('sending AUTO login request');
 
         this.socket.sendLoginRequest(user.login, user.password);
-      } else {
-        this.setContent(new LoginPageView());
       }
-    } else {
-      this.setContent(new LoginPageView());
     }
-  }
+  };
 }

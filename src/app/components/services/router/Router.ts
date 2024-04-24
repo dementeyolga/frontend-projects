@@ -17,6 +17,7 @@ class Router {
     this.app = app;
 
     this.state.subscribe(StateKeys.CurrentUser, this.showRelevantPage);
+    this.showCurrentHashRoute();
   }
 
   async init(): Promise<void> {
@@ -54,7 +55,7 @@ class Router {
   }
 
   private static getCurrentPath(): string {
-    let currentPath = document.location.hash;
+    let currentPath = window.location.hash;
     if (currentPath.length) {
       currentPath = currentPath.slice(1);
     }
@@ -63,22 +64,28 @@ class Router {
   }
 
   private showRelevantPage = async (): Promise<void> => {
-    const user = this.state.getValue(StateKeys.CurrentUser);
+    if (window.location.hash === '') {
+      const user = this.state.getValue(StateKeys.CurrentUser);
 
-    if (isUserCredentials(user)) {
-      console.log('moving to chat page');
+      if (isUserCredentials(user)) {
+        const { default: ChatPageView } = await import(
+          '../../pages/ChatPage/ChatPageView'
+        );
 
-      const { default: ChatPageView } = await import(
-        '../../pages/ChatPage/ChatPageView'
-      );
+        this.app.setContent(new ChatPageView());
+      } else {
+        const { default: LoginPageView } = await import(
+          '../../pages/LoginPage/LoginPageView'
+        );
 
-      this.app.setContent(new ChatPageView());
+        this.app.setContent(new LoginPageView());
+      }
     } else {
-      const { default: LoginPageView } = await import(
-        '../../pages/LoginPage/LoginPageView'
+      const { default: AboutPageView } = await import(
+        '../../pages/AboutPage/AboutPageView'
       );
 
-      this.app.setContent(new LoginPageView());
+      this.app.setContent(new AboutPageView());
     }
   };
 }
