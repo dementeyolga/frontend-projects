@@ -15,6 +15,7 @@ import {
   isLogoutResponse,
   isMessageDeleteResponse,
   isMessageDeliveredResponse,
+  isMessageEditResponse,
   isMessageHistoryResponse,
   isMessageReadResponse,
   isSendMessageResponse,
@@ -30,6 +31,7 @@ import {
   Payloads,
   SendMessageRequest,
   WSRequest,
+  MessageEditRequest,
 } from '../../../types/types';
 import StateManagementService from '../StateManagementService/StateManagementService';
 
@@ -179,12 +181,13 @@ export default class WebSocketService {
 
         this.state.setValue(StateKeys.MessageDeleted, message.payload);
       }
-    });
-  }
 
-  private send(data: object): void {
-    const msg = JSON.stringify(data);
-    this.socket.send(msg);
+      if (isMessageEditResponse(message)) {
+        console.log('need to EDIT a message', message);
+
+        this.state.setValue(StateKeys.MessageEdited, message.payload);
+      }
+    });
   }
 
   sendLoginRequest(login: string, password: string): void {
@@ -308,5 +311,27 @@ export default class WebSocketService {
     this.requests.push(data);
 
     this.send(data);
+  }
+
+  sendEditMessageRequest(id: string, text: string): void {
+    const data: MessageEditRequest = {
+      id: String(this.requests.length + 1),
+      type: RequestTypes.EditMessage,
+      payload: {
+        message: {
+          id,
+          text,
+        },
+      },
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
+  }
+
+  private send(data: object): void {
+    const msg = JSON.stringify(data);
+    this.socket.send(msg);
   }
 }

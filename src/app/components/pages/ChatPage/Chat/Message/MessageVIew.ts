@@ -1,6 +1,7 @@
-import { Events, StateKeys } from '../../../../../types/enums';
+import { CustomEvents, Events, StateKeys } from '../../../../../types/enums';
 import {
   isMessageDeliveredPayload,
+  isMessageEditPayload,
   isMessageReadPayload,
   isUserCredentials,
 } from '../../../../../types/typeGuards';
@@ -27,6 +28,8 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
   private readonly datetime: number;
 
   private readonly state = StateManagementService.getInstance();
+
+  private textComp?: BaseComponentView<HTMLParagraphElement>;
 
   private editedStatusComp?: BaseComponentView<HTMLParagraphElement>;
 
@@ -72,6 +75,8 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
       this.state.subscribe(StateKeys.MessageRead, this.changeReadStatus);
     }
 
+    this.state.subscribe(StateKeys.MessageEdited, this.editMessage);
+
     this.initListeners();
   }
 
@@ -83,6 +88,7 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
       this.changeDeliveredStatus,
     );
     this.state.unsubscribe(StateKeys.MessageRead, this.changeReadStatus);
+    this.state.unsubscribe(StateKeys.MessageEdited, this.editMessage);
   }
 
   private initListeners(): void {
@@ -99,9 +105,14 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
   }
 
   private initEditListener(): void {
-    if (this.deleteButton) {
-      this.deleteButton.getElement().addEventListener(Events.Click, () => {
-        // TODO need to add edit func
+    if (this.editButton) {
+      this.editButton.getElement().addEventListener(Events.Click, () => {
+        this.editButton?.getElement().dispatchEvent(
+          new CustomEvent(CustomEvents.EditMessage, {
+            bubbles: true,
+            detail: { text: this.textComp?.getTextContent(), id: this.id },
+          }),
+        );
       });
     }
   }
@@ -109,6 +120,8 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
   private renderMessageInfo(message: MessageData) {
     const { text, from, status } = message;
     const { isDelivered, isEdited, isReaded } = status;
+
+    this.textComp = p(text);
 
     const topInfoComponents = [];
 
@@ -125,7 +138,6 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
         div(classes.actionButtons, this.editButton, this.deleteButton),
       );
 
-      this.editedStatusComp = p(isEdited ? 'edited' : '');
       this.deliveredStatusComp = p(
         isDelivered ? '🗸' : '🕐',
         classes.deliveredStatus,
@@ -140,26 +152,22 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
         this.readStatusComp,
       );
 
-      bottomInfoComponents.push(
-        this.editedStatusComp,
-        this.deliveredReadStatusComp,
-      );
+      bottomInfoComponents.push(this.deliveredReadStatusComp);
     }
 
     topInfoComponents.unshift(p(fromUser, classes.fromUser));
 
     const timeComp = p(this.formatDateTime());
 
-    bottomInfoComponents.splice(
-      Math.ceil(bottomInfoComponents.length / 2),
-      0,
+    bottomInfoComponents.unshift(
+      (this.editedStatusComp = p(isEdited ? 'edited' : '')),
       timeComp,
     );
 
     this.addChildrenComponents(
       'end',
       div(classes.topInfo, ...topInfoComponents),
-      p(text),
+      this.textComp,
       div(classes.bottomInfo, ...bottomInfoComponents),
     );
   }
@@ -218,6 +226,20 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
       this.isReaded = true;
 
       this.state.unsubscribe(StateKeys.MessageRead, this.changeReadStatus);
+    }
+  };
+
+  private editMessage = (): void => {
+    const payload = this.state.getValue(StateKeys.MessageEdited);
+
+    if (
+      isMessageEditPayload(payload) &&
+      payload.message.id === this.id &&
+      payload.message.status.isEdited === true
+    ) {
+      this.isEdited = true;
+      this.editedStatusComp?.setTextContent('edited');
+      this.textComp?.setTextContent(payload.message.text);
     }
   };
 }

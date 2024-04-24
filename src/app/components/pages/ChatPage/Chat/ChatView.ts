@@ -63,15 +63,46 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
   }
 
   initListeners(): void {
+    this.initSendMessageListener();
+    this.editMessageListener();
+  }
+
+  private initSendMessageListener(): void {
     this.element.addEventListener(CustomEvents.SendChatMessage, (ev) => {
       if (ev instanceof CustomEvent) {
         const text = ev.detail;
 
         if (this.username && typeof text === 'string') {
-          this.socket.sendChatMessage(this.username, text);
+          if (this.messageForm.editingMessage) {
+            const { id } = this.messageForm.editingMessage;
+
+            this.socket.sendEditMessageRequest(id, text);
+            this.messageForm.disableEditMode();
+          } else {
+            this.socket.sendChatMessage(this.username, text);
+          }
         }
 
         this.messageHistory.readMessages();
+      }
+    });
+  }
+
+  private editMessageListener(): void {
+    this.element.addEventListener(CustomEvents.EditMessage, (ev) => {
+      if (ev instanceof CustomEvent) {
+        const info = ev.detail;
+
+        if (
+          info instanceof Object &&
+          typeof info.text === 'string' &&
+          typeof info.id === 'string'
+        ) {
+          const { text, id } = info;
+
+          console.log('need to edit message', text);
+          this.messageForm.enableEditMode(id, text);
+        }
       }
     });
   }

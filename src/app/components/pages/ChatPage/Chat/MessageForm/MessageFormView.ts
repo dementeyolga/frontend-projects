@@ -5,6 +5,11 @@ import ButtonView from '../../../../common/Button/ButtonView';
 import TextAreaView from '../../../../common/TextArea/TextAreaView';
 
 export default class MessageFormView extends BaseComponentView<HTMLFormElement> {
+  editingMessage: {
+    id: string;
+    text: string;
+  } | null = null;
+
   private readonly messageTextArea: TextAreaView;
 
   private readonly sendButton: ButtonView;
@@ -33,6 +38,26 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
 
   clear(): void {
     this.messageTextArea.setValue('');
+  }
+
+  enableEditMode(id: string, text: string): void {
+    this.messageTextArea.focus();
+    this.messageTextArea.setValue(text);
+    this.editingMessage = {
+      id,
+      text,
+    };
+    this.defineButtonState();
+    this.sendButton.addClass(classes.edit);
+    this.sendButton.setTextContent('Edit');
+  }
+
+  disableEditMode(): void {
+    this.messageTextArea.setValue('');
+    this.editingMessage = null;
+    this.defineButtonState();
+    this.sendButton.removeClass(classes.edit);
+    this.sendButton.setTextContent('Send');
   }
 
   protected override setParameters(params: Partial<HTMLFormElement>): void {
@@ -65,14 +90,19 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
   }
 
   private initFormInputListener(): void {
-    this.element.addEventListener(CustomEvents.FormInput, () => {
-      console.log('event');
-
-      if (this.messageTextArea.getValue().length === 0) {
-        this.sendButton.disable();
-      } else {
-        this.sendButton.enable();
-      }
-    });
+    this.element.addEventListener(
+      CustomEvents.FormInput,
+      this.defineButtonState,
+    );
   }
+
+  private defineButtonState = (): void => {
+    console.log('event');
+
+    if (this.messageTextArea.getValue().length === 0) {
+      this.sendButton.disable();
+    } else {
+      this.sendButton.enable();
+    }
+  };
 }

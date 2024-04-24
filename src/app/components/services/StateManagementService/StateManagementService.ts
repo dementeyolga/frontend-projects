@@ -3,6 +3,7 @@ import {
   MessageData,
   MessageDeletePayload,
   MessageDeliveredPayload,
+  MessageEditResponsePayload,
   MessageReadPayload,
   UserCredentials,
   UserStatus,
@@ -17,6 +18,7 @@ type ObservedValuesTypes =
   | MessageDeliveredPayload
   | MessageReadPayload
   | MessageDeletePayload
+  | MessageEditResponsePayload
   | null
   | undefined;
 

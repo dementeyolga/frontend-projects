@@ -1,6 +1,11 @@
+@use './../../../../../../styles/abstract/variables' as *;
 @use './../../../../../../styles/layout/padding' as *;
 
 .form {
   @extend %inner-padding;
   display: flex;
+}
+
+.edit {
+  background-color: $color-active;
 }

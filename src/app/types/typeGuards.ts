@@ -15,6 +15,8 @@ import type {
   MessageDeleteResponse,
   MessageDeliveredPayload,
   MessageDeliveredResponse,
+  MessageEditResponse,
+  MessageEditResponsePayload,
   MessageHistoryResponse,
   MessageHistoryResponsePayload,
   MessageReadPayload,
@@ -397,6 +399,7 @@ function isMessageDeletePayload(
 
   return false;
 }
+
 function isMessageDeleteResponse(
   message: WSRequest<RequestTypes, Payloads>,
 ): message is MessageDeleteResponse {
@@ -404,6 +407,38 @@ function isMessageDeleteResponse(
     message instanceof Object &&
     message.type === RequestTypes.DeleteMessage &&
     isMessageDeletePayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageEditPayload(
+  payload: unknown,
+): payload is MessageEditResponsePayload {
+  if (
+    payload instanceof Object &&
+    (payload as MessageEditResponsePayload).message &&
+    typeof (payload as MessageEditResponsePayload).message.id === 'string' &&
+    typeof (payload as MessageEditResponsePayload).message.text === 'string' &&
+    (payload as MessageEditResponsePayload).message.status &&
+    typeof (payload as MessageEditResponsePayload).message.status.isEdited ===
+      'boolean'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageEditResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is MessageEditResponse {
+  if (
+    message instanceof Object &&
+    message.type === RequestTypes.EditMessage &&
+    isMessageEditPayload(message.payload)
   ) {
     return true;
   }
@@ -436,4 +471,6 @@ export {
   isMessageReadResponse,
   isMessageDeletePayload,
   isMessageDeleteResponse,
+  isMessageEditPayload,
+  isMessageEditResponse,
 };

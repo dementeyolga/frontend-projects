@@ -21,6 +21,7 @@ export const enum StateKeys {
   MessageDelivered = 'messageDelivered',
   MessageRead = 'messageRead',
   MessageDeleted = 'messageDeleted',
+  MessageEdited = 'messageEdited',
 }
 
 export const enum RequestTypes {
@@ -41,6 +42,7 @@ export const enum RequestTypes {
 
 export const enum Events {
   Input = 'input',
+  Change = 'change',
   Submit = 'submit',
   Click = 'click',
   Scroll = 'scroll',
@@ -48,9 +50,11 @@ export const enum Events {
 
 export const enum CustomEvents {
   FormInput = 'form-input',
+  FormChange = 'form-change',
   TextAreaInput = 'textarea-input',
   OpenChat = 'open-chat',
   SendChatMessage = 'send-chat-message',
+  EditMessage = 'edit-message',
 }
 
 export const enum SocketEvents {
