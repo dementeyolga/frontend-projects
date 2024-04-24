@@ -82,7 +82,7 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
             this.socket.sendChatMessage(this.username, text);
           }
         }
-
+        this.messageForm.defineButtonState();
         this.messageHistory.readMessages();
       }
     });

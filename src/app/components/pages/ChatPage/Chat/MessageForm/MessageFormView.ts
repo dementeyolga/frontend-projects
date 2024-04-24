@@ -36,6 +36,11 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
     this.messageTextArea.enable();
   }
 
+  disable(): void {
+    this.messageTextArea.disable();
+    this.sendButton.disable();
+  }
+
   clear(): void {
     this.messageTextArea.setValue('');
   }
@@ -96,7 +101,7 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
     );
   }
 
-  private defineButtonState = (): void => {
+  defineButtonState = (): void => {
     console.log('event');
 
     if (this.messageTextArea.getValue().length === 0) {

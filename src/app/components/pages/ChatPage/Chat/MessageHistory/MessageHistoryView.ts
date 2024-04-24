@@ -31,6 +31,8 @@ export default class MessageHistoryView extends BaseComponentView<HTMLDivElement
 
     this.initListeners();
     this.state.subscribe(StateKeys.MessageDeleted, this.deleteMessage);
+
+    this.element.scrollTop = this.element.scrollHeight;
   }
 
   setPlugText(username: string | undefined): void {
