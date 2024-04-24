@@ -20,6 +20,7 @@ export const enum StateKeys {
   MessageHistory = 'messageHistory',
   MessageDelivered = 'messageDelivered',
   MessageRead = 'messageRead',
+  MessageDeleted = 'messageDeleted',
 }
 
 export const enum RequestTypes {

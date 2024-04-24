@@ -1,4 +1,4 @@
-import { StateKeys } from '../../../../../types/enums';
+import { Events, StateKeys } from '../../../../../types/enums';
 import {
   isMessageDeliveredPayload,
   isMessageReadPayload,
@@ -8,10 +8,21 @@ import { MessageData } from '../../../../../types/types';
 import { div, p } from '../../../../../utils/tagViews';
 import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
 import StateManagementService from '../../../../services/StateManagementService/StateManagementService';
+import WebSocketService from '../../../../services/WebSocketService/WebSocketService';
 import classes from './Message.module.scss';
 
 export default class MessageView extends BaseComponentView<HTMLDivElement> {
+  to: string;
+
+  isReaded: boolean;
+
+  isDelivered: boolean;
+
+  isEdited: boolean;
+
   readonly id: string;
+
+  private readonly socket = WebSocketService.getInstance();
 
   private readonly datetime: number;
 
@@ -23,18 +34,16 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
 
   private readStatusComp?: BaseComponentView<HTMLDivElement>;
 
+  private deleteButton?: BaseComponentView<HTMLParagraphElement>;
+
+  private editButton?: BaseComponentView<HTMLParagraphElement>;
+
   private deliveredReadStatusComp?: BaseComponentView<HTMLDivElement>;
 
-  to: string;
-
-  isReaded: boolean;
-
-  isDelivered: boolean;
-
-  isEdited: boolean;
+  private readonly from: string;
 
   constructor(message: MessageData, className?: string) {
-    const { to, id, datetime, status } = message;
+    const { from, to, id, datetime, status } = message;
     const { isReaded, isDelivered, isEdited } = status;
 
     super({
@@ -42,6 +51,7 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
       className: `${classes.message} ${className}`,
     });
 
+    this.from = from;
     this.to = to;
     this.id = id;
     this.datetime = datetime;
@@ -61,6 +71,8 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
     if (!isReaded) {
       this.state.subscribe(StateKeys.MessageRead, this.changeReadStatus);
     }
+
+    this.initListeners();
   }
 
   override destroy(): void {
@@ -73,17 +85,45 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
     this.state.unsubscribe(StateKeys.MessageRead, this.changeReadStatus);
   }
 
+  private initListeners(): void {
+    this.initDeleteListener();
+    this.initEditListener();
+  }
+
+  private initDeleteListener(): void {
+    if (this.deleteButton) {
+      this.deleteButton.getElement().addEventListener(Events.Click, () => {
+        this.socket.sendDeleleMessageRequest(this.id);
+      });
+    }
+  }
+
+  private initEditListener(): void {
+    if (this.deleteButton) {
+      this.deleteButton.getElement().addEventListener(Events.Click, () => {
+        // TODO need to add edit func
+      });
+    }
+  }
+
   private renderMessageInfo(message: MessageData) {
     const { text, from, status } = message;
     const { isDelivered, isEdited, isReaded } = status;
 
-    const user = this.state.getValue(StateKeys.CurrentUser);
+    const topInfoComponents = [];
 
     const bottomInfoComponents = [];
 
     let fromUser = from;
-    if (isUserCredentials(user) && user.login === from) {
+    if (this.isMesageFromCurrentUser()) {
       fromUser = 'you';
+
+      this.deleteButton = p('✖');
+      this.editButton = p('✎');
+
+      topInfoComponents.push(
+        div(classes.actionButtons, this.editButton, this.deleteButton),
+      );
 
       this.editedStatusComp = p(isEdited ? 'edited' : '');
       this.deliveredStatusComp = p(
@@ -106,6 +146,8 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
       );
     }
 
+    topInfoComponents.unshift(p(fromUser, classes.fromUser));
+
     const timeComp = p(this.formatDateTime());
 
     bottomInfoComponents.splice(
@@ -116,10 +158,20 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
 
     this.addChildrenComponents(
       'end',
-      p(fromUser, classes.fromUser),
+      div(classes.topInfo, ...topInfoComponents),
       p(text),
-      div(classes.messageInfo, ...bottomInfoComponents),
+      div(classes.bottomInfo, ...bottomInfoComponents),
     );
+  }
+
+  private isMesageFromCurrentUser(): boolean {
+    const user = this.state.getValue(StateKeys.CurrentUser);
+
+    if (isUserCredentials(user) && user.login === this.from) {
+      return true;
+    }
+
+    return false;
   }
 
   private formatDateTime(): string {

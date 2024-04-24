@@ -29,12 +29,38 @@
   }
 }
 
-.messageInfo {
+.topInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 3px;
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: $color-font-accent;
+}
+
+.actionButtons {
+  display: flex;
+  column-gap: 3px;
+  font-size: 0.8rem;
+
+  * {
+    transition: 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      filter: brightness(0.7);
+    }
+  }
+}
+
+.bottomInfo {
   align-self: flex-end;
 
   display: flex;
   align-items: center;
-  column-gap: 2px;
+  column-gap: 3px;
 
   font-size: 0.7rem;
   font-weight: 600;

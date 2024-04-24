@@ -105,22 +105,22 @@ export type MessageReadResponse = WSRequest<
   MessageReadPayload
 >;
 
-export type DeleteMessageRequest = WSRequest<
+export type MessageDeleteRequest = WSRequest<
   RequestTypes.DeleteMessage,
   MessageIDPayload
 >;
 
-export type DeleteMessageResponse = WSRequest<
+export type MessageDeleteResponse = WSRequest<
   RequestTypes.DeleteMessage,
   MessageDeletePayload
 >;
 
-export type EditMessageRequest = WSRequest<
+export type MessageEditRequest = WSRequest<
   RequestTypes.EditMessage,
   MessageEditRequestPayload
 >;
 
-export type EditMessageResponse = WSRequest<
+export type MessageEditResponse = WSRequest<
   RequestTypes.EditMessage,
   MessageEditResponsePayload
 >;
@@ -138,8 +138,8 @@ export type ResponseTypes =
   | MessageHistoryResponse
   | MessageDeliveredResponse
   | MessageReadResponse
-  | DeleteMessageResponse
-  | EditMessageResponse;
+  | MessageDeleteResponse
+  | MessageEditResponse;
 
 // Payloads
 export type UserStatus = {

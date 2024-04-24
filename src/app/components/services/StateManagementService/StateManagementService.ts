@@ -1,6 +1,7 @@
 import { StateKeys } from '../../../types/enums';
 import {
   MessageData,
+  MessageDeletePayload,
   MessageDeliveredPayload,
   MessageReadPayload,
   UserCredentials,
@@ -15,6 +16,7 @@ type ObservedValuesTypes =
   | MessageData[]
   | MessageDeliveredPayload
   | MessageReadPayload
+  | MessageDeletePayload
   | null
   | undefined;
 

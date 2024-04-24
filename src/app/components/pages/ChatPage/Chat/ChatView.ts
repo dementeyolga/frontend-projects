@@ -24,7 +24,7 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
   constructor(username?: string) {
     super({ tagName: 'div', className: classes.chat });
 
-    this.messageHistory = new MessageHistoryView();
+    this.messageHistory = new MessageHistoryView(username);
     this.messageForm = new MessageFormView();
 
     this.addChildrenComponents(

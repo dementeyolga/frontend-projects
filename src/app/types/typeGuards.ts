@@ -11,6 +11,8 @@ import type {
   LogoutResponse,
   Message,
   MessageData,
+  MessageDeletePayload,
+  MessageDeleteResponse,
   MessageDeliveredPayload,
   MessageDeliveredResponse,
   MessageHistoryResponse,
@@ -355,7 +357,6 @@ function isMessageReadPayload(payload: unknown): payload is MessageReadPayload {
   if (
     payload instanceof Object &&
     (payload as MessageReadPayload).message &&
-    (payload as MessageReadPayload).message.id &&
     typeof (payload as MessageReadPayload).message.id === 'string' &&
     (payload as MessageReadPayload).message.status &&
     typeof (payload as MessageReadPayload).message.status.isReaded === 'boolean'
@@ -373,6 +374,36 @@ function isMessageReadResponse(
     message instanceof Object &&
     message.type === RequestTypes.MessageRead &&
     isMessageReadPayload(message.payload)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function isMessageDeletePayload(
+  payload: unknown,
+): payload is MessageDeletePayload {
+  if (
+    payload instanceof Object &&
+    (payload as MessageDeletePayload).message &&
+    typeof (payload as MessageDeletePayload).message.id === 'string' &&
+    (payload as MessageDeletePayload).message.status &&
+    typeof (payload as MessageDeletePayload).message.status.isDeleted ===
+      'boolean'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+function isMessageDeleteResponse(
+  message: WSRequest<RequestTypes, Payloads>,
+): message is MessageDeleteResponse {
+  if (
+    message instanceof Object &&
+    message.type === RequestTypes.DeleteMessage &&
+    isMessageDeletePayload(message.payload)
   ) {
     return true;
   }
@@ -403,4 +434,6 @@ export {
   isMessagesList,
   isMessageReadPayload,
   isMessageReadResponse,
+  isMessageDeletePayload,
+  isMessageDeleteResponse,
 };

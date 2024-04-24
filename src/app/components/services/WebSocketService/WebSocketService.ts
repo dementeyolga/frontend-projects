@@ -13,6 +13,7 @@ import {
   isLoginRequest,
   isLoginResponse,
   isLogoutResponse,
+  isMessageDeleteResponse,
   isMessageDeliveredResponse,
   isMessageHistoryResponse,
   isMessageReadResponse,
@@ -20,6 +21,7 @@ import {
 } from '../../../types/typeGuards';
 import {
   ActiveUsersRequest,
+  MessageDeleteRequest,
   InactiveUsersRequest,
   LoginRequest,
   LogoutRequest,
@@ -171,6 +173,12 @@ export default class WebSocketService {
 
         this.state.setValue(StateKeys.MessageRead, message.payload);
       }
+
+      if (isMessageDeleteResponse(message)) {
+        console.log('need to DELETE a message', message);
+
+        this.state.setValue(StateKeys.MessageDeleted, message.payload);
+      }
     });
   }
 
@@ -274,6 +282,22 @@ export default class WebSocketService {
     const data: MessageReadRequest = {
       id: String(this.requests.length + 1),
       type: RequestTypes.MessageRead,
+      payload: {
+        message: {
+          id,
+        },
+      },
+    };
+
+    this.requests.push(data);
+
+    this.send(data);
+  }
+
+  sendDeleleMessageRequest(id: string): void {
+    const data: MessageDeleteRequest = {
+      id: String(this.requests.length + 1),
+      type: RequestTypes.DeleteMessage,
       payload: {
         message: {
           id,
