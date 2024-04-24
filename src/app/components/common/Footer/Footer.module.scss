@@ -1,6 +1,21 @@
 @use './../../../../styles/abstract/variables' as *;
+@use './../../../../styles/layout/padding' as *;
 
 .footer {
+  @extend %wrapper-padding;
+
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: $color-background-cover;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.logo {
+  width: 30px;
 }

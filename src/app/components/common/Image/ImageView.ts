@@ -1,6 +1,6 @@
 import BaseComponentView from '../../BaseComponent/BaseComponentView';
 
-export default class ImgView extends BaseComponentView<HTMLImageElement> {
+export default class ImageView extends BaseComponentView<HTMLImageElement> {
   constructor(src: string, alt: string = '', className?: string) {
     super({
       tagName: 'img',

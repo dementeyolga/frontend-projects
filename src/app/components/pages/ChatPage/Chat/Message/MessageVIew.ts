@@ -139,7 +139,7 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
       );
 
       this.deliveredStatusComp = p(
-        isDelivered ? '🗸' : '🕐',
+        isDelivered ? '🗸' : '◔',
         classes.deliveredStatus,
       );
       this.readStatusComp = p(

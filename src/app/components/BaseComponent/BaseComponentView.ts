@@ -27,6 +27,10 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
     this.element.textContent = text;
   }
 
+  setInnerHTML(html: string): void {
+    this.element.innerHTML = html;
+  }
+
   getTextContent(): string | null {
     return this.element.textContent;
   }

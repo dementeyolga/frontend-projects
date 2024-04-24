@@ -111,14 +111,5 @@ export default class InputView extends BaseComponentView<HTMLInputElement> {
         }),
       );
     });
-
-    this.element.addEventListener(Events.Change, () => {
-      this.element.dispatchEvent(
-        new CustomEvent(CustomEvents.FormChange, {
-          bubbles: true,
-          detail: this.getValue(),
-        }),
-      );
-    });
   }
 }

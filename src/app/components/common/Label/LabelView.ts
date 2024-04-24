@@ -42,12 +42,19 @@ export default class LabelView extends BaseComponentView<HTMLLabelElement> {
     this.element.addEventListener(CustomEvents.FormInput, () => {
       if (this.inputComp.checkValid()) {
         this.errorMsg.setTextContent('');
-      } else if (this.inputComp.checkTooShort()) {
-        this.errorMsg.setTextContent(
-          `${this.inputComp.getName()[0].toUpperCase() + this.inputComp.getName().slice(1) || 'Value'} must contain at least ${this.inputComp.getMinLength()} characters, you typed ${this.inputComp.getValue().length}.`,
-        );
-      } else if (this.inputComp.checkPatternMismatch()) {
-        this.errorMsg.setTextContent(this.inputComp.patternMessage);
+      } else {
+        let errorText = '';
+
+        if (this.inputComp.checkTooShort()) {
+          errorText += `${this.inputComp.getName()[0].toUpperCase() + this.inputComp.getName().slice(1) || 'Value'} must contain at least ${this.inputComp.getMinLength()} characters, you typed ${this.inputComp.getValue().length}.`;
+        }
+
+        if (this.inputComp.checkPatternMismatch()) {
+          errorText += errorText ? '<br>' : '';
+          errorText += this.inputComp.patternMessage;
+        }
+
+        this.errorMsg.setInnerHTML(errorText);
       }
     });
   }

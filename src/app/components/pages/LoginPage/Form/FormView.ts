@@ -23,10 +23,10 @@ export default class FormView extends BaseComponentView<HTMLFormElement> {
         type: 'text',
         name: 'login',
         required: true,
-        pattern: '[a-z\\-_]{3,}',
+        pattern: '^[0-9A-Za-z\\-_]{3,16}$',
         minLength: 3,
       },
-      `Login must start with uppercase letter and contain only English letters or '-'`,
+      `Login must contain only English letters, digits, hyphen or underscore (max 15 symbols)`,
     );
 
     this.passwordInput = new InputView(
@@ -37,7 +37,7 @@ export default class FormView extends BaseComponentView<HTMLFormElement> {
         pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$',
         minLength: 8,
       },
-      'Password should be minimum 8 characters and contain at least 1 uppercase letter and 1 lowercase letter',
+      'Password must contain at least 1 uppercase and 1 lowercase English letter and a digit',
     );
 
     this.loginButton = new ButtonView({

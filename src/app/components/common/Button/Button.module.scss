@@ -2,4 +2,6 @@
 
 .button {
   @extend .button;
+
+  width: fit-content;
 }
