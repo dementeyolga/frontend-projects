@@ -1,3 +1,5 @@
+import getOwnTextContent from '../../utils/getOwnTextContent';
+
 export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
   children: BaseComponentView[] = [];
 
@@ -32,7 +34,7 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
   }
 
   getTextContent(): string | null {
-    return this.element.textContent;
+    return getOwnTextContent(this.element);
   }
 
   protected setParameters(params: Partial<T>) {
@@ -97,6 +99,8 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
       this.children.splice(index, 1);
 
       component.destroy();
+
+      console.log('deleting component', component);
     }
   }
 
@@ -128,8 +132,8 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
 
   findChildComponentByTextContent(text: string): BaseComponentView | undefined {
     const component = this.children.find((comp) => {
-      if (comp.getTextContent()) {
-        return comp.getTextContent() === text;
+      if (getOwnTextContent(comp.element)) {
+        return getOwnTextContent(comp.element) === text;
       }
 
       return false;

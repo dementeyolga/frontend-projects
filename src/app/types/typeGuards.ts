@@ -463,6 +463,7 @@ export {
   isMessageStatus,
   isSendMessageResponsePayload,
   isSendMessageResponse,
+  isMessageHistoryResponsePayload,
   isMessageHistoryResponse,
   isMessageDeliveredResponse,
   isMessageDeliveredPayload,

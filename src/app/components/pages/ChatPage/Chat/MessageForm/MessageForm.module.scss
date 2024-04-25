@@ -4,6 +4,7 @@
 .form {
   @extend %inner-padding;
   display: flex;
+  column-gap: 6px;
 }
 
 .edit {

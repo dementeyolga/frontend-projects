@@ -23,6 +23,7 @@ export const enum StateKeys {
   MessageDeleted = 'messageDeleted',
   MessageEdited = 'messageEdited',
   LoginError = 'loginError',
+  ResetUnreadMessages = 'resetUnreadMessages',
 }
 
 export const enum RequestTypes {
@@ -47,6 +48,7 @@ export const enum Events {
   Submit = 'submit',
   Click = 'click',
   Scroll = 'scroll',
+  Keydown = 'keydown',
 }
 
 export const enum CustomEvents {

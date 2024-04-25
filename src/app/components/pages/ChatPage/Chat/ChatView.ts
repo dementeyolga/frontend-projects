@@ -83,6 +83,7 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
           }
         }
         this.messageForm.defineButtonState();
+        this.messageForm.focus();
         this.messageHistory.readMessages();
       }
     });
@@ -116,10 +117,11 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
       if (to === this.username) {
         this.messageHistory.removePlugText();
 
-        this.messageHistory.addChildrenComponents(
-          'end',
-          new MessageView(message, messageClasses.outgoing),
-        );
+        const newMessage = new MessageView(message, messageClasses.outgoing);
+
+        this.messageHistory.addChildrenComponents('end', newMessage);
+
+        newMessage.getElement().scrollIntoView();
       }
     }
 
@@ -136,10 +138,11 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
       if (from === this.username) {
         this.messageHistory.removePlugText();
 
-        this.messageHistory.addChildrenComponents(
-          'end',
-          new MessageView(message, messageClasses.incoming),
-        );
+        const newMessage = new MessageView(message, messageClasses.incoming);
+
+        this.messageHistory.addChildrenComponents('end', newMessage);
+
+        newMessage.getElement().scrollIntoView();
       }
     }
   };
@@ -165,6 +168,10 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
             );
           }
         });
+
+        this.messageHistory.children[this.messageHistory.children.length - 1]
+          .getElement()
+          .scrollIntoView();
       } else {
         this.messageHistory.setPlugText(this.username);
       }

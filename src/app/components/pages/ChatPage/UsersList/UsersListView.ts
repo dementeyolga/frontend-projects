@@ -1,11 +1,13 @@
 import { CustomEvents, StateKeys } from '../../../../types/enums';
 import { isUserCredentials, isUsersList } from '../../../../types/typeGuards';
-import { div, p } from '../../../../utils/tagViews';
+import { div } from '../../../../utils/tagViews';
 import BaseComponentView from '../../../BaseComponent/BaseComponentView';
 import InputView from '../../../common/Input/InputView';
 import StateManagementService from '../../../../services/StateManagementService/StateManagementService';
 import WebSocketService from '../../../../services/WebSocketService/WebSocketService';
+import UserNameView from './UserName/UserNameView';
 import classes from './UsersList.module.scss';
+import getOwnTextContent from '../../../../utils/getOwnTextContent';
 
 export default class UsersListView extends BaseComponentView<HTMLDivElement> {
   private readonly socket: WebSocketService = WebSocketService.getInstance();
@@ -56,7 +58,7 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
         target.dispatchEvent(
           new CustomEvent(CustomEvents.OpenChat, {
             bubbles: true,
-            detail: target.textContent,
+            detail: getOwnTextContent(target),
           }),
         );
       }
@@ -70,7 +72,10 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
 
         if (typeof text === 'string') {
           this.activeUsersContainer.children.forEach((comp) => {
-            if (comp.getTextContent()?.startsWith(text)) {
+            if (
+              comp instanceof UserNameView &&
+              comp.username.startsWith(text)
+            ) {
               comp.removeClass(classes.hidden);
             } else {
               comp.addClass(classes.hidden);
@@ -78,7 +83,10 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
           });
 
           this.inactiveUsersContainer.children.forEach((comp) => {
-            if (comp.getTextContent()?.startsWith(text)) {
+            if (
+              comp instanceof UserNameView &&
+              comp.username.startsWith(text)
+            ) {
               comp.removeClass(classes.hidden);
             } else {
               comp.addClass(classes.hidden);
@@ -99,7 +107,9 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
     if (isUsersList(users)) {
       const children = users.reduce((acc, curr) => {
         if (curr.login !== currentUserLogin) {
-          acc.push(p(curr.login, `${classes.user} ${classes.online}`));
+          acc.push(
+            new UserNameView(curr.login, `${classes.user} ${classes.online}`),
+          );
         }
 
         return acc;
@@ -114,8 +124,9 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
     const users = this.state.getValue(StateKeys.InactiveUsers);
 
     if (isUsersList(users)) {
-      const children = users.map((user) =>
-        p(user.login, `${classes.user} ${classes.offline}`),
+      const children = users.map(
+        (user) =>
+          new UserNameView(user.login, `${classes.user} ${classes.offline}`),
       );
 
       this.inactiveUsersContainer.removeChildrenComponents();
@@ -126,11 +137,19 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
   private handleExternalLogin = (): void => {
     const login = this.state.getValue(StateKeys.ExternalLogin);
 
-    if (typeof login === 'string') {
+    if (
+      typeof login === 'string' &&
+      !this.activeUsersContainer.findChildComponentByTextContent(login)
+    ) {
+      console.log(
+        'EXTERNAL LOGIN REMOVING FROM INACTIVE ADDING TO ACTIVE',
+        login,
+      );
+
       this.inactiveUsersContainer.removeChildComponent(login);
       this.activeUsersContainer.addChildrenComponents(
         'begin',
-        p(login, `${classes.user} ${classes.online}`),
+        new UserNameView(login, `${classes.user} ${classes.online}`),
       );
     }
   };
@@ -138,11 +157,19 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
   private handleExternalLogout = (): void => {
     const login = this.state.getValue(StateKeys.ExternalLogout);
 
-    if (typeof login === 'string') {
+    if (
+      typeof login === 'string' &&
+      !this.inactiveUsersContainer.findChildComponentByTextContent(login)
+    ) {
+      console.log(
+        'EXTERNAL LOGIN REMOVING FROM ACTIVE ADDING TO INACTIVE',
+        login,
+      );
+
       this.activeUsersContainer.removeChildComponent(login);
       this.inactiveUsersContainer.addChildrenComponents(
         'begin',
-        p(login, `${classes.user} ${classes.offline}`),
+        new UserNameView(login, `${classes.user} ${classes.offline}`),
       );
     }
   };

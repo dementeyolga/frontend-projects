@@ -1,0 +1,22 @@
+@use './../../../../../../styles/abstract/variables' as *;
+
+.counter {
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 16px;
+  width: 16px;
+  font-size: 0.7rem;
+  font-weight: 600;
+
+  color: $color-neutral;
+  background-color: $color-accent;
+  border-radius: 50%;
+
+  &.invisible {
+    display: none;
+  }
+}

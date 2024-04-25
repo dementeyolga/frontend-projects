@@ -226,6 +226,10 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
       this.isReaded = true;
 
       this.state.unsubscribe(StateKeys.MessageRead, this.changeReadStatus);
+
+      if (!this.isMesageFromCurrentUser()) {
+        this.state.setValue(StateKeys.ResetUnreadMessages, this.from);
+      }
     }
   };
 

@@ -45,6 +45,10 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
     this.messageTextArea.setValue('');
   }
 
+  focus(): void {
+    this.messageTextArea.focus();
+  }
+
   enableEditMode(id: string, text: string): void {
     this.messageTextArea.focus();
     this.messageTextArea.setValue(text);
@@ -65,6 +69,16 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
     this.sendButton.setTextContent('Send');
   }
 
+  defineButtonState = (): void => {
+    console.log('event');
+
+    if (this.messageTextArea.getValue().length === 0) {
+      this.sendButton.disable();
+    } else {
+      this.sendButton.enable();
+    }
+  };
+
   protected override setParameters(params: Partial<HTMLFormElement>): void {
     super.setParameters(params);
 
@@ -77,6 +91,7 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
   private initListeners(): void {
     this.initSubmitListener();
     this.initFormInputListener();
+    this.initKeyPressListener();
   }
 
   private initSubmitListener(): void {
@@ -101,13 +116,20 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
     );
   }
 
-  defineButtonState = (): void => {
-    console.log('event');
+  private initKeyPressListener(): void {
+    this.element.addEventListener(Events.Keydown, (ev) => {
+      if (ev.code === 'Enter' && !ev.shiftKey) {
+        ev.preventDefault();
 
-    if (this.messageTextArea.getValue().length === 0) {
-      this.sendButton.disable();
-    } else {
-      this.sendButton.enable();
-    }
-  };
+        const text = this.messageTextArea.getValue();
+
+        this.element.dispatchEvent(
+          new CustomEvent(CustomEvents.SendChatMessage, {
+            bubbles: true,
+            detail: text,
+          }),
+        );
+      }
+    });
+  }
 }

@@ -20,6 +20,7 @@ export default class AppView extends BaseComponentView {
   }
 
   override destroy(): void {
+    super.destroy();
     this.state.unsubscribe(StateKeys.LoginError, this.showErrorModal);
   }
 
