@@ -1,8 +1,8 @@
 import { Events, StateKeys } from '../../../../types/enums';
 import { isUserCredentials } from '../../../../types/typeGuards';
 import ButtonView from '../../../common/Button/ButtonView';
-import StateManagementService from '../../../services/StateManagementService/StateManagementService';
-import WebSocketService from '../../../services/WebSocketService/WebSocketService';
+import StateManagementService from '../../../../services/StateManagementService/StateManagementService';
+import WebSocketService from '../../../../services/WebSocketService/WebSocketService';
 
 export default class LogoutButtonView extends ButtonView {
   private readonly state: StateManagementService =

@@ -1,8 +1,8 @@
 import { SessionStorageKeys, StateKeys } from '../../types/enums';
 import { isUserCredentials } from '../../types/typeGuards';
 import BaseComponentView from '../BaseComponent/BaseComponentView';
-import StateManagementService from '../services/StateManagementService/StateManagementService';
-import WebSocketService from '../services/WebSocketService/WebSocketService';
+import StateManagementService from '../../services/StateManagementService/StateManagementService';
+import WebSocketService from '../../services/WebSocketService/WebSocketService';
 import AppView from './AppView';
 
 export default class AppPresenter {

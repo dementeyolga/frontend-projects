@@ -4,7 +4,7 @@ import classes from './Form.module.scss';
 import LabelView from '../../../common/Label/LabelView';
 import InputView from '../../../common/Input/InputView';
 import ButtonView from '../../../common/Button/ButtonView';
-import WebSocketService from '../../../services/WebSocketService/WebSocketService';
+import WebSocketService from '../../../../services/WebSocketService/WebSocketService';
 
 export default class FormView extends BaseComponentView<HTMLFormElement> {
   private readonly loginInput: InputView;

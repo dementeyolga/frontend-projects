@@ -1,4 +1,4 @@
-import { StateKeys } from '../../../types/enums';
+import { StateKeys } from '../../types/enums';
 import {
   MessageData,
   MessageDeletePayload,
@@ -7,7 +7,7 @@ import {
   MessageReadPayload,
   UserCredentials,
   UserStatus,
-} from '../../../types/types';
+} from '../../types/types';
 
 type ObservedValuesTypes =
   | string

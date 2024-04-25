@@ -8,8 +8,8 @@ import {
 import { MessageData } from '../../../../../types/types';
 import { div, p } from '../../../../../utils/tagViews';
 import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
-import StateManagementService from '../../../../services/StateManagementService/StateManagementService';
-import WebSocketService from '../../../../services/WebSocketService/WebSocketService';
+import StateManagementService from '../../../../../services/StateManagementService/StateManagementService';
+import WebSocketService from '../../../../../services/WebSocketService/WebSocketService';
 import classes from './Message.module.scss';
 
 export default class MessageView extends BaseComponentView<HTMLDivElement> {

@@ -22,6 +22,7 @@ export const enum StateKeys {
   MessageRead = 'messageRead',
   MessageDeleted = 'messageDeleted',
   MessageEdited = 'messageEdited',
+  LoginError = 'loginError',
 }
 
 export const enum RequestTypes {
@@ -55,6 +56,7 @@ export const enum CustomEvents {
   OpenChat = 'open-chat',
   SendChatMessage = 'send-chat-message',
   EditMessage = 'edit-message',
+  RemoveErrorModal = 'remove-error-modal',
 }
 
 export const enum SocketEvents {
@@ -62,4 +64,21 @@ export const enum SocketEvents {
   Close = 'close',
   Message = 'message',
   Error = 'error',
+}
+
+export const enum ServerErrorMessages {
+  UserAlreadyAuthorized = 'a user with this login is already authorized',
+  IncorrectPassword = 'incorrect password',
+  LogoutWrongCredentials = 'there is no user with this login',
+  LogoutUserNotAuthorized = 'the user was not authorized',
+  SenderAndRecipientLoginsSame = 'sender and recipient logins are the same',
+  MessageOperationWrongRecipientLogin = 'the user with the specified login does not exist',
+  MessageOperationUserNotLogined = 'user not registered or not logged',
+  WrongMessageID = 'incorrect message id',
+  MessageOperationUserNotRecipient = 'user not recipient cannot be executed',
+
+  IncorrectRequestStructure = 'incorrect request structure',
+  IncorrectTypeParameters = 'incorrect type parameters',
+  RequestPayloadNotSupported = 'incorrect payload parameters',
+  InternalServerError = 'internal server error',
 }

@@ -1,7 +1,7 @@
 import AppPresenter from './app/components/App/AppPresenter';
 import AppView from './app/components/App/AppView';
-import Router from './app/components/services/router/Router';
-import { appRoutes } from './app/components/services/router/routes';
+import Router from './app/services/router/Router';
+import { appRoutes } from './app/services/router/routes';
 
 const app = new AppPresenter(new AppView());
 app.render(document.body);

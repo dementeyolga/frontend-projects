@@ -1,9 +1,10 @@
 import {
   RequestTypes,
+  ServerErrorMessages,
   SessionStorageKeys,
   SocketEvents,
   StateKeys,
-} from '../../../types/enums';
+} from '../../types/enums';
 import {
   isActiveUsersResponse,
   isErrorResponse,
@@ -19,7 +20,7 @@ import {
   isMessageHistoryResponse,
   isMessageReadResponse,
   isSendMessageResponse,
-} from '../../../types/typeGuards';
+} from '../../types/typeGuards';
 import {
   ActiveUsersRequest,
   MessageDeleteRequest,
@@ -32,7 +33,7 @@ import {
   SendMessageRequest,
   WSRequest,
   MessageEditRequest,
-} from '../../../types/types';
+} from '../../types/types';
 import StateManagementService from '../StateManagementService/StateManagementService';
 
 export default class WebSocketService {
@@ -101,8 +102,6 @@ export default class WebSocketService {
         );
 
         if (request && isLoginRequest(request)) {
-          console.log('relevant login request: ', request);
-
           const { user } = request.payload;
 
           sessionStorage.setItem(SessionStorageKeys.User, JSON.stringify(user));
@@ -124,10 +123,6 @@ export default class WebSocketService {
       if (isInActiveUsersResponse(message)) {
         console.log('inactive users response', message);
         this.state.setValue(StateKeys.InactiveUsers, message.payload.users);
-      }
-
-      if (isErrorResponse(message)) {
-        console.log('error', message.payload);
       }
 
       if (isExternalLoginResponse(message)) {
@@ -186,6 +181,19 @@ export default class WebSocketService {
         console.log('need to EDIT a message', message);
 
         this.state.setValue(StateKeys.MessageEdited, message.payload);
+      }
+
+      if (isErrorResponse(message)) {
+        console.log('error', message.payload);
+
+        const { error: errorMessage } = message.payload;
+
+        if (
+          errorMessage === ServerErrorMessages.UserAlreadyAuthorized ||
+          errorMessage === ServerErrorMessages.IncorrectPassword
+        ) {
+          this.state.setValue(StateKeys.LoginError, errorMessage);
+        }
       }
     });
   }

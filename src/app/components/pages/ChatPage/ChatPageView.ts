@@ -4,7 +4,7 @@ import HeaderView from '../../common/Header/HeaderView';
 import { main, p } from '../../../utils/tagViews';
 import LogoutButtonView from './LogoutButton/LogoutButtonView';
 import UsersListView from './UsersList/UsersListView';
-import StateManagementService from '../../services/StateManagementService/StateManagementService';
+import StateManagementService from '../../../services/StateManagementService/StateManagementService';
 import { isUserCredentials } from '../../../types/typeGuards';
 import { CustomEvents, StateKeys } from '../../../types/enums';
 import ChatView from './Chat/ChatView';

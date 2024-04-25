@@ -3,8 +3,8 @@ import { isUserCredentials, isUsersList } from '../../../../types/typeGuards';
 import { div, p } from '../../../../utils/tagViews';
 import BaseComponentView from '../../../BaseComponent/BaseComponentView';
 import InputView from '../../../common/Input/InputView';
-import StateManagementService from '../../../services/StateManagementService/StateManagementService';
-import WebSocketService from '../../../services/WebSocketService/WebSocketService';
+import StateManagementService from '../../../../services/StateManagementService/StateManagementService';
+import WebSocketService from '../../../../services/WebSocketService/WebSocketService';
 import classes from './UsersList.module.scss';
 
 export default class UsersListView extends BaseComponentView<HTMLDivElement> {

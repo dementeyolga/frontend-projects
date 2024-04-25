@@ -1,5 +1,5 @@
-import { Pathes, SessionStorageKeys } from '../../../types/enums';
-import BaseComponentView from '../../BaseComponent/BaseComponentView';
+import { Pathes, SessionStorageKeys } from '../../types/enums';
+import BaseComponentView from '../../components/BaseComponent/BaseComponentView';
 
 export type Route = {
   path: string;
@@ -17,11 +17,11 @@ export const appRoutes: Route[] = [
 
         if (!userStr) {
           ({ default: View } = await import(
-            '../../pages/LoginPage/LoginPageView'
+            '../../components/pages/LoginPage/LoginPageView'
           ));
         } else {
           ({ default: View } = await import(
-            '../../pages/ChatPage/ChatPageView'
+            '../../components/pages/ChatPage/ChatPageView'
           ));
         }
 
@@ -38,7 +38,7 @@ export const appRoutes: Route[] = [
     callback: async () => {
       try {
         const { default: View } = await import(
-          '../../pages/AboutPage/AboutPageView'
+          '../../components/pages/AboutPage/AboutPageView'
         );
         return new View();
       } catch (e) {

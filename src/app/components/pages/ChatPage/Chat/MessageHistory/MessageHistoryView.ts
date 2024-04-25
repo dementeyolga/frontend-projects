@@ -5,8 +5,8 @@ import {
 } from '../../../../../types/typeGuards';
 import { p } from '../../../../../utils/tagViews';
 import BaseComponentView from '../../../../BaseComponent/BaseComponentView';
-import StateManagementService from '../../../../services/StateManagementService/StateManagementService';
-import WebSocketService from '../../../../services/WebSocketService/WebSocketService';
+import StateManagementService from '../../../../../services/StateManagementService/StateManagementService';
+import WebSocketService from '../../../../../services/WebSocketService/WebSocketService';
 import MessageView from '../Message/MessageVIew';
 import classes from './MessageHistory.module.scss';
 

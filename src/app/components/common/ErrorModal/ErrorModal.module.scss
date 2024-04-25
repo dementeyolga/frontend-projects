@@ -1,0 +1,73 @@
+@use './../../../../styles/abstract/variables' as *;
+
+.modalWrapper {
+  height: 100vh;
+  width: 100vw;
+
+  position: fixed;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1rem;
+  color: $color-text;
+  font-weight: 600;
+  background-color: $color-background-cover-transparent;
+
+  opacity: 1;
+  visibility: visible;
+
+  transition: 0.3s;
+
+  transform: translateZ(0);
+  z-index: 100;
+
+  &.invisible {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &.visible {
+    animation: 0.3s fadeIn;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  position: relative;
+
+  padding: 30px;
+  border-radius: $medium-border-radius;
+
+  background-color: $color-background-middle;
+}
+
+.closeButton {
+  position: absolute;
+  top: 5px;
+  right: 7px;
+
+  padding: 5px;
+
+  font-size: 1.2rem;
+
+  background: none;
+  border: none;
+
+  transition: 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    filter: opacity(0.6);
+  }
+}

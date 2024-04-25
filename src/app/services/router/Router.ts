@@ -1,6 +1,6 @@
-import { StateKeys } from '../../../types/enums';
-import { isUserCredentials } from '../../../types/typeGuards';
-import AppPresenter from '../../App/AppPresenter';
+import { StateKeys } from '../../types/enums';
+import { isUserCredentials } from '../../types/typeGuards';
+import AppPresenter from '../../components/App/AppPresenter';
 import StateManagementService from '../StateManagementService/StateManagementService';
 import { Route } from './routes';
 
@@ -69,20 +69,20 @@ class Router {
 
       if (isUserCredentials(user)) {
         const { default: ChatPageView } = await import(
-          '../../pages/ChatPage/ChatPageView'
+          '../../components/pages/ChatPage/ChatPageView'
         );
 
         this.app.setContent(new ChatPageView());
       } else {
         const { default: LoginPageView } = await import(
-          '../../pages/LoginPage/LoginPageView'
+          '../../components/pages/LoginPage/LoginPageView'
         );
 
         this.app.setContent(new LoginPageView());
       }
     } else {
       const { default: AboutPageView } = await import(
-        '../../pages/AboutPage/AboutPageView'
+        '../../components/pages/AboutPage/AboutPageView'
       );
 
       this.app.setContent(new AboutPageView());
