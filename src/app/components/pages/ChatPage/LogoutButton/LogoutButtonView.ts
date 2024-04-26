@@ -20,8 +20,6 @@ export default class LogoutButtonView extends ButtonView {
     this.element.addEventListener(Events.Click, () => {
       const user = this.state.getValue(StateKeys.CurrentUser);
 
-      console.log(this.state);
-
       if (user && isUserCredentials(user)) {
         this.socket.sendLogoutRequest(user.login, user.password);
       }

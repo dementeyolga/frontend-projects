@@ -141,11 +141,6 @@ export default class UsersListView extends BaseComponentView<HTMLDivElement> {
       typeof login === 'string' &&
       !this.activeUsersContainer.findChildComponentByTextContent(login)
     ) {
-      console.log(
-        'EXTERNAL LOGIN REMOVING FROM INACTIVE ADDING TO ACTIVE',
-        login,
-      );
-
       this.inactiveUsersContainer.removeChildComponent(login);
       this.activeUsersContainer.addChildrenComponents(
         'begin',

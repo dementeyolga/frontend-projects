@@ -31,6 +31,12 @@ export default class ErrorModalView extends BaseComponentView<HTMLDivElement> {
     this.initClickListener();
   }
 
+  override destroy(): void {
+    this.addClass(classes.invisible);
+
+    this.element.ontransitionend = () => super.destroy();
+  }
+
   private initClickListener(): void {
     this.element.onclick = ({ target }) => {
       if (target === this.element || target === this.closeButton.getElement()) {
@@ -39,11 +45,5 @@ export default class ErrorModalView extends BaseComponentView<HTMLDivElement> {
         );
       }
     };
-  }
-
-  override destroy(): void {
-    this.addClass(classes.invisible);
-
-    this.element.ontransitionend = () => super.destroy();
   }
 }

@@ -85,8 +85,6 @@ export default class UserNameView extends BaseComponentView<HTMLParagraphElement
       const { from } = message;
 
       if (from === this.username) {
-        console.log('need to increment unred');
-
         const count = this.unreadMessageCounter.getTextContent();
 
         const numberCount = count ? parseInt(count, 10) : 0;

@@ -101,7 +101,6 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
         ) {
           const { text, id } = info;
 
-          console.log('need to edit message', text);
           this.messageForm.enableEditMode(id, text);
         }
       }
@@ -130,7 +129,6 @@ export default class ChatView extends BaseComponentView<HTMLDivElement> {
 
   private showReceivedMessage = (): void => {
     const message = this.state.getValue(StateKeys.MessageReceived);
-    console.log('adding received message', isMessageData(message));
 
     if (isMessageData(message)) {
       const { from } = message;

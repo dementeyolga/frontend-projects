@@ -1,11 +1,15 @@
 import BaseComponentView from '../BaseComponent/BaseComponentView';
-import classes from './AppView.module.scss';
-import '../../../styles/main.scss';
 import StateManagementService from '../../services/StateManagementService/StateManagementService';
-import { CustomEvents, StateKeys } from '../../types/enums';
+import WebSocketService from '../../services/WebSocketService/WebSocketService';
 import ErrorModalView from '../common/ErrorModal/ErrorModalView';
+import { CustomEvents, SessionStorageKeys, StateKeys } from '../../types/enums';
+import { isUserCredentials } from '../../types/typeGuards';
+import '../../../styles/main.scss';
+import classes from './AppView.module.scss';
 
 export default class AppView extends BaseComponentView {
+  private readonly socket: WebSocketService = WebSocketService.getInstance();
+
   private readonly state: StateManagementService =
     StateManagementService.getInstance();
 
@@ -15,6 +19,7 @@ export default class AppView extends BaseComponentView {
     super({ tagName: 'div', className: classes.app });
 
     this.state.subscribe(StateKeys.LoginError, this.showErrorModal);
+    this.state.subscribe(StateKeys.OpenSocket, this.sendAutoLoginRequest);
 
     this.initListeners();
   }
@@ -22,7 +27,29 @@ export default class AppView extends BaseComponentView {
   override destroy(): void {
     super.destroy();
     this.state.unsubscribe(StateKeys.LoginError, this.showErrorModal);
+    this.state.unsubscribe(StateKeys.OpenSocket, this.sendAutoLoginRequest);
   }
+
+  render(root: HTMLElement): void {
+    root.prepend(this.getElement());
+  }
+
+  setContent(view: BaseComponentView): void {
+    this.removeChildrenComponents();
+    this.addChildrenComponents('end', view);
+  }
+
+  sendAutoLoginRequest = (): void => {
+    const userStr = sessionStorage.getItem(SessionStorageKeys.User);
+
+    if (userStr) {
+      const user = JSON.parse(userStr);
+
+      if (isUserCredentials(user)) {
+        this.socket.sendLoginRequest(user.login, user.password);
+      }
+    }
+  };
 
   private showErrorModal = (): void => {
     const errorMessage = this.state.getValue(StateKeys.LoginError);

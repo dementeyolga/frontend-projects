@@ -128,6 +128,7 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
     const bottomInfoComponents = [];
 
     let fromUser = from;
+
     if (this.isMesageFromCurrentUser()) {
       fromUser = 'you';
 
@@ -142,10 +143,12 @@ export default class MessageView extends BaseComponentView<HTMLDivElement> {
         isDelivered ? '🗸' : '◔',
         classes.deliveredStatus,
       );
+
       this.readStatusComp = p(
         isDelivered && isReaded ? '🗸' : '',
         classes.readStatus,
       );
+
       this.deliveredReadStatusComp = div(
         classes.statusContainer,
         this.deliveredStatusComp,

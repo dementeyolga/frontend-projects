@@ -33,6 +33,8 @@ import {
   SendMessageRequest,
   WSRequest,
   MessageEditRequest,
+  LoginResponse,
+  SendMessageResponse,
 } from '../../types/types';
 import StateManagementService from '../StateManagementService/StateManagementService';
 
@@ -52,150 +54,6 @@ export default class WebSocketService {
 
   static getInstance(): WebSocketService {
     return this.instance;
-  }
-
-  private openSocketConnection(url: string): void {
-    this.socket = new WebSocket(`ws://${url}`);
-    this.initSocketListeners();
-  }
-
-  private initSocketListeners(): void {
-    this.initOpenListener();
-  }
-
-  private initOpenListener(): void {
-    this.socket.addEventListener(SocketEvents.Open, () => {
-      console.log('socket has opened');
-
-      this.initMessageListener();
-      this.initErrorListener();
-      this.initCloseListener();
-
-      this.state.setValue(StateKeys.OpenSocket, 'open');
-    });
-  }
-
-  private initCloseListener(): void {
-    this.socket.addEventListener(SocketEvents.Close, () => {
-      console.log('socket has closed');
-
-      this.openSocketConnection(this.url);
-      this.initOpenListener();
-    });
-  }
-
-  private initErrorListener(): void {
-    this.socket.addEventListener(SocketEvents.Error, (ev) => {
-      console.log('WebSocket error: ', ev);
-    });
-  }
-
-  private initMessageListener(): void {
-    this.socket.addEventListener(SocketEvents.Message, (e) => {
-      const message = JSON.parse(e.data);
-
-      if (isLoginResponse(message)) {
-        console.log('user logined: ', message);
-
-        const request = this.requests.find(
-          (req) => req.id === message.id && req.type === RequestTypes.UserLogin,
-        );
-
-        if (request && isLoginRequest(request)) {
-          const { user } = request.payload;
-
-          sessionStorage.setItem(SessionStorageKeys.User, JSON.stringify(user));
-
-          this.state.setValue(StateKeys.CurrentUser, user);
-        }
-      }
-
-      if (isLogoutResponse(message)) {
-        sessionStorage.removeItem(SessionStorageKeys.User);
-        this.state.setValue(StateKeys.CurrentUser, null);
-      }
-
-      if (isActiveUsersResponse(message)) {
-        console.log('active users response', message);
-        this.state.setValue(StateKeys.ActiveUsers, message.payload.users);
-      }
-
-      if (isInActiveUsersResponse(message)) {
-        console.log('inactive users response', message);
-        this.state.setValue(StateKeys.InactiveUsers, message.payload.users);
-      }
-
-      if (isExternalLoginResponse(message)) {
-        console.log('user logged in', message.payload.user);
-        this.state.setValue(
-          StateKeys.ExternalLogin,
-          message.payload.user.login,
-        );
-      }
-
-      if (isExternalLogoutResponse(message)) {
-        console.log('user logged out', message.payload.user);
-        this.state.setValue(
-          StateKeys.ExternalLogout,
-          message.payload.user.login,
-        );
-      }
-
-      if (isSendMessageResponse(message)) {
-        if (message.id === null) {
-          console.log('message received', message);
-          this.state.setValue(
-            StateKeys.MessageReceived,
-            message.payload.message,
-          );
-        } else {
-          console.log('message successfully sent', message);
-          this.state.setValue(StateKeys.MessageSent, message.payload.message);
-        }
-      }
-
-      if (isMessageHistoryResponse(message)) {
-        console.log('message history received', message);
-        this.state.setValue(StateKeys.MessageHistory, message.payload.messages);
-      }
-
-      if (isMessageDeliveredResponse(message)) {
-        console.log('message status changed to DELIVERED', message);
-
-        this.state.setValue(StateKeys.MessageDelivered, message.payload);
-      }
-
-      if (isMessageReadResponse(message)) {
-        console.log('message was READ', message);
-
-        this.state.setValue(StateKeys.MessageRead, message.payload);
-      }
-
-      if (isMessageDeleteResponse(message)) {
-        console.log('need to DELETE a message', message);
-
-        this.state.setValue(StateKeys.MessageDeleted, message.payload);
-      }
-
-      if (isMessageEditResponse(message)) {
-        console.log('need to EDIT a message', message);
-
-        this.state.setValue(StateKeys.MessageEdited, message.payload);
-      }
-
-      if (isErrorResponse(message)) {
-        console.log('error', message.payload);
-
-        const { error: errorMessage } = message.payload;
-
-        if (
-          errorMessage === ServerErrorMessages.UserAlreadyAuthorized ||
-          errorMessage === ServerErrorMessages.IncorrectPassword
-        ) {
-          this.state.setValue(StateKeys.LoginError, errorMessage);
-        }
-      }
-    });
   }
 
   sendLoginRequest(login: string, password: string): void {
@@ -341,5 +199,141 @@ export default class WebSocketService {
   private send(data: object): void {
     const msg = JSON.stringify(data);
     this.socket.send(msg);
+  }
+
+  private openSocketConnection(url: string): void {
+    this.socket = new WebSocket(`ws://${url}`);
+    this.initSocketListeners();
+  }
+
+  private initSocketListeners(): void {
+    this.initOpenListener();
+  }
+
+  private initOpenListener(): void {
+    this.socket.addEventListener(SocketEvents.Open, () => {
+      console.log('socket has opened');
+
+      this.initMessageListener();
+      this.initErrorListener();
+      this.initCloseListener();
+
+      this.state.setValue(StateKeys.OpenSocket, 'open');
+    });
+  }
+
+  private initCloseListener(): void {
+    this.socket.addEventListener(SocketEvents.Close, () => {
+      console.log('socket has closed');
+
+      this.openSocketConnection(this.url);
+      this.initOpenListener();
+    });
+  }
+
+  private initErrorListener(): void {
+    this.socket.addEventListener(SocketEvents.Error, (ev) => {
+      console.log('WebSocket error: ', ev);
+    });
+  }
+
+  private initMessageListener(): void {
+    this.socket.addEventListener(SocketEvents.Message, (e) => {
+      const message = JSON.parse(e.data);
+
+      if (isLoginResponse(message)) {
+        this.handleLoginResponse(message);
+      }
+
+      if (isLogoutResponse(message)) {
+        sessionStorage.removeItem(SessionStorageKeys.User);
+        this.state.setValue(StateKeys.CurrentUser, null);
+      }
+
+      if (isActiveUsersResponse(message)) {
+        this.state.setValue(StateKeys.ActiveUsers, message.payload.users);
+      }
+
+      if (isInActiveUsersResponse(message)) {
+        this.state.setValue(StateKeys.InactiveUsers, message.payload.users);
+      }
+
+      if (isExternalLoginResponse(message)) {
+        this.state.setValue(
+          StateKeys.ExternalLogin,
+          message.payload.user.login,
+        );
+      }
+
+      if (isExternalLogoutResponse(message)) {
+        this.state.setValue(
+          StateKeys.ExternalLogout,
+          message.payload.user.login,
+        );
+      }
+
+      if (isSendMessageResponse(message)) {
+        this.handleSendMessageResponse(message);
+      }
+
+      if (isMessageHistoryResponse(message)) {
+        this.state.setValue(StateKeys.MessageHistory, message.payload.messages);
+      }
+
+      if (isMessageDeliveredResponse(message)) {
+        this.state.setValue(StateKeys.MessageDelivered, message.payload);
+      }
+
+      if (isMessageReadResponse(message)) {
+        this.state.setValue(StateKeys.MessageRead, message.payload);
+      }
+
+      if (isMessageDeleteResponse(message)) {
+        this.state.setValue(StateKeys.MessageDeleted, message.payload);
+      }
+
+      if (isMessageEditResponse(message)) {
+        this.state.setValue(StateKeys.MessageEdited, message.payload);
+      }
+
+      if (isErrorResponse(message)) {
+        console.log('error', message.payload);
+
+        const { error: errorMessage } = message.payload;
+
+        if (
+          errorMessage === ServerErrorMessages.UserAlreadyAuthorized ||
+          errorMessage === ServerErrorMessages.IncorrectPassword
+        ) {
+          this.state.setValue(StateKeys.LoginError, errorMessage);
+        }
+      }
+    });
+  }
+
+  private handleLoginResponse(message: LoginResponse): void {
+    console.log('user logined: ', message);
+
+    const request = this.requests.find(
+      (req) => req.id === message.id && req.type === RequestTypes.UserLogin,
+    );
+
+    if (request && isLoginRequest(request)) {
+      const { user } = request.payload;
+
+      sessionStorage.setItem(SessionStorageKeys.User, JSON.stringify(user));
+
+      this.state.setValue(StateKeys.CurrentUser, user);
+    }
+  }
+
+  private handleSendMessageResponse(message: SendMessageResponse): void {
+    if (message.id === null) {
+      console.log('message received', message);
+      this.state.setValue(StateKeys.MessageReceived, message.payload.message);
+    } else {
+      console.log('message successfully sent', message);
+      this.state.setValue(StateKeys.MessageSent, message.payload.message);
+    }
   }
 }

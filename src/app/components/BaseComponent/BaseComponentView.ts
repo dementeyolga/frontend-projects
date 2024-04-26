@@ -99,8 +99,6 @@ export default class BaseComponentView<T extends HTMLElement = HTMLElement> {
       this.children.splice(index, 1);
 
       component.destroy();
-
-      console.log('deleting component', component);
     }
   }
 

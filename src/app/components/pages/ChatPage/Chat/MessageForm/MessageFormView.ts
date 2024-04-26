@@ -70,8 +70,6 @@ export default class MessageFormView extends BaseComponentView<HTMLFormElement> 
   }
 
   defineButtonState = (): void => {
-    console.log('event');
-
     if (this.messageTextArea.getValue().length === 0) {
       this.sendButton.disable();
     } else {

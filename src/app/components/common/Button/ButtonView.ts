@@ -22,6 +22,14 @@ export default class ButtonView extends BaseComponentView<HTMLButtonElement> {
     }
   }
 
+  disable(): void {
+    this.element.disabled = true;
+  }
+
+  enable(): void {
+    this.element.disabled = false;
+  }
+
   protected override setParameters(params: Partial<HTMLButtonElement>): void {
     super.setParameters(params);
 
@@ -33,13 +41,5 @@ export default class ButtonView extends BaseComponentView<HTMLButtonElement> {
     if (disabled) {
       this.element.disabled = disabled;
     }
-  }
-
-  disable(): void {
-    this.element.disabled = true;
-  }
-
-  enable(): void {
-    this.element.disabled = false;
   }
 }

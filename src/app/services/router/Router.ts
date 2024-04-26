@@ -1,18 +1,18 @@
 import { StateKeys } from '../../types/enums';
 import { isUserCredentials } from '../../types/typeGuards';
-import AppPresenter from '../../components/App/AppPresenter';
 import StateManagementService from '../StateManagementService/StateManagementService';
 import { Route } from './routes';
+import AppView from '../../components/App/AppView';
 
 class Router {
   private readonly routes: Route[];
 
-  private readonly app: AppPresenter;
+  private readonly app: AppView;
 
   private readonly state: StateManagementService =
     StateManagementService.getInstance();
 
-  constructor(routes: Route[], app: AppPresenter) {
+  constructor(routes: Route[], app: AppView) {
     this.routes = routes;
     this.app = app;
 
